@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScans;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "connect.controllers")
+@ComponentScan(basePackages = {"connect.controllers","connect.service"})
 public class ConnectServerApplication {
 
 	public static void main(String[] args) {
