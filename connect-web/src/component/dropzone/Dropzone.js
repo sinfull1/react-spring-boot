@@ -67,7 +67,7 @@ class Dropzone extends Component {
         onClick={this.openFileDialog}
         style={{ cursor: this.props.disabled ? "default" : "pointer" }}
       >
-        <input
+         <input
           ref={this.fileInputRef}
           className="FileInput"
           type="file"

@@ -2,38 +2,30 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: flex-start;
-  text-align: left;
-  overflow: hidden;
+  padding: 20px;
+  justify-content: center ;
 }
 
 .Content {
   display: flex;
   flex-direction: row;
-  padding-top: 16px;
-  box-sizing: border-box;
-  width: 100%;
+  flex: 1;
+  justify-content: center ;
 }
 
 .Files {
-  margin-left: 32px;
-  align-items: flex-start;
   justify-items: flex-start;
   flex: 1;
-  overflow-y: auto;
 }
 
 .Actions {
   display: flex;
   flex: 1;
   width: 100%;
-  align-items: flex-end;
-  flex-direction: column;
-  margin-top: 32px;
+  justify-content: center;
 }
 
 .Title {
-  margin-bottom: 32px;
   color: #555;
 }
 
@@ -74,7 +66,6 @@ button {
   min-width: 88px;
   padding: 6px 16px;
   line-height: 1.42857143;
-  text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   -ms-touch-action: manipulation;

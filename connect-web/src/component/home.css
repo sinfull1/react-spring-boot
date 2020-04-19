@@ -1,0 +1,20 @@
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-self: stretch;
+  flex: 1;
+}
+
+.page-header
+{
+    flex-grow: 1;
+    align-self: stretch;
+}
+
+.page-main
+{
+    flex-grow: 8;
+    align-self: stretch;
+}
