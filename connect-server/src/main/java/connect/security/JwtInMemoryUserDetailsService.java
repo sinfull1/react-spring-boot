@@ -1,5 +1,7 @@
 package connect.security;
 
+import connect.dao.UserDao;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +17,7 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
   static List<JwtUserDetails> inMemoryUserList = new ArrayList<>();
 
   static {
-    inMemoryUserList.add(new JwtUserDetails(1L, "in28minutes",
+    inMemoryUserList.add(new JwtUserDetails(1L, "revber@ff.con",
         "$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e", "ROLE_USER_2"));
   }
 
@@ -31,6 +33,13 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
     return findFirst.get();
   }
 
+
+  public boolean registerUser (UserDao userDao)
+  {
+    inMemoryUserList.add( new JwtUserDetails(inMemoryUserList.size()+1L,
+            userDao.getUsername(),userDao.getPassword(),"user"));
+    return true;
+  }
 }
 
 

@@ -82,9 +82,13 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .ignoring()
             .antMatchers(
-                HttpMethod.GET,
-                "/getPrices" //Other Stuff You want to Ignore
-            );
+                HttpMethod.POST,
+                "/upload"
+            ).and().ignoring()
+                .antMatchers(
+                        HttpMethod.POST,
+                        "/register"
+                );
     }
 }
 

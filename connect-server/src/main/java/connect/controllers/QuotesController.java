@@ -24,7 +24,10 @@ public class QuotesController {
         this.sectorGeneratorService = sectorGeneratorService;
     }
 
-
+    @GetMapping(value ="/initPrices", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    Flux<SectorDao> initialQuote() {
+        return sectorGeneratorService.getQuotes();
+    }
     @GetMapping(value ="/getPrices", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     Flux<SectorDao> getQuotes() {
         return sectorGeneratorService.getQuotes();
