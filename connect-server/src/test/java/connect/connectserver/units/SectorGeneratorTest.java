@@ -5,9 +5,6 @@ import connect.generator.SectorGenerator;
 import connect.service.SectorGeneratorService;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
-import java.util.function.Consumer;
 
 public class SectorGeneratorTest {
 
@@ -17,9 +14,8 @@ public class SectorGeneratorTest {
 
         SectorGenerator sg = new SectorGenerator();
         SectorDao sd = sg.generateSectorQuote();
-
+        System.out.println(sd.toString());
         assert (sd != null);
-
     }
 
 
