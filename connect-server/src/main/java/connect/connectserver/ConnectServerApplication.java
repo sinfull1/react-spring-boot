@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @ComponentScan(basePackages = {"connect.controllers", "connect.service", "connect.security", "connect.utils"})
 @EnableWebSecurity
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-
 public class ConnectServerApplication {
 
     public static void main(String[] args) {

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService";
-import LoginComponent from "./LoginComponent";
-import LogoutComponent from "./LogoutComponent";
+import LoginComponent from "../login/LoginComponent";
+import LogoutComponent from "../login/LogoutComponent";
 import './menu.css'
 class MenuComponent extends Component {
   render() {

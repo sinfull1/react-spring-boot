@@ -2,8 +2,12 @@ package connect.connectserver.units;
 
 import connect.dao.SectorDao;
 import connect.generator.SectorGenerator;
+import connect.service.SectorGeneratorService;
 import org.junit.Test;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.function.Consumer;
 
 public class SectorGeneratorTest {
 
@@ -16,5 +20,13 @@ public class SectorGeneratorTest {
 
         assert (sd != null);
 
+    }
+
+
+    @Test
+    public void testflux() throws InterruptedException {
+        Flux<SectorDao> sd = SectorGeneratorService.getQuotes();
+        sd.subscribe(sectorDao -> System.out.println(sectorDao.toString()));
+        Thread.sleep(2000);
     }
 }

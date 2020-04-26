@@ -5,11 +5,6 @@ const API_URL = "http://localhost:8000";
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = "authenticatedUser";
 
 class AuthenticationService {
-  executeBasicAuthenticationService(username, password) {
-    return axios.get(`${API_URL}/basicauth`, {
-      headers: { authorization: this.createBasicAuthToken(username, password) },
-    });
-  }
 
   executeJwtAuthenticationService(username, password) {
     console.log(username);
@@ -19,16 +14,21 @@ class AuthenticationService {
     });
   }
 
+  register(email, username, password) {
+      console.log(username);
+      return axios.post(`${API_URL}/register`, {
+        email,
+        username,
+        password,
+      });
+    }
+
+
+
   createBasicAuthToken(username, password) {
     return "Basic " + window.btoa(username + ":" + password);
   }
 
-  registerSuccessfulLogin(username, password) {
-    //let basicAuthHeader = 'Basic ' +  window.btoa(username + ":" + password)
-    //console.log('registerSuccessfulLogin')
-    sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
-    this.setupAxiosInterceptors(this.createBasicAuthToken(username, password));
-  }
 
   registerSuccessfulLoginForJwt(username, token) {
     sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username);
