@@ -1,25 +1,25 @@
 package connect.generator;
 
 import connect.dao.StockDao;
+import connect.dao.StockSymbols;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class StockGenerator {
 
-    private final static List<String> stocks = Arrays.asList("Reliance", "Tata Consulting", "Infosys");
-    private final static List<String> stockCodes = Arrays.asList("REL", "TCS", "INFY");
 
-    public static StockDao generateStockQuote() {
-        Random random = new Random();
-        int index = random.nextInt(3);
-        return new StockDao(stocks.get(index), stockCodes.get(index), random.nextDouble());
-    }
+    private static int counter = -1;
 
-    public StockDao generateStockQuote(int index) {
+    public static List<StockDao> generateStockListQuote() {
         Random random = new Random();
-        return new StockDao(stocks.get(index), stockCodes.get(index), random.nextDouble());
+        List<StockDao> ret = new ArrayList<StockDao>();
+        for(String stock: StockSymbols.symList)
+        {
+            ret.add( new StockDao(stock, stock, random.nextDouble()));
+
+        }
+
+        return ret;
     }
 
 }

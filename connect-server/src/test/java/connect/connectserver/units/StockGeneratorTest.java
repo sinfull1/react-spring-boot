@@ -7,14 +7,7 @@ import org.junit.Test;
 public class StockGeneratorTest {
 
     @Test
-    public void testgenerator()
-    {
-        StockGenerator sg = new StockGenerator();
-        StockDao sd = sg.generateStockQuote();
-        System.out.println(sd);
-        assert (sd != null);
-
+    public void testgenerator() {
+        System.out.println(StockGenerator.generateStockListQuote());
     }
-
-
 }

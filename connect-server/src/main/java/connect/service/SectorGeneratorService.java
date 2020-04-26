@@ -12,6 +12,13 @@ import java.util.stream.Stream;
 @Service
 public class SectorGeneratorService {
 
+    public static SectorDao initQuotes() {
+
+
+        return SectorGenerator.generateSectorQuote();
+
+    }
+
     public static Flux<SectorDao> getQuotes() {
         Flux<Long> interval = Flux.interval(Duration.ofSeconds(1));
         interval.subscribe((i) -> SectorGenerator.generateSectorQuote());

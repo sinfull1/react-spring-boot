@@ -3,7 +3,7 @@ import "./App.css";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-import { Router,Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AuthenticationService from './service/AuthenticationService';
 import StockList from "../component/home/HomeComponent";
 import LoginComponent from '../component/login/LoginComponent';
@@ -51,9 +51,12 @@ class App extends React.Component {
    else{
     return (
       <div className="App">
-      <Switch>
-           <Route path="/" component={StockList} />
-       </Switch>
+    <BrowserRouter >
+            <Switch>
+             <Route path="/" component={StockList} />
+            </Switch>
+    </BrowserRouter>
+
       </div>
     );
   }
