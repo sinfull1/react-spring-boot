@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
-
+import './cslcontainer.css'
+import CSLBlockView from './CSLBlockView';
 event = new EventSource("http://localhost:8000/getPrices");
-
-class StockList extends Component {
+import CSLBarView from './CSLBarView';
+import CSLTrackerView from './CSLTrackerView';
+class CSLContainer  extends Component {
 
 
   constructor(props) {
@@ -24,43 +25,28 @@ class StockList extends Component {
       const update = JSON.parse(event.data); // <3>
       this.setState({stocks: update.lisStocks}); // <4>
     };
-    this.state.eventSource.onerror = event  => console.log('error', event);
+    this.state.eventSource.onerror = event  => {
+     console.log("Server side shut");
+     this.state.eventSource.close();
+     this.setState({eventSource: null});
+    }
   }
 
-  createHeaders() {
-    this.state.stocks.map(stock => {
-      return <th>{stock.stockCode}</th>
-    });
+  componentWillUnMount()
+  {
+    this.state.eventSource.close();
+    this.setState({eventSource: null});
   }
-
-  createContent() {
-
-  }
-
 
   render() {
     const {eventSource, stocks, isLoading} = this.state;
      return(
-           <table>
-          <thead>
-            <tr>
-                <th>Stock Code</th>
-                <th>Stock Price</th>
-             </tr>
-            </thead>
-             <tbody>
+        <div className="stock-group-wrapper">
 
-              {stocks.map(stock =>
-              <tr>
-                  <td>{stock.stockCode}</td>
-                  <td>{stock.stockPrice}</td>
-                               </tr>
-
-              )}
-             </tbody>
-           </table>
+         <CSLTrackerView stocks={stocks}/>
+        </div>
     );
   }
 }
 
-export default StockList;
+export default CSLContainer;

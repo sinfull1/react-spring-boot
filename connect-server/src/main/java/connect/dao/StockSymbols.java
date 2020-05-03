@@ -9,7 +9,11 @@ public class StockSymbols {
             Arrays.asList(
                     "RELIANCE",
                     "TCS",
-                    "INFOSYS"
+                    "INFOSYS",
+                    "HDFC",
+                    "LARSEN",
+                    "NESTLE",
+                    "SUNPHAMRA","ONGC","GAIL"
             );
 
 }

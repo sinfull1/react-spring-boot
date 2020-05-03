@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import AuthenticationService from './service/AuthenticationService';
-import StockList from "../component/home/HomeComponent";
+import CSLContainer from "../component/home/CSLContainer";
 import LoginComponent from '../component/login/LoginComponent';
 import LogoutComponent from '../component/login/LogoutComponent';
 import RegisterComponent from '../component/login/RegisterComponent';
@@ -43,7 +43,7 @@ class App extends React.Component {
       return (
         <div className="App">
              <Switch>
-                 <Route exact path="/" component={StockList}/>
+                 <Route exact path="/" component={CSLContainer}/>
               </Switch>
         </div>
       );
@@ -53,7 +53,7 @@ class App extends React.Component {
       <div className="App">
     <BrowserRouter >
             <Switch>
-             <Route path="/" component={StockList} />
+             <Route path="/" component={CSLContainer} />
             </Switch>
     </BrowserRouter>
 

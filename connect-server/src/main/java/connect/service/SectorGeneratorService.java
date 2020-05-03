@@ -20,7 +20,7 @@ public class SectorGeneratorService {
     }
 
     public static Flux<SectorDao> getQuotes() {
-        Flux<Long> interval = Flux.interval(Duration.ofSeconds(1));
+        Flux<Long> interval = Flux.interval(Duration.ofMillis(500));
         interval.subscribe((i) -> SectorGenerator.generateSectorQuote());
         Flux<SectorDao> messageFlux = Flux.fromStream(
                 Stream.generate(SectorGenerator::generateSectorQuote));

@@ -15,7 +15,7 @@ public class StockGenerator {
         List<StockDao> ret = new ArrayList<StockDao>();
         for(String stock: StockSymbols.symList)
         {
-            ret.add( new StockDao(stock, stock, random.nextDouble()));
+            ret.add( new StockDao(stock, stock, random.nextDouble()*100));
 
         }
 
