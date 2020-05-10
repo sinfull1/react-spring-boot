@@ -24,7 +24,7 @@ class CSLBarView extends Component {
   drawChart() {
          const margin = 60;
          const height = 500 - 2 * margin;
-         const width =  1000 - 2 * margin;
+         const width =  600 - 2 * margin;
          const xScale = scaleBand().range([0,width]).domain(this.props.stocks.map((s)=> s.stockName)).padding(0.2);
          const yScale = scaleLinear().range([height,0]).domain([0,100]);
          const svg = select(this.node);

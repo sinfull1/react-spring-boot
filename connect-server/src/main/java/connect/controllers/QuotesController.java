@@ -1,6 +1,7 @@
 package connect.controllers;
 
 import connect.dao.SectorDao;
+import connect.dao.Strategy;
 import connect.generator.SectorGenerator;
 import connect.service.SectorGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+
+import java.util.HashMap;
 
 @CrossOrigin(origins = {"*"})
 @RestController
@@ -33,5 +36,10 @@ public class QuotesController {
         return sectorGeneratorService.getQuotes();
     }
 
+
+    @GetMapping(value = "/getStrategy")
+    HashMap<String, Integer> getStrategy() {
+        return Strategy.eqStrat();
+    }
 
 }

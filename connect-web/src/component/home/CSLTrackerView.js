@@ -11,71 +11,55 @@ class CSLTrackerView extends Component {
   {
    super(props);
      this.state = {
-        firstRender: true,
-        chart: null
-
+        chart: null,
+        initialTime: 0,
     }
     this.drawChart = this.drawChart.bind(this)
-   // this.updateChart = this.updateChart.bind(this)
+    var prevPrice = 0;
+    var prevTime = 0;
   }
-   componentDidUpdate() {
-      this.state.firstRender = false;
+
+   async componentDidMount() {
+    await this.setState( { initialTime:Date.now()});
+    this.prevPrice = 0;
+    this.prevTime = Date.now();
+
+   }
+
+   async componentDidUpdate() {
       this.drawChart()
    }
   drawChart() {
-    var margin = {top: 20, right: 50, bottom: 30, left: 50},
-    width = 1000 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 50, bottom: 30, left: 50};
+    var width = 1000 - margin.left - margin.right;
+    var height = 400 - margin.top - margin.bottom;
+
     const xScale = scaleTime().range([0,width]).domain([1588499706418 - 6 * 60 * 60 * 1000,   1588499706418]).nice();
     const yScale = scaleLinear().range([height, 0]).domain([0,100]);
-    console.log(Date.now());
-
     const svg = select(this.node);
     const chart = svg.select('g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     const xAxis = chart.select('#axisLeft').call(axisLeft(yScale));
-
     const yAxis = chart.select('#axisBottom').attr('transform',"translate(0,"+height+")")
                   .call(axisBottom(xScale));
+     var timeDelta = (Date.now() - this.state.initialTime)/300;
 
- /* y.domain([
-    d3.min(companies, function(c) { return d3.min(c.values, function(v) { return v.price; }); }),
-    d3.max(companies, function(c) { return d3.max(c.values, function(v) { return v.price; }); })
-  ]);*/
-  const line = chart.append("line")
-               .attr("x1", 5)
-               .attr("y1", 5)
-               .attr("x2", 50)
-               .attr("y2", 50)
-               .attr("stroke-width", 2)
-               .attr("stroke", "black");
+     var path = chart.append("path")
+              .attr("stroke","black")
+              .attr("stroke-width", 2)
+              .attr("fill","none");
+     console.log(timeDelta);
 
+    var hScale = height/100;
+    var pathData = [ "M " + this.prevTime + " " + (height-(this.prevPrice)*hScale)
+                    + " L " + timeDelta +" "+ (height-(this.props.stocks.map(s=> s.stockPrice)[0])*hScale)];
 
-
-
-
-
-
-
-
-
-/*   d3.select(path[0][0])
-      .attr("stroke-dasharray", totalLength[0] + " " + totalLength[0] )
-      .attr("stroke-dashoffset", totalLength[0])
-      .transition()
-        .duration(5000)
-        .ease("linear")
-        .attr("stroke-dashoffset", 0);
-
-   d3.select(path[0][1])
-      .attr("stroke-dasharray", totalLength[1] + " " + totalLength[1] )
-      .attr("stroke-dashoffset", totalLength[1])
-      .transition()
-        .duration(5000)
-        .ease("linear")
-        .attr("stroke-dashoffset", 0);*/
+    path.data(pathData)
+                  .attr("d", function(d) {
+                       return d;
+                  });
+    this.prevPrice = this.props.stocks.map(s=> s.stockPrice)[0];
+    this.prevTime = timeDelta;
      }
-
-
 
   render(){
      return ( <div className="csl-tracker-view"> <svg ref={node => this.node =node}>
@@ -83,8 +67,7 @@ class CSLTrackerView extends Component {
             <g id="axisLeft">
             </g>
                <g id="axisBottom">
-              </g>
-
+            </g>
         </g>
         </svg></div>);
    }
