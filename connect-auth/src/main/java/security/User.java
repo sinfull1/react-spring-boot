@@ -1,8 +1,7 @@
-package connect.security;
+package security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import connect.security.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,8 +23,7 @@ public class User implements UserDetails {
     @Setter
     private Boolean enabled;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private List<Role> roles;
 
     public User(String username) {
