@@ -1,4 +1,4 @@
-package security;
+package connect.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

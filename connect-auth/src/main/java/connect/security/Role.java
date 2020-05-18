@@ -1,4 +1,4 @@
-package security;
+package connect.security;
 
 public enum Role {
     ROLE_USER, ROLE_ADMIN
