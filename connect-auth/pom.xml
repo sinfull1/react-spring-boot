@@ -7,9 +7,20 @@
         <groupId>connect</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+
+    <groupId>connect</groupId>
     <artifactId>connect-auth</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>connect-authr</name>
+    <description>Demo project for Spring JWt Auth</description>
+
+    <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+
    <dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>

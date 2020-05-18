@@ -1,4 +1,4 @@
-package security;
+package connect.security;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
