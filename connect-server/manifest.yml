@@ -1,0 +1,8 @@
+---
+applications:
+  - name: connect-server
+    instances: 2
+    memory: 1G
+    buildpacks:
+      - java_buildpack
+    path: /target/connect-server-0.0.1-SNAPSHOT.jar

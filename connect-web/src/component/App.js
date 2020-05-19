@@ -3,7 +3,7 @@ import "./App.css";
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link} from 'react-router-dom';
 import AuthenticationService from './service/AuthenticationService';
 import CSLContainer from "../component/home/CSLContainer";
 import LoginComponent from '../component/login/LoginComponent';
@@ -50,13 +50,13 @@ class App extends React.Component {
     }
    else{
     return (
-      <div className="App">
-    <BrowserRouter >
-            <Switch>
-             <Route path="/" component={CSLContainer} />
-            </Switch>
-    </BrowserRouter>
 
+      <div className="App">
+        <Switch>
+             <Route exact path="/" component={CSLContainer} />
+             <Route path="/login" component={LoginComponent} />
+             <Route path="/register" component={RegisterComponent } />
+        </Switch>
       </div>
     );
   }
