@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './cslcontainer.css'
 import CSLBlockView from './CSLBlockView';
-event = new EventSource("http://localhost:8000/getPrices");
+//event = new EventSource("http://localhost:8000/getPrices");
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 import CSLStrategyView from './CSLStrategyView';
@@ -20,23 +20,22 @@ class CSLContainer  extends Component {
   }
 
   async componentDidMount() {
-    this.state.eventSource = event;
     this.setState({isLoading: true});
-    this.state.eventSource.onopen = event => console.log('open', event); // <2>
-    this.state.eventSource.onmessage = event => {
+    this.props.events.onopen = event => console.log('open', event); // <2>
+    this.props.events.onmessage = event => {
       const update = JSON.parse(event.data); // <3>
       this.setState({stocks: update.lisStocks}); // <4>
     };
-    this.state.eventSource.onerror = event  => {
+    this.props.events.onerror = event  => {
      console.log("Server side shut");
-     this.state.eventSource.close();
+     this.props.events.close();
      this.setState({eventSource: null});
     }
   }
 
   componentWillUnMount()
   {
-    this.state.eventSource.close();
+    this.props.eventSource.close();
     this.setState({eventSource: null});
   }
 
