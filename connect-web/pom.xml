@@ -59,6 +59,29 @@
             </dependency>
         </dependencies>
     </plugin>
+    <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+            <execution>
+                <id>copy-resources</id>
+                <goals>
+                    <goal>copy-resources</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                    <outputDirectory>../connect-server/target/classes/public</outputDirectory>
+                    <resources>
+                        <resource>
+                            <directory>dist</directory>
+                            <filtering>true</filtering>
+                        </resource>
+                    </resources>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+
     </plugins>
 </build>
 </project>
