@@ -8,6 +8,8 @@ public class StrategyGenTest {
     @Test
     public void test()
     {
-        System.out.println(Strategy.eqStrat().toString());
+        Strategy strategy = new Strategy();
+
+        System.out.println(strategy.get().toString());
     }
 }
