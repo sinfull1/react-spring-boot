@@ -21,13 +21,15 @@ public class QuotesController {
     @Autowired
     private final SectorGeneratorService sectorGeneratorService;
 
+    private final Strategy strategy = new Strategy();
+
     public QuotesController(SectorGeneratorService sectorGeneratorService) {
         this.sectorGeneratorService = sectorGeneratorService;
     }
 
     @GetMapping(value = "/initPrices")
     SectorDao initialQuote() {
-        return SectorGenerator.generateSectorQuote();
+        return sectorGeneratorService.initQuotes();
     }
 
 
@@ -39,7 +41,7 @@ public class QuotesController {
 
     @GetMapping(value = "/getStrategy")
     HashMap<String, Integer> getStrategy() {
-        return Strategy.eqStrat();
+        return strategy.get();
     }
 
 }
