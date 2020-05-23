@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { Route, Switch, Link} from 'react-router-dom';
 import AuthenticationService from './service/AuthenticationService';
-import CSLContainer from "../component/home/
-`CSLContainer";
+import CSLContainer from "../component/home/CSLContainer";
 import LoginComponent from '../component/login/LoginComponent';
 import LogoutComponent from '../component/login/LogoutComponent';
 import RegisterComponent from '../component/login/RegisterComponent';
