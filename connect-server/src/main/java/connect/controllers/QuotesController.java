@@ -33,7 +33,7 @@ public class QuotesController {
     }
 
 
-    @GetMapping(value = "/getPrices", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/getPrices")
     Flux<SectorDao> getQuotes() {
         return sectorGeneratorService.getQuotes();
     }
