@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.*;
 import java.util.function.Function;
@@ -33,7 +34,7 @@ public class Fluxtests {
         Random random = new Random();
         if( random.nextInt()%2==0) {
             System.out.println("x");
-            throw new RuntimeException("xx");
+            throw new RuntimeException(x.toString());
         }
         return  x ;
     }
@@ -48,21 +49,16 @@ public class Fluxtests {
     //Hooks.onEachOperator(new OnEveryFunction());
         //   Hooks.onOperatorError((i,o)-> ));
 
-        Hooks.onNextDropped(o -> System.out.println("onNextDropped- - " + o));
+      //  Hooks.onOperatorError((i,o) -> {System.out.println(o); return i;});
+        Hooks.onOperatorError((i,o)-> {System.out.println(i.getLocalizedMessage()); return i;});
         List<Object> valuesDropped = new ArrayList<>();
         List<Throwable> errorsDropped = new ArrayList<>();
-        Hooks.onNextError(
-                (t, s) -> {
-                    System.out.println("onNextError   ---- " + t.getLocalizedMessage());
-                    errorsDropped.add(t);
-                    valuesDropped.add(s);
-                    return t;
-                });
+
 //        Operator error = Hooks.onNextDropped(new ErrorConsumer());
 
 
 
-       Flux.fromIterable(Arrays.asList(1,2,3,4,4,5)).log().subscriberContext(ctx->ctx.put("Key","Value"))
+       Flux.fromIterable(Arrays.asList(1,2,3,4,4,5)).publishOn(Schedulers.boundedElastic()).log().subscriberContext(ctx->ctx.put("Key","Value"))
                 .flatMap(x ->  Mono.fromCallable(() -> getCsvQuotes(x)).retry(1).onErrorReturn(16))
                         .flatMap(x->
                                 Flux.just(x.toString())).reduce((s1,s2)-> {return s1+s2;})
