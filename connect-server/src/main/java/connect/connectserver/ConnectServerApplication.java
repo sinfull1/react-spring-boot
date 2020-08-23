@@ -3,6 +3,7 @@ package connect.connectserver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +20,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 @SpringBootApplication
-@ComponentScan(basePackages = {"connect.controllers", "connect.service", "connect.security", "connect.utils"})
-
+@ComponentScan(basePackages = {"connect.controllers", "connect.service", "connect.security", "connect.utils", "connect.actuator"})
+@EnableCaching
 public class ConnectServerApplication {
 
     public static void main(String[] args) {
