@@ -20,7 +20,7 @@ public class UserService {
         data = new HashMap<>();
 
         //username:passwowrd -> user:user
-        data.put("user", new User("user", "cBrlgyL2GI2GINuLUUwgojITuIufFycpLG4490dhGtY=", true, Arrays.asList(Role.ROLE_USER)));
+        data.put("user", new User("user", "check1", true, Arrays.asList(Role.ROLE_USER)));
 
         //username:passwowrd -> admin:admin
         data.put("admin", new User("admin", "dQNjUIMorJb8Ubj2+wVGYp6eAeYkdekqAcnYp+aRq5w=", true, Arrays.asList(Role.ROLE_ADMIN)));
@@ -32,6 +32,11 @@ public class UserService {
         } else {
             return Mono.empty();
         }
+    }
+
+    public boolean addUser(RegisterRequest register) {
+        data.put ("user",new User(register.getUsername(),register.getPassword(),true,Arrays.asList(Role.ROLE_USER)));
+        return true;
     }
 
 }

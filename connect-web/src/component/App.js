@@ -9,7 +9,7 @@ import CSLContainer from "../component/home/CSLContainer";
 import LoginComponent from '../component/login/LoginComponent';
 import LogoutComponent from '../component/login/LogoutComponent';
 import RegisterComponent from '../component/login/RegisterComponent';
-event = new EventSource("http://localhost:8000/getPrices");
+event = new EventSource("http://localhost:8000/gpetPrices");
 
 const mapStateToProps = state => {
   return {
@@ -52,7 +52,6 @@ class App extends React.Component {
     return (
 
       <div className="App">
-
         <Switch>
              <Route exact path="/"> <CSLContainer events={event} /> </Route>
              <Route path="/login" component={LoginComponent} />

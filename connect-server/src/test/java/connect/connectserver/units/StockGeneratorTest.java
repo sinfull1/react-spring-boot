@@ -7,7 +7,7 @@ public class StockGeneratorTest {
 
     @Test
     public void testgenerator() {
-        StockGenerator stockGenerator = new StockGenerator();
-        System.out.println(stockGenerator.get());
+    //    StockGenerator stockGenerator = new StockGenerator(nseDataService);
+      //  System.out.println(stockGenerator.get());
     }
 }

@@ -7,13 +7,9 @@ public class StockSymbols {
 
     public static final  List<String> symList =
             Arrays.asList(
-                    "RELIANCE",
-                    "TCS",
-                    "INFOSYS",
-                    "HDFC",
-                    "LARSEN",
-                    "NESTLE",
-                    "SUNPHAMRA","ONGC","GAIL"
+                    "ASHOKLEY",
+                    "RELIANCE"
+
             );
 
 }

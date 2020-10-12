@@ -11,7 +11,6 @@ export const history = createBrowserHistory()
 
 const store = createStore(
     createRootReducer(history),
-    {"router":""},
   )
 ReactDOM.render((
   <Provider store={store}>
