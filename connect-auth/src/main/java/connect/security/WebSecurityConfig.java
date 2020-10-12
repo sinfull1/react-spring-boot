@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter;
 import reactor.core.publisher.Mono;
 
 @EnableWebFluxSecurity
@@ -21,7 +22,10 @@ public class WebSecurityConfig {
     private SecurityContextRepository securityContextRepository;
 
     @Bean
-    public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        http.headers().frameOptions().mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN);
+      // http.headers().contentSecurityPolicy("default-src")
+
         return http
                 .exceptionHandling()
                 .authenticationEntryPoint((swe, e) -> {
@@ -41,6 +45,7 @@ public class WebSecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers("/login").permitAll()
+                .pathMatchers("/register").permitAll()
                 .anyExchange().authenticated()
                 .and().build();
     }

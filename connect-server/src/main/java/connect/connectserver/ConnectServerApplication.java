@@ -2,26 +2,32 @@ package connect.connectserver;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.cache.CachesEndpointAutoConfiguration;
+import org.springframework.boot.actuate.cache.CachesEndpointWebExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
-@SpringBootApplication
-@ComponentScan(basePackages = {"connect.controllers", "connect.service", "connect.security", "connect.utils", "connect.actuator"})
+@SpringBootApplication(exclude = {CachesEndpointAutoConfiguration.class})
 @EnableCaching
+@ComponentScan(basePackages = {"connect"})
 public class ConnectServerApplication {
 
     public static void main(String[] args) {
@@ -55,5 +61,12 @@ public class ConnectServerApplication {
     }
     // Todo
     // Implement https://medium.com/@ard333/authentication-and-authorization-using-jwt-on-spring-webflux-29b81f813e78
+
+    @Bean
+
+    public Flux<String> getSubs()
+    {
+        return Flux.just("tty");
+    }
 
 }
