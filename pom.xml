@@ -18,7 +18,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>connect-web</module>
+        <module>connect-react</module>
         <module>connect-auth</module>
         <module>connect-server</module>
 
