@@ -23,18 +23,8 @@ public class HttpBinService {
                         .queryParam("val",val)
                         .path("/get")
                         .build())
+                .retrieve().bodyToMono(String.class);
 
-                .exchange().
-
-                        log().
-                        flatMap(response -> {
-                                    if (!response.statusCode().is4xxClientError()) {
-                                        return response.bodyToMono(String.class);
-                                    } else {
-                                        return Mono.just("");
-                                    }
-                                }
-                        );
     }
 
 
