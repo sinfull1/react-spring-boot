@@ -1,5 +1,6 @@
 package connect.security;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
 @Component
+@Setter
 public class PBKDF2Encoder implements PasswordEncoder {
 
     @Value("${springbootwebfluxjjwt.password.encoder.secret}")

@@ -3,17 +3,23 @@ package connect.connectserver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.cache.CachesEndpointAutoConfiguration;
-import org.springframework.boot.actuate.cache.CachesEndpointWebExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.ServerCodecConfigurer;
+
+import org.springframework.session.ReactiveMapSessionRepository;
+import org.springframework.session.ReactiveSessionRepository;
+import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
+import org.springframework.session.config.annotation.web.server.EnableSpringWebSession;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
@@ -22,11 +28,16 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
+import java.util.concurrent.ConcurrentHashMap;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 @SpringBootApplication(exclude = {CachesEndpointAutoConfiguration.class})
 @EnableCaching
+
+@EnableWebFlux
 @ComponentScan(basePackages = {"connect"})
 public class ConnectServerApplication {
 
@@ -35,7 +46,8 @@ public class ConnectServerApplication {
     }
 
     @Configuration
-    @EnableWebFlux
+
+
     public class CorsGlobalConfiguration implements WebFluxConfigurer {
 
         @Override
@@ -55,6 +67,7 @@ public class ConnectServerApplication {
         );
     }
 
+
     @Bean
     RouterFunction<ServerResponse> staticResourceRouter(){
         return RouterFunctions.resources("/**", new ClassPathResource("public/"));
@@ -68,5 +81,17 @@ public class ConnectServerApplication {
     {
         return Flux.just("tty");
     }
+    @Configuration
+    @EnableSpringWebSession
+    public class SessionConfig {
+
+        @Bean
+        public ReactiveSessionRepository reactiveSessionRepository() {
+            return new ReactiveMapSessionRepository(new ConcurrentHashMap<>());
+        }
+    }
+
+
+
 
 }

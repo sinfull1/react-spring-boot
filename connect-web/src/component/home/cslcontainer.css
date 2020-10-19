@@ -1,8 +1,0 @@
-.stock-group-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: start ;
-  align-items: left;
-  flex-wrap: wrap;
-  flex: 1;
-}
