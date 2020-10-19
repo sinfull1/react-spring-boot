@@ -28,7 +28,7 @@ public class TestCase {
                 .flatMap(response -> Mono.just(response.split("\\R")))
                 .block();
 
-        Arrays.asList(f).stream().forEach(System.out::println);
+      //  Arrays.asList(f).stream().forEach(System.out::println);
 
     }
     @Test
