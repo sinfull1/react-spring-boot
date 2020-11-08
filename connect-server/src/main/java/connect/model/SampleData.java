@@ -1,11 +1,13 @@
 package connect.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
 @Data
 @Getter
+
 public class SampleData {
 
     private Integer userId;

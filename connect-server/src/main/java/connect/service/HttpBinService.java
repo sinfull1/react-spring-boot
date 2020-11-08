@@ -1,30 +1,47 @@
 package connect.service;
 
-import connect.model.DerivateData;
-import connect.model.StockData;
-import org.springframework.context.annotation.Profile;
+import io.netty.channel.ChannelPipeline;
+import io.netty.handler.timeout.IdleStateHandler;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.time.Duration;
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.resources.ConnectionProvider;
+import reactor.netty.tcp.TcpClient;
 
 
 @Component
 public class HttpBinService {
 
-    private final WebClient nseWebClient = WebClient.create("https://httpbin.org/");
+    private final WebClient nseWebClient = createWebClient("https://httpbin.org/", 3);
 
 
     public Mono<String> getHttpbin(String id, String val) {
         return nseWebClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .queryParam("id",id)
-                        .queryParam("val",val)
+                        .queryParam("id", id)
+                        .queryParam("val", val)
                         .path("/get")
                         .build())
                 .retrieve().bodyToMono(String.class);
 
+    }
+
+    public static WebClient createWebClient(final String baseUrl, final int idleTimeoutSec) {
+        final TcpClient tcpClient = TcpClient.create(ConnectionProvider.fixed("fixed-pool"))
+                .doOnConnected(conn -> {
+                    final ChannelPipeline pipeline = conn.channel().pipeline();
+                    if (pipeline.context("idleStateHandler") == null) {
+                        pipeline.addLast("idleStateHandler", new IdleStateHandler(3, 3, idleTimeoutSec)
+                        );
+                    }
+                });
+
+        return WebClient.builder()
+                .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
+                .baseUrl(baseUrl)
+                .build();
     }
 
 

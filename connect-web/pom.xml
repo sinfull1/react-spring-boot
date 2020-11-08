@@ -73,7 +73,7 @@
                     <outputDirectory>../connect-server/target/classes/public</outputDirectory>
                     <resources>
                         <resource>
-                            <directory>dist</directory>
+                            <directory>build</directory>
                             <filtering>true</filtering>
                         </resource>
                     </resources>
