@@ -148,6 +148,20 @@
     color: white;
   }
 
+  .modal
+  {
+  
+  }
+  .placeClass3{
+    position: relative;
+    background-color: #807f7f;
+    border-radius: 2px;
+    box-sizing: border-box;
+    cursor: default;
+    outline: none;
+    transition: all 200ms ease;
+    color: white;
+  }
 
   .placeClass2{
     position: relative;

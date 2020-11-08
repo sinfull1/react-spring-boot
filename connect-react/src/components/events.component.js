@@ -8,6 +8,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { Redirect } from 'react-router-dom';
 import "./events.css";
 import Dropdown from 'react-dropdown';
+import ModalComponent from './modal.component';
 
 let id = Math.random().toString(36).substr(2, 9);
 
@@ -22,15 +23,18 @@ sseEvents.onerror = event => {
 }
 let savedFilter = [];
 let savedSelectedRows = [];
-let options = ['NoFilter'];
-let choices = [{ id: 0, value: "NoFilter" }];
+let options = [];
+let choices = [];
 let value = choices[0];
-const defaultOption = options[0];
 
-let optionsSel = ['NoSelection'];
-let choicesSel = [{ id: 0, value: "NoSelection" }];
-let valueSel = choicesSel[0];
+
+let optionsSel = [];
+let choicesSel = [];
+let valueSel = optionsSel[0];
 const defaultOptionSel = optionsSel[0];
+
+let optionsPreset = [];
+let choicesPreset = [{ id: 0, value: "NoFilter" }];
 
 
 export default function Events(props) {
@@ -59,7 +63,6 @@ export default function Events(props) {
       return !selectedRow.includes(row);
     });
     setRowData(newRowData);
-
   };
 
 
@@ -74,34 +77,43 @@ export default function Events(props) {
     setRowData(newRowData);
   };
 
-  function saveFilters() {
-    let filterCopy = JSON.parse(JSON.stringify(gridApi.getFilterModel()));
-    console.log(Object.keys(filterCopy).length);
-    if (Object.keys(filterCopy).length !== 0) {
-      savedFilter.push(filterCopy);
-      options.push("filter" + parseInt(options.length));
-      choices.push({
-        id: "filter" + parseInt(options.length) - 1,
-        value: filterCopy
-      });
+  function saveFilters(textdata) {
+    if (textdata.length != 0 && !options.includes(textdata)) {
+      let filterCopy = JSON.parse(JSON.stringify(gridApi.getFilterModel()));
+      if (Object.keys(filterCopy).length !== 0) {
+        savedFilter.push(filterCopy);
+        options.push(textdata);
+        choices.push({
+          id: textdata,
+          value: filterCopy
+        });
+      }
+      else{
+        alert("No Filter selected ");
+      }
     }
     else {
-      alert("No filter created");
+      alert("Filter creation failed check if name is already used or filter is created in grid");
     }
   }
 
-  function saveSelection() {
+  function saveSelection(textdata) {
+    if (textdata.length != 0 && !options.includes(textdata)) {
     let rows = JSON.parse(JSON.stringify(gridApi.getSelectedRows()));
     if (rows.length !== 0) {
       savedSelectedRows.push(rows);
-      optionsSel.push("selection" + parseInt(optionsSel.length));
+      optionsSel.push(textdata);
       choicesSel.push({
-        id: "selection" + parseInt(optionsSel.length) - 1,
+        id: textdata,
         value: rows
       });
     }
+    else{
+      alert("Nothing selected");
+    }
+  }
     else {
-      alert("No selection created");
+      alert("Selection not saved, please select something");
     }
   }
 
@@ -110,10 +122,25 @@ export default function Events(props) {
       if (data.label == options[key]) {
         gridApi.setFilterModel(value.value);
         let x = document.getElementsByClassName("Dropdown-placeholder placeClass is-selected").item(0);
-        x.innerHTML = data.label;
+        if (x != undefined) {
+          x.innerHTML = data.label;
+        }
       }
     })
   }
+  async function applyPresetFilter(data) {
+    choices.forEach(function (value, key) {
+      if (data.label == options[key]) {
+        gridApi.setFilterModel(value.value);
+        let x = document.getElementsByClassName("Dropdown-placeholder placeClass3 is-selected").item(0);
+        if (x != undefined) {
+          x.innerHTML = data.label;
+        }
+      }
+    })
+  }
+
+
 
   async function applySelection(data) {
     gridApi.deselectAll()
@@ -121,36 +148,35 @@ export default function Events(props) {
       if (data.label == optionsSel[key]) {
         gridApi.forEachNodeAfterFilterAndSort(function (rowNode, index) {
           {
-            console.log(data,value);
-            if(value.value == "NoSelection")
-            {
-              return;
-            }
             if (Object.keys(value.value).length !== 0)
-                value.value.map(row => {
+              value.value.map(row => {
                 if (row.id == rowNode.id) {
-                  
+
                   rowNode.setSelected(true);
                 }
               });
           }
         }
-       );
+        );
       }
     });
   }
 
   async function removeAllFilters() {
     gridApi.setFilterModel({});
-    value = choices[0];
     let x = document.getElementsByClassName("Dropdown-placeholder placeClass is-selected").item(0);
-    x.innerHTML = "NoFilter";
+    if (x != undefined) {
+      x.innerHTML = "Saved Filters";
+    }
   }
 
   async function removeAllSelection() {
     gridApi.deselectAll();
     let x = document.getElementsByClassName("Dropdown-placeholder placeClass2 is-selected").item(0);
-    x.innerHTML = "NoSelection";
+    if (x != undefined) {
+      x.innerHTML = "Saved Selctions";
+    }
+
   }
 
   function onGridReady(params) {
@@ -162,45 +188,72 @@ export default function Events(props) {
     gridApi.setQuickFilter(document.getElementById('quickFilter').value);
   };
 
+
+  const externalFilterChanged = (newValue) => {
+    //  ageType = newValue;
+    //gridApi.onFilterChanged();
+  };
+
+  const isExternalFilterPresent = () => {
+    return true// ageType !== 'everyone';
+  };
+
+  const doesExternalFilterPass = (node) => {
+    switch (id) {
+      case 'below25':
+        return true
+      default:
+        return true;
+    }
+  };
+
+
+
   return (
     <div style={{ width: "1000px", height: "600px" }}>
       <button className="button" onClick={() => addRowData()}>Append row</button>
       <button className="button" onClick={() => removeRowData()}>
-        Delete selected row
-        </button>
-      <button className="button" onClick={() => updateOddRowData()}>Update odd rows</button>
- 
-      <button className="button" onClick={() => saveFilters()}>
-        Save Current Filter
-        </button>
-
-      <button className="button" onClick={() => saveSelection()}>
-        Save Selection
-        </button>
-        <button className="button" onClick={() => removeAllSelection()}>
-        Remove Selection
+        Delete rows
         </button>
 
 
+
+
+      <ModalComponent  submitfunc={saveSelection} titleName ="Save Selection" />
+      <button className="button" onClick={() => removeAllSelection()}>
+        Clear Selection
+        </button>
+
+      <button className="button" onClick={() => removeAllFilters()}>
+        Remove all filters
+        </button>
+      <ModalComponent  submitfunc={saveFilters} titleName ="Save Filter" />
       <Dropdown className='dropdown'
         controlClassName='controlClass'
         placeholderClassName='placeClass'
         onChange={applyFilter}
         options={options}
-        value={defaultOption}
-        placeholder="Select an option" />
+
+        placeholder="Saved Filters" />
 
       <Dropdown className='dropdown'
         controlClassName='controlClass'
         placeholderClassName='placeClass2'
         onChange={applySelection}
         options={optionsSel}
-        value={defaultOptionSel}
-        placeholder="Save selection" />
 
-      <button className="button" onClick={() => removeAllFilters()}>
-        Remove all filters
-        </button>
+        placeholder="Saved Selections" />
+
+
+      <Dropdown className='dropdown'
+        controlClassName='controlClass'
+        placeholderClassName='placeClass3'
+        onChange={applyPresetFilter}
+        options={optionsPreset}
+        placeholder="Preset Filters" />
+
+
+
       <div className="quickFilterDiv">
         Quick Filter
         <input
