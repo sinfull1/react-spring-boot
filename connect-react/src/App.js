@@ -55,7 +55,7 @@ class App extends Component {
 
   render() {
     const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
-   console.log(currentUser);
+
     return (
       <Router history={history}>
         <div>
