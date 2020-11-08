@@ -13,6 +13,7 @@
     <artifactId>connect-auth</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>connect-auth</name>
+
     <description>Demo project for Spring JWt Auth</description>
 
     <modelVersion>4.0.0</modelVersion>
@@ -63,8 +64,19 @@
        </dependency>
 
    </dependencies>
+
     <build>
+
+            <finalName>${artifactId}</finalName>
     <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
     <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

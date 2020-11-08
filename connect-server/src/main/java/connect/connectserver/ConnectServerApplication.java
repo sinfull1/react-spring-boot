@@ -10,16 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.http.MediaType;
-
-import org.springframework.session.ReactiveMapSessionRepository;
-import org.springframework.session.ReactiveSessionRepository;
-import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
-import org.springframework.session.config.annotation.web.server.EnableSpringWebSession;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.reactive.config.CorsRegistry;
 import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
@@ -28,12 +19,10 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 
-import java.time.Duration;
-import java.util.concurrent.ConcurrentHashMap;
-
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+
 @SpringBootApplication(exclude = {CachesEndpointAutoConfiguration.class})
 @EnableCaching
 
@@ -69,7 +58,7 @@ public class ConnectServerApplication {
 
 
     @Bean
-    RouterFunction<ServerResponse> staticResourceRouter(){
+    RouterFunction<ServerResponse> staticResourceRouter() {
         return RouterFunctions.resources("/**", new ClassPathResource("public/"));
     }
     // Todo
@@ -77,11 +66,10 @@ public class ConnectServerApplication {
 
     @Bean
 
-    public Flux<String> getSubs()
-    {
+    public Flux<String> getSubs() {
         return Flux.just("tty");
     }
-    @Configuration
+   /* @Configuration
     @EnableSpringWebSession
     public class SessionConfig {
 
@@ -89,9 +77,7 @@ public class ConnectServerApplication {
         public ReactiveSessionRepository reactiveSessionRepository() {
             return new ReactiveMapSessionRepository(new ConcurrentHashMap<>());
         }
-    }
-
-
+    }*/
 
 
 }

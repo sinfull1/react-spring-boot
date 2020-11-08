@@ -13,9 +13,9 @@ public class GenericEventPublisher<T> {
     ApplicationEventPublisher applicationEventPublisher;
 
 
-    public void publishGenericEvent(String eventType, WebSession session) {
+    public void publishGenericEvent(String subsId, String event) {
         System.out.println("Publishing custom event. ");
-        GenericEvent genericEvent = new GenericEvent(eventType, session);
+        GenericEvent genericEvent = new GenericEvent(subsId, event);
         applicationEventPublisher.publishEvent(genericEvent);
     }
 

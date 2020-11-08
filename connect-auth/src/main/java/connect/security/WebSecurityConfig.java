@@ -23,10 +23,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        http.headers().frameOptions().mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN);
+        http.headers().frameOptions().mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN)
+        ;
       // http.headers().contentSecurityPolicy("default-src")
 
         return http
+
                 .exceptionHandling()
                 .authenticationEntryPoint((swe, e) -> {
                     return Mono.fromRunnable(() -> {

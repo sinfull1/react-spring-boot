@@ -27,6 +27,13 @@ class AuthService {
       password,
     });
   }
+  isLoggedIn() {
+   if( localStorage.getItem("user")) return true
+   else return false;
+
+  }
+
+
 }
 
 export default new AuthService();

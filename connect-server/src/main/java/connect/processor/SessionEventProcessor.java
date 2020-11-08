@@ -31,15 +31,8 @@ public class SessionEventProcessor {
 
     public FluxProcessor<Object,Object>  getProcessor(String userId) {
         map.putIfAbsent(userId, DirectProcessor.create().serialize());
-        System.out.println(map.size());
         return map.get(userId);
     }
-
-    public void onNext(Object alert){
-        logger.info("onNext [{}]", alert);
-        map.entrySet().stream().map(Map.Entry::getValue).findFirst().get().onNext(alert);
-    }
-
 
     public void cleanProcessor(FluxProcessor<Object, Object > s) {
         map.entrySet()

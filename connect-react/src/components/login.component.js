@@ -58,7 +58,7 @@ class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       dispatch(login(this.state.username, this.state.password))
         .then(() => {
-          history.push("/profile");
+          history.push("/eventGrid");
           window.location.reload();
         })
         .catch(() => {
@@ -77,13 +77,15 @@ class Login extends Component {
     const { isLoggedIn, message } = this.props;
 
     if (isLoggedIn) {
-      return <Redirect to="/event" />;
+      return <Redirect to="/eventGrid" />;
     }
 
     return (
       <div className="col-md-12">
         <div className="card card-container">
-         
+          <img
+            className="profile-img-card"
+          />
 
           <Form
             onSubmit={this.handleLogin}

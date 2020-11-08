@@ -22,7 +22,8 @@ public class UserService {
         //username:passwowrd -> user:user
         data.put("user", new User("user", "check1", true, Arrays.asList(Role.ROLE_USER)));
 
-        //username:passwowrd -> admin:admin
+        data.put("user2", new User("user2", "check1", true, Arrays.asList(Role.ROLE_USER)));
+//username:passwowrd -> admin:admin
         data.put("admin", new User("admin", "dQNjUIMorJb8Ubj2+wVGYp6eAeYkdekqAcnYp+aRq5w=", true, Arrays.asList(Role.ROLE_ADMIN)));
     }
 

@@ -24,7 +24,7 @@ public class NseDataService {
 
                         .exchange().log().
                         flatMap(response -> {
-                                    if (!response.statusCode().is4xxClientError()) {
+                                    if (response.statusCode().is2xxSuccessful()) {
                                         return response.bodyToMono(StockData.class);
                                     } else {
                                         return Mono.just(new StockData());
@@ -43,9 +43,10 @@ public class NseDataService {
 
                         .exchange().log().
                         flatMap(response -> {
-                                    if (!response.statusCode().is4xxClientError()) {
+                                    if (response.statusCode().is2xxSuccessful()) {
                                         return response.bodyToMono(DerivateData.class);
                                     } else {
+                                        response.bodyToMono(Void.class).then(Mono.empty());
                                         return Mono.just(new DerivateData());
                                     }
                                 }
