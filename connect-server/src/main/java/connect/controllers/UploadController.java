@@ -1,43 +1,58 @@
 package connect.controllers;
 
 
-import connect.service.StorageService;
+import connect.processor.FileEventProcessor;
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferFactory;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxProcessor;
+import reactor.core.publisher.Mono;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition", "Content-Type"})
 @RestController
+@NoArgsConstructor
 public class UploadController {
+
 
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
-    private final StorageService storageService;
+    String basePath = "C:\\Users\\micro\\IdeaProjects\\react-spring-boot\\connect-server\\src\\main\\resources\\";
 
-    public UploadController(StorageService storageService) {
-        this.storageService = storageService;
+    @Autowired
+    FileEventProcessor fileEventProcessor;
+
+    @GetMapping(path = "/test")
+    public Mono<ClientResponse> test(@RequestParam ("fileName") String fileName)  {
+        Path p = Paths.get(new File(basePath+fileName).getAbsolutePath());
+        DataBufferFactory dbf = new DefaultDataBufferFactory();
+        Flux<DataBuffer> flux= DataBufferUtils.read(p, dbf, 256*256);
+        return Mono.just(ClientResponse.create(HttpStatus.OK).body(flux).build());
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile[] file) throws IOException {
-
-        logger.info("Recieved request to upload files. Total of " + file.length);
-        if (file.length == 0) {
-            return ResponseEntity.badRequest().build();
-        }
-        for (int i = 0; i < file.length; i++) {
-            storageService.store(file[i]);
-        }
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping(path = "/up")
-    public ResponseEntity yesy() {
-        return ResponseEntity.ok().build();
+    @GetMapping(path = "/reader", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Object> reader()  {
+        FluxProcessor<Object,Object> s = fileEventProcessor.getProcessor( UUID.randomUUID().toString());
+        return s.log().doOnCancel(()->{
+            fileEventProcessor.cleanProcessor(s);});
     }
 
 }

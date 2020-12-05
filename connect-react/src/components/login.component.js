@@ -153,7 +153,7 @@ function mapStateToProps(state) {
   const { isLoggedIn } = state.auth;
   const { message } = state.message;
   return {
-    isLoggedIn,
+     isLoggedIn,
     message
   };
 }

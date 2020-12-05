@@ -1,0 +1,134 @@
+{
+  "info": {
+    "symbol": "ASHOKLEY",
+    "companyName": "Ashok Leyland Limited",
+    "industry": "AUTOMOBILES - 4 WHEELERS",
+    "activeSeries": [
+      "EQ"
+    ],
+    "debtSeries": [],
+    "tempSuspendedSeries": [],
+    "isFNOSec": true,
+    "isCASec": false,
+    "isSLBSec": true,
+    "isDebtSec": false,
+    "isSuspended": false,
+    "isETFSec": false,
+    "isDelisted": false,
+    "isin": "INE208A01029",
+    "isTop10": false,
+    "identifier": "ASHOKLEYEQN"
+  },
+  "metadata": {
+    "series": "EQ",
+    "symbol": "ASHOKLEY",
+    "isin": "INE208A01029",
+    "status": "Listed",
+    "listingDate": "25-May-1995",
+    "industry": "COMMERCIAL VEHICLES",
+    "lastUpdateTime": "03-Sep-2020 16:00:00",
+    "pdSectorPe": 37.91,
+    "pdSymbolPe": 0,
+    "pdSectorInd": "NIFTY 500                                         "
+  },
+  "securityInfo": {
+    "boardStatus": "Main",
+    "tradingStatus": "Active",
+    "tradingSegment": "Normal Market",
+    "sessionNo": "-",
+    "slb": "Yes",
+    "classOfShare": "Equity",
+    "derivatives": "Yes",
+    "surveillance": "-",
+    "faceValue": 1,
+    "issuedCap": 2935527276
+  },
+  "priceInfo": {
+    "lastPrice": 69.3,
+    "change": 0.8499999999999943,
+    "pChange": 1.2417823228633955,
+    "previousClose": 68.45,
+    "open": 69.25,
+    "close": 69.5,
+    "vwap": 69.52,
+    "lowerCP": "61.65",
+    "upperCP": "75.25",
+    "pPriceBand": "No Band",
+    "basePrice": 68.45,
+    "intraDayHighLow": {
+      "min": 68.75,
+      "max": 70.5,
+      "value": 69.3
+    },
+    "weekHighLow": {
+      "min": 33.7,
+      "minDate": "25-Mar-2020",
+      "max": 87.5,
+      "maxDate": "24-Jan-2020",
+      "value": 69.3
+    }
+  },
+  "preOpenMarket": {
+    "preopen": [
+      {
+        "price": 61.65,
+        "buyQty": 0,
+        "sellQty": 1732
+      },
+      {
+        "price": 67,
+        "buyQty": 0,
+        "sellQty": 374
+      },
+      {
+        "price": 68,
+        "buyQty": 0,
+        "sellQty": 5200
+      },
+      {
+        "price": 68.1,
+        "buyQty": 0,
+        "sellQty": 55
+      },
+      {
+        "price": 69.25,
+        "buyQty": 0,
+        "sellQty": 0,
+        "iep": true
+      },
+      {
+        "price": 71.5,
+        "buyQty": 100,
+        "sellQty": 0
+      },
+      {
+        "price": 71.9,
+        "buyQty": 24,
+        "sellQty": 0
+      },
+      {
+        "price": 72,
+        "buyQty": 25,
+        "sellQty": 0
+      },
+      {
+        "price": 75,
+        "buyQty": 26,
+        "sellQty": 0
+      }
+    ],
+    "ato": {
+      "buy": 16539,
+      "sell": 4010
+    },
+    "IEP": 69.25,
+    "totalTradedVolume": 55463,
+    "finalPrice": 69.25,
+    "finalQuantity": 55463,
+    "lastUpdateTime": "03-Sep-2020 09:08:02",
+    "totalBuyQuantity": 255927,
+    "totalSellQuantity": 436352,
+    "atoBuyQty": 16539,
+    "atoSellQty": 4010
+  }
+}

@@ -28,9 +28,9 @@ public class QuotesController {
         this.sectorGeneratorService = sectorGeneratorService;
     }
 
-    @GetMapping(value = "/initPrices")
-    Flux<List<StockData>> initialQuote() {
-        return null;
+    @GetMapping(value = "/api/test/all")
+    String initialQuote() {
+        return "home";
     }
 
 

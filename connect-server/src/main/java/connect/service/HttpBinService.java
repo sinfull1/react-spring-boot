@@ -29,11 +29,11 @@ public class HttpBinService {
     }
 
     public static WebClient createWebClient(final String baseUrl, final int idleTimeoutSec) {
-        final TcpClient tcpClient = TcpClient.create(ConnectionProvider.fixed("fixed-pool"))
+        final TcpClient tcpClient = TcpClient.create(ConnectionProvider.create("fixed-pool"))
                 .doOnConnected(conn -> {
                     final ChannelPipeline pipeline = conn.channel().pipeline();
                     if (pipeline.context("idleStateHandler") == null) {
-                        pipeline.addLast("idleStateHandler", new IdleStateHandler(3, 3, idleTimeoutSec)
+                        pipeline.addLast("idleStateHandler", new IdleStateHandler(300, 300, 300)
                         );
                     }
                 });

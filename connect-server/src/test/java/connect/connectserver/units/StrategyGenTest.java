@@ -1,7 +1,8 @@
 package connect.connectserver.units;
 
 import connect.dao.Strategy;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 public class StrategyGenTest {
 
