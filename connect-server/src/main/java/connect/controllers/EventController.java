@@ -37,31 +37,17 @@ public class EventController {
     public void getEvent(@RequestParam("subsId") String subsId,
                          @RequestParam("event") String event
                         ){
-
         genericEventPublisher.publishGenericEvent(subsId,event);
     }
 
-    @GetMapping(path = "/finiteFlux", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Flux<SampleData>> finiteFlux() {
-        return ResponseEntity.ok().body(Flux.range(0, 100)
-                .map(tick -> new SampleData()));
-    }
     @GetMapping(value = "/getHttp", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Object> getHttp(@RequestParam("subsId") String subsId) {
-
         System.out.println("socket subscription id session:"+ subsId);
         FluxProcessor<Object,Object> s = eventProcessor.getProcessor(subsId);
         return s.log()
-              //  .map(e-> ResponseEntity.ok().body(e))
                 .doOnCancel(()->{
-
-                    eventProcessor.cleanProcessor(s);});
+                 eventProcessor.cleanProcessor(s);});
     }
 
-    @GetMapping(value = "/getTime", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Long> getTime(@RequestParam("subsId") String subsId) {
-
-         return Flux.just(new Date().getTime());
-    }
 
 }

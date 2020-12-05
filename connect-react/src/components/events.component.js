@@ -14,12 +14,12 @@ let id = Math.random().toString(36).substr(2, 9);
 
 
 
-let sseEvents = new EventSource("https://connect-server-new.cfapps.io//getHttp?subsId=" + id);
+let sseEvents = new EventSource("https://sample-grid.cfapps.io/getHttp?subsId=" + id);
 sseEvents.onopen = event => console.log('open', event);
 sseEvents.onerror = event => {
   console.log("Server side shut");
   sseEvents.close();
-  sseEvents = new EventSource("https://connect-server-new.cfapps.io/getHttp?subsId=" + id);
+  sseEvents = new EventSource("https://sample-grid.cfapps.io/getHttp?subsId=" + id);
 }
 let savedFilter = [];
 let savedSelectedRows = [];
@@ -54,7 +54,7 @@ export default function Events(props) {
   };
 
   function addRowData(newData) {
-    fetch('https://connect-server-new.cfapps.io/event?subsId=' + id + "&event=sample");
+    fetch('https://sample-grid.cfapps.io/event?subsId=' + id + "&event=sample");
   };
 
   function removeRowData() {
