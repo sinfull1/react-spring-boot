@@ -1,6 +1,7 @@
 package connect.controllers;
 
 
+import connect.listneter.FileEventListener;
 import connect.processor.FileEventProcessor;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -29,7 +30,6 @@ import java.util.UUID;
 
 @CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition", "Content-Type"})
 @RestController
-@NoArgsConstructor
 public class UploadController {
 
 
@@ -37,22 +37,26 @@ public class UploadController {
 
     String basePath = "C:\\Users\\micro\\IdeaProjects\\react-spring-boot\\connect-server\\src\\main\\resources\\";
 
+
+    private final FileEventProcessor fileEventProcessor;
+
     @Autowired
-    FileEventProcessor fileEventProcessor;
+    public UploadController(FileEventProcessor fileEventProcessor) {
+        this.fileEventProcessor=fileEventProcessor;
+    }
 
     @GetMapping(path = "/test")
-    public Mono<ClientResponse> test(@RequestParam ("fileName") String fileName)  {
+    public Flux<DataBuffer> test(@RequestParam ("fileName") String fileName)  {
         Path p = Paths.get(new File(basePath+fileName).getAbsolutePath());
         DataBufferFactory dbf = new DefaultDataBufferFactory();
         Flux<DataBuffer> flux= DataBufferUtils.read(p, dbf, 256*256);
-        return Mono.just(ClientResponse.create(HttpStatus.OK).body(flux).build());
+        return flux;
     }
 
     @GetMapping(path = "/reader", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Object> reader()  {
-        FluxProcessor<Object,Object> s = fileEventProcessor.getProcessor( UUID.randomUUID().toString());
-        return s.log().doOnCancel(()->{
-            fileEventProcessor.cleanProcessor(s);});
+        return  fileEventProcessor.getFlux();
+
     }
 
 }
