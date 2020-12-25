@@ -13,6 +13,8 @@ public class SampleDataService {
 
 
     public Mono<SampleData[]> getSampleData() {
+
+
         return nseWebClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/posts")

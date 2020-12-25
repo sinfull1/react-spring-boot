@@ -46,10 +46,6 @@ public class Fluxtests {
     public void test() {
 
 
-    //Hooks.onEachOperator(new OnEveryFunction());
-        //   Hooks.onOperatorError((i,o)-> ));
-
-      //  Hooks.onOperatorError((i,o) -> {System.out.println(o); return i;});
         Hooks.onOperatorError((i,o)-> {System.out.println(i.getLocalizedMessage()); return i;});
         List<Object> valuesDropped = new ArrayList<>();
         List<Throwable> errorsDropped = new ArrayList<>();
@@ -62,10 +58,26 @@ public class Fluxtests {
                 .flatMap(x ->  Mono.fromCallable(() -> getCsvQuotes(x)).retry(1).onErrorReturn(16))
                         .flatMap(x->
                                 Flux.just(x.toString())).reduce((s1,s2)-> {return s1+s2;})
-
-
-
                 .subscribe(x-> System.out.println(Objects.requireNonNull(x.toString())));
+
+    }
+
+    @Test
+    public void tes22t()
+    {
+        Flux<Integer> jj = Flux.just(1,2,3,4);
+        Flux<String> kk = jj.flatMap(x-> Mono.just(String.valueOf(x)));
+        Flux<String> kk1 = jj.flatMap(x-> Mono.just(String.valueOf(x)));
+
+        kk.subscribe(System.out::println);
+        kk1.subscribe(System.out::println);
+
+
+
+
+
+
+
 
     }
 

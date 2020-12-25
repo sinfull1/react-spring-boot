@@ -1,134 +1,182 @@
-{
-  "info": {
-    "symbol": "SAMPLESTOCK",
-    "companyName": "SAMPLE STOCK",
-    "industry": "AUTOMOBILES - 4 WHEELERS",
-    "activeSeries": [
-      "EQ"
+[
+  {
+    "_id": "5fcbbd3ad3725ba71e19ed89",
+    "index": 0,
+    "guid": "fc412984-ce86-41e0-8f5c-214dd449a6df",
+    "isActive": false,
+    "balance": "$2,113.70",
+    "picture": "http://placehold.it/32x32",
+    "age": 30,
+    "eyeColor": "blue",
+    "name": "Daugherty Copeland",
+    "gender": "male",
+    "company": "ISOPOP",
+    "email": "daughertycopeland@isopop.com",
+    "phone": "+1 (990) 513-3030",
+    "address": "107 Monitor Street, Fivepointville, American Samoa, 7896",
+    "about": "In est ipsum cupidatat eu nostrud aliqua consectetur nostrud excepteur. Sit ipsum ipsum ullamco elit in velit ea in sint nostrud nostrud laborum. Irure ad aute ut ut. Dolore in non proident reprehenderit magna aliqua cillum irure cillum Lorem proident laboris. Aliqua cupidatat sint proident mollit commodo Lorem dolore enim labore occaecat elit officia sunt pariatur. Deserunt nulla tempor adipisicing in ipsum elit velit magna.\r\n",
+    "registered": "2014-07-11T10:09:05 -06:-30",
+    "latitude": -17.895875,
+    "longitude": 28.118129,
+    "tags": [
+      "excepteur",
+      "ea",
+      "officia",
+      "aute",
+      "magna",
+      "ex",
+      "sit"
     ],
-    "debtSeries": [],
-    "tempSuspendedSeries": [],
-    "isFNOSec": true,
-    "isCASec": false,
-    "isSLBSec": true,
-    "isDebtSec": false,
-    "isSuspended": false,
-    "isETFSec": false,
-    "isDelisted": false,
-    "isin": "INE208A01029",
-    "isTop10": false,
-    "identifier": "ASHOKLEYEQN"
-  },
-  "metadata": {
-    "series": "EQ",
-    "symbol": "ASHOKLEY",
-    "isin": "INE208A01029",
-    "status": "Listed",
-    "listingDate": "25-May-1995",
-    "industry": "COMMERCIAL VEHICLES",
-    "lastUpdateTime": "03-Sep-2020 16:00:00",
-    "pdSectorPe": 37.91,
-    "pdSymbolPe": 0,
-    "pdSectorInd": "NIFTY 500                                         "
-  },
-  "securityInfo": {
-    "boardStatus": "Main",
-    "tradingStatus": "Active",
-    "tradingSegment": "Normal Market",
-    "sessionNo": "-",
-    "slb": "Yes",
-    "classOfShare": "Equity",
-    "derivatives": "Yes",
-    "surveillance": "-",
-    "faceValue": 1,
-    "issuedCap": 2935527276
-  },
-  "priceInfo": {
-    "lastPrice": 69.3,
-    "change": 0.8499999999999943,
-    "pChange": 1.2417823228633955,
-    "previousClose": 68.45,
-    "open": 69.25,
-    "close": 69.5,
-    "vwap": 69.52,
-    "lowerCP": "61.65",
-    "upperCP": "75.25",
-    "pPriceBand": "No Band",
-    "basePrice": 68.45,
-    "intraDayHighLow": {
-      "min": 68.75,
-      "max": 70.5,
-      "value": 69.3
-    },
-    "weekHighLow": {
-      "min": 33.7,
-      "minDate": "25-Mar-2020",
-      "max": 87.5,
-      "maxDate": "24-Jan-2020",
-      "value": 69.3
-    }
-  },
-  "preOpenMarket": {
-    "preopen": [
+    "friends": [
       {
-        "price": 61.65,
-        "buyQty": 0,
-        "sellQty": 1732
+        "id": 0,
+        "name": "Dianne Diaz"
       },
       {
-        "price": 67,
-        "buyQty": 0,
-        "sellQty": 374
+        "id": 1,
+        "name": "Anita Nieves"
       },
       {
-        "price": 68,
-        "buyQty": 0,
-        "sellQty": 5200
-      },
-      {
-        "price": 68.1,
-        "buyQty": 0,
-        "sellQty": 55
-      },
-      {
-        "price": 69.25,
-        "buyQty": 0,
-        "sellQty": 0,
-        "iep": true
-      },
-      {
-        "price": 71.5,
-        "buyQty": 100,
-        "sellQty": 0
-      },
-      {
-        "price": 71.9,
-        "buyQty": 24,
-        "sellQty": 0
-      },
-      {
-        "price": 72,
-        "buyQty": 25,
-        "sellQty": 0
-      },
-      {
-        "price": 75,
-        "buyQty": 26,
-        "sellQty": 0
+        "id": 2,
+        "name": "Kathy Rojas"
       }
     ],
-    "ato": {
-      "buy": 16539,
-      "sell": 4010
-    },
-    "IEP": 69.25,
-    "totalTradedVolume": 55463,
-    "finalPrice": 69.25,
-    "finalQuantity": 55463,
-    "lastUpdateTime": "03-Sep-2020 09:08:02",
-    "totalBuyQuantity": 255927,
-    "totalSellQuantity": 436352,
-    "atoBuyQty": 16539,
-    "atoSellQty": 4010
+    "greeting": "Hello, Daugherty Copeland! You have 3 unread messages.",
+    "favoriteFruit": "apple"
+  },
+  {
+    "_id": "5fcbbd3aa521ea2d4f98d90d",
+    "index": 1,
+    "guid": "2b6154ca-a20f-454f-ae83-969c9d9cbc9a",
+    "isActive": false,
+    "balance": "$2,191.39",
+    "picture": "http://placehold.it/32x32",
+    "age": 29,
+    "eyeColor": "green",
+    "name": "Sanchez Herring",
+    "gender": "male",
+    "company": "EYERIS",
+    "email": "sanchezherring@eyeris.com",
+    "phone": "+1 (802) 453-2354",
+    "address": "715 Fillmore Place, Lindcove, Connecticut, 7269",
+    "about": "Qui consectetur commodo officia elit aliqua laborum veniam ullamco velit consectetur adipisicing et. Non esse eu est amet anim tempor sunt ut exercitation ullamco. Eiusmod veniam ut officia est aliqua dolore ex aute cupidatat sunt.\r\n",
+    "registered": "2018-05-13T05:45:26 -06:-30",
+    "latitude": -1.578143,
+    "longitude": 91.64598,
+    "tags": [
+      "mollit",
+      "dolore",
+      "consectetur",
+      "do",
+      "et",
+      "duis",
+      "id"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Christi Webster"
+      },
+      {
+        "id": 1,
+        "name": "Maribel Shannon"
+      },
+      {
+        "id": 2,
+        "name": "Lorna Caldwell"
+      }
+    ],
+    "greeting": "Hello, Sanchez Herring! You have 4 unread messages.",
+    "favoriteFruit": "strawberry"
+  },
+  {
+    "_id": "5fcbbd3aa7e41f3bc1b07b97",
+    "index": 2,
+    "guid": "db37c75e-373e-4c15-be69-4451a3ae6ad8",
+    "isActive": true,
+    "balance": "$3,694.41",
+    "picture": "http://placehold.it/32x32",
+    "age": 24,
+    "eyeColor": "blue",
+    "name": "Oneal Rodriquez",
+    "gender": "male",
+    "company": "TROLLERY",
+    "email": "onealrodriquez@trollery.com",
+    "phone": "+1 (990) 571-2061",
+    "address": "361 Prospect Place, Onton, Arizona, 4683",
+    "about": "Sit occaecat aute irure nisi mollit dolore esse culpa aliqua exercitation sint. Quis ea deserunt consectetur in mollit ea est nostrud magna. Enim dolor pariatur officia reprehenderit. Amet anim pariatur sint ex incididunt anim laborum id irure. Ex nostrud occaecat esse ex cillum ipsum magna veniam.\r\n",
+    "registered": "2014-07-14T11:01:13 -06:-30",
+    "latitude": 59.309569,
+    "longitude": -15.436191,
+    "tags": [
+      "sunt",
+      "nostrud",
+      "veniam",
+      "commodo",
+      "magna",
+      "consectetur",
+      "et"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Gina Dickson"
+      },
+      {
+        "id": 1,
+        "name": "Anna Koch"
+      },
+      {
+        "id": 2,
+        "name": "Brenda Clark"
+      }
+    ],
+    "greeting": "Hello, Oneal Rodriquez! You have 3 unread messages.",
+    "favoriteFruit": "apple"
+  },
+  {
+    "_id": "5fcbbd3aa3d3be758f787045",
+    "index": 3,
+    "guid": "3fe31132-14bf-40f5-bbf3-31f71ceb9b93",
+    "isActive": true,
+    "balance": "$1,701.59",
+    "picture": "http://placehold.it/32x32",
+    "age": 24,
+    "eyeColor": "green",
+    "name": "Jeanne Bryan",
+    "gender": "female",
+    "company": "PRINTSPAN",
+    "email": "jeannebryan@printspan.com",
+    "phone": "+1 (988) 565-2774",
+    "address": "704 Rapelye Street, Boling, South Carolina, 3526",
+    "about": "Culpa culpa consectetur consectetur dolor consequat aliquip velit non ipsum occaecat amet anim ea. Aute veniam Lorem voluptate sint et nulla fugiat nisi ullamco consectetur ut exercitation officia. Cupidatat commodo id commodo amet consequat reprehenderit deserunt reprehenderit occaecat reprehenderit et aliquip laboris incididunt. Enim ex adipisicing eiusmod fugiat adipisicing esse id fugiat. Officia tempor consequat cupidatat minim consequat officia nisi nulla sunt quis. Magna aute enim nulla officia nostrud aute voluptate dolore. Magna aliquip minim id et amet consectetur.\r\n",
+    "registered": "2019-05-21T08:02:22 -06:-30",
+    "latitude": -47.195962,
+    "longitude": -112.536658,
+    "tags": [
+      "elit",
+      "officia",
+      "fugiat",
+      "labore",
+      "commodo",
+      "amet",
+      "eu"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Compton Irwin"
+      },
+      {
+        "id": 1,
+        "name": "Melba Coleman"
+      },
+      {
+        "id": 2,
+        "name": "Schneider Mendez"
+      }
+    ],
+    "greeting": "Hello, Jeanne Bryan! You have 7 unread messages.",
+    "favoriteFruit": "banana"
   }
-}
+  ]

@@ -23,7 +23,7 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
         }
     }
 
-    Path path = Paths.get("C:\\Users\\micro\\IdeaProjects\\react-spring-boot\\connect-server\\src\\main\\resources\\");
+    Path path = Paths.get("tmp");
 
     @Autowired
     FileEventPublisher fileEventPublisher;
@@ -32,15 +32,19 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
     @SneakyThrows
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent readyEvent) {
-        path.register(watchService,StandardWatchEventKinds.ENTRY_CREATE);
-        WatchKey key;
-        while ((key = watchService.take()) != null) {
-            for (WatchEvent<?> event : key.pollEvents()) {
-
-
-               fileEventPublisher.publishFileEvent(path.toString() +"\\"+ event.context().toString());
+        try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
+            path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+            WatchKey key = null;
+            while (true) {
+                if ((key = watchService.take()) == null) break;
+                for (WatchEvent<?> event : key.pollEvents()) {
+                    fileEventPublisher.publishFileEvent(path.toString() + "\\" + event.context().toString());
+                }
+                key.reset();
             }
-           key.reset();
+
+        } catch (IOException | InterruptedException e) {
+
         }
     }
 }
