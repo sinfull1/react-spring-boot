@@ -21,12 +21,18 @@ public class TestCase {
         WebClient we =
 
                 WebClient.builder().baseUrl("https://www.quandl.com/").
-                        exchangeStrategies(ExchangeStrategies.builder()
+                        defaultHeader("djnfj", "fgg")
+                         .exchangeStrategies(ExchangeStrategies.builder()
                                 .codecs(configurer -> configurer
                                         .defaultCodecs()
-                                        .maxInMemorySize(16 * 1024 * 1024))
+                                       .maxInMemorySize(16 * 1024 * 1024))
                                 .build())
                         .build();
+
+        WebClient.RequestHeadersSpec j  = we.head();
+
+
+
         String[] f = we.get().uri("api/v3/datasets/WIKI/AAPL.csv").exchange().
                 flatMap(response -> response.bodyToMono(String.class))
                 .flatMap(response -> Mono.just(response.split("\\R")))

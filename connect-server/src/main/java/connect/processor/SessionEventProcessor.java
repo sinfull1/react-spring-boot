@@ -2,19 +2,12 @@ package connect.processor;
 
 
 
-import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
-import org.springframework.web.server.WebSession;
-import reactor.core.publisher.DirectProcessor;
-import reactor.core.publisher.EmitterProcessor;
-import reactor.core.publisher.FluxProcessor;
-
-import java.util.HashMap;
-import java.util.Map;
+import reactor.core.publisher.*;
 
 
 @Component
@@ -22,23 +15,17 @@ public class SessionEventProcessor {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    Map<String, FluxProcessor<Object,Object>> map =
-    new HashMap<String, FluxProcessor<Object,Object>>();
+    Sinks.Many<Object> replaySink = Sinks.many().replay().limit(1);
 
-    public SessionEventProcessor(){
-
+    public SessionEventProcessor() {
     }
-
-    public FluxProcessor<Object,Object>  getProcessor(String userId) {
-        map.putIfAbsent(userId, DirectProcessor.create().serialize());
-        return map.get(userId);
+    public Flux<Object> getFlux() {
+        return replaySink.asFlux();
     }
-
-    public void cleanProcessor(FluxProcessor<Object, Object > s) {
-        map.entrySet()
-                .removeIf(
-                        entry -> (s
-                                .equals(entry.getValue())));
-
+    public Sinks.Many<Object> getSink() {
+        return replaySink;
     }
 }
+
+
+

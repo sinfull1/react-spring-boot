@@ -6,7 +6,7 @@ const API_URL = "http://localhost:8080/api/test/";
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + "all", {
-      headers:   authHeader()
+      headers: authHeader()
      });
   }
 

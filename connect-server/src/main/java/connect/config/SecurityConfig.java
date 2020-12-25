@@ -19,7 +19,7 @@ public class SecurityConfig {
                                                ) {
         final String PATH_POSTS = "/posts/**";
 
-        return http
+        return http.csrf().disable()
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .authorizeExchange(it -> it
 

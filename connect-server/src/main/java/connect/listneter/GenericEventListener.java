@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxProcessor;
+import reactor.core.publisher.Sinks;
 
 @Component
 public class GenericEventListener implements ApplicationListener<GenericEvent> {
@@ -26,17 +27,16 @@ public class GenericEventListener implements ApplicationListener<GenericEvent> {
 
     @Override
     public void onApplicationEvent(GenericEvent event) {
-        FluxProcessor<Object,Object> processor = eventProcessor.getProcessor(event.getSubsId());
         switch (event.getEvent()) {
             case "http":
-                httpBinService.getHttpbin("1", "2").subscribe(processor::onNext);
+                httpBinService.getHttpbin("1", "2").subscribe(k->eventProcessor.getSink().emitNext(k, Sinks.EmitFailureHandler.FAIL_FAST));
                 break;
             case "sample":
-                sampleDataService.getSampleData().subscribe(processor::onNext);
+                sampleDataService.getSampleData().subscribe(k->eventProcessor.getSink().emitNext(k, Sinks.EmitFailureHandler.FAIL_FAST));
                 break;
 
             case "table":
-                Flux.just(new CarModel("a","b",234)).subscribe(processor::onNext);
+                Flux.just(new CarModel("a","b",234)).subscribe(k->eventProcessor.getSink().emitNext(k, Sinks.EmitFailureHandler.FAIL_FAST));
                 break;
 
         }

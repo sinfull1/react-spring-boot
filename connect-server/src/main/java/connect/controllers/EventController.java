@@ -43,10 +43,8 @@ public class EventController {
     @GetMapping(value = "/getHttp", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Object> getHttp(@RequestParam("subsId") String subsId) {
         System.out.println("socket subscription id session:"+ subsId);
-        FluxProcessor<Object,Object> s = eventProcessor.getProcessor(subsId);
-        return s.log()
-                .doOnCancel(()->{
-                 eventProcessor.cleanProcessor(s);});
+        return eventProcessor.getFlux();
+
     }
 
 

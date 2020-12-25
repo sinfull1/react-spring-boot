@@ -6,6 +6,7 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.resources.ConnectionProvider;
 import reactor.netty.tcp.TcpClient;
@@ -13,6 +14,7 @@ import reactor.netty.tcp.TcpClient;
 
 @Component
 public class HttpBinService {
+
 
     private final WebClient nseWebClient = createWebClient("https://httpbin.org/", 3);
 
@@ -29,17 +31,10 @@ public class HttpBinService {
     }
 
     public static WebClient createWebClient(final String baseUrl, final int idleTimeoutSec) {
-        final TcpClient tcpClient = TcpClient.create(ConnectionProvider.create("fixed-pool"))
-                .doOnConnected(conn -> {
-                    final ChannelPipeline pipeline = conn.channel().pipeline();
-                    if (pipeline.context("idleStateHandler") == null) {
-                        pipeline.addLast("idleStateHandler", new IdleStateHandler(300, 300, 300)
-                        );
-                    }
-                });
 
+        HttpClient httpClient = HttpClient.create(ConnectionProvider.create("fixed",10000));
         return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .baseUrl(baseUrl)
                 .build();
     }
