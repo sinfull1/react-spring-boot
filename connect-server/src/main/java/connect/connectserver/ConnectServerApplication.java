@@ -58,6 +58,24 @@ public class ConnectServerApplication {
                 -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> htmlHomeRouter(
+            @Value("classpath:/public/index.html") Resource html) {
+        return route(GET("/home"), request
+                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> htmlLoginRouter(
+            @Value("classpath:/public/index.html") Resource html) {
+        return route(GET("/login"), request
+                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
+        );
+    }
+
+
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
         ObjectMapper mapper = new ObjectMapper();
