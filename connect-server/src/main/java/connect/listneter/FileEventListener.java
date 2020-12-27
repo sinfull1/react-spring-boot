@@ -29,7 +29,7 @@ public class FileEventListener implements ApplicationListener<FileEvent> {
     @SneakyThrows
     @Override
     public void onApplicationEvent(FileEvent fileEvent) {
-        File files = new File(basePath + File.separator + fileEvent.getSource());
+        File files = new File((String) fileEvent.getSource());
         Path p = Paths.get(files.getAbsolutePath());
         checkFileGrowth(files);
         DataBufferFactory dbf = new DefaultDataBufferFactory();
