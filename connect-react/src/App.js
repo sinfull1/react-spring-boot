@@ -15,6 +15,7 @@ import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 
 import { history } from './helpers/history';
+import UploadFiles from "./upload/upload-files.component";
 
 class App extends Component {
   constructor(props) {
@@ -99,13 +100,19 @@ class App extends Component {
                     EventGrid
                   </Link>
                 </li>
-                </div>
-
                 <li className="nav-item">
                   <Link to={"/register"} className="nav-link">
                     Sign Up
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to={"/upload"} className="nav-link">
+                    Upload
+                  </Link>
+                </li>
+                </div>
+
+               
               </div>
             )}
           </nav>
@@ -115,6 +122,7 @@ class App extends Component {
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route exact path="/upload" component={UploadFiles} />
               {currentUser ?<Route exact path="/eventGrid"   component={Events} />
               :<Route exact path="/eventGrid"   component={Login} />
               }

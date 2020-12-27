@@ -22,9 +22,6 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .authorizeExchange(it -> it
-
-                        .pathMatchers(PATH_POSTS).authenticated()
-                        .pathMatchers("/api/test/all").authenticated()
                         .anyExchange().permitAll()
                 )
                 .addFilterAt(new AuthzFilter(jwtUtils), SecurityWebFiltersOrder.HTTP_BASIC)
