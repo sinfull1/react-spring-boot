@@ -1,4 +1,4 @@
-package connect.service;
+package connect.service.storage;
 
 import connect.generator.SectorGenerator;
 import connect.model.StockData;

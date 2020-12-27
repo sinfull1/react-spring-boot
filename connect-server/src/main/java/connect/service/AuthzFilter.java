@@ -23,11 +23,11 @@ public class AuthzFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-      //  String token = resolveToken(exchange.getRequest());
-      //  if (StringUtils.hasText(token) && jwtUtils.validateToken(token)) {
-      //      Authentication authentication = jwtUtils.getAuthentication(token);
-       //     return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
-     //   }
+       /* String token = resolveToken(exchange.getRequest());
+        if (StringUtils.hasText(token) && jwtUtils.validateToken(token)) {
+            Authentication authentication = jwtUtils.getAuthentication(token);
+           return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
+        }*/
         return chain.filter(exchange);
     }
 
