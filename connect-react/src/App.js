@@ -55,9 +55,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
-    console.log(currentUser);
-
+    let currentUser = localStorage.getItem("user");
     return (
       <Router history={history}>
         <div>
