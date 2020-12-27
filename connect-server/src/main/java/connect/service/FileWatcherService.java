@@ -22,8 +22,8 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
             e.printStackTrace();
         }
     }
-
-    Path path = Paths.get("tmp");
+    private String basePath = System.getProperty("java.io.tmpdir") + "myTemp";
+    Path path = Paths.get(basePath);
 
     @Autowired
     FileEventPublisher fileEventPublisher;

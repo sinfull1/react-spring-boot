@@ -21,20 +21,20 @@ sseEvents.onerror = event => {
   sseEvents.close();
   sseEvents = new EventSource("http://localhost:8080/getHttp?subsId=" + id);
 }
-let savedFilter = [];
-let savedSelectedRows = [];
-let options = [];
-let choices = [];
+const savedFilter = [];
+const savedSelectedRows = [];
+const options = [];
+const choices = [];
 let value = choices[0];
 
 
-let optionsSel = [];
-let choicesSel = [];
+const optionsSel = [];
+const choicesSel = [];
 let valueSel = optionsSel[0];
 const defaultOptionSel = optionsSel[0];
 
-let optionsPreset = [];
-let choicesPreset = [{ id: 0, value: "NoFilter" }];
+const optionsPreset = [];
+const choicesPreset = [{ id: 0, value: "NoFilter" }];
 
 
 export default function Events(props) {

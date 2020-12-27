@@ -1,17 +1,17 @@
 package connect.controllers;
 
+import connect.dao.SectorDao;
 import connect.dao.Strategy;
-import connect.model.StockData;
-import connect.service.storage.SectorGeneratorService;
+import connect.generator.SectorGenerator;
+import connect.service.SectorGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
-import java.util.List;
 
 @CrossOrigin(origins = {"*"})
 @RestController
@@ -27,9 +27,14 @@ public class QuotesController {
         this.sectorGeneratorService = sectorGeneratorService;
     }
 
+    @GetMapping(value = "/initPrices")
+    SectorDao initialQuote() {
+        return sectorGeneratorService.initQuotes();
+    }
 
-    @GetMapping(value = "/getPrices", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    Mono<List<StockData>> getQuotes() {
+
+    @GetMapping(value = "/getPrices")
+    Flux<SectorDao> getQuotes() {
         return sectorGeneratorService.getQuotes();
     }
 
