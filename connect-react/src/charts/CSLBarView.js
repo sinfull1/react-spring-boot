@@ -15,7 +15,6 @@ class CSLBarView extends Component {
 
     }
     this.drawChart = this.drawChart.bind(this)
-   // this.updateChart = this.updateChart.bind(this)
   }
    componentDidUpdate() {
       this.state.firstRender = false;

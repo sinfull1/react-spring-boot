@@ -14,8 +14,6 @@ public class StockDao {
     private Double stockPrice;
 
 
-
-
     public String toString() {
         return stockName + " " + stockCode + " " + stockPrice;
     }

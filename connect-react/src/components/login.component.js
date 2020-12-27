@@ -58,7 +58,7 @@ class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       dispatch(login(this.state.username, this.state.password))
         .then(() => {
-          history.push("/eventGrid");
+          history.push("/home");
           window.location.reload();
         })
         .catch(() => {
@@ -77,7 +77,7 @@ class Login extends Component {
     const { isLoggedIn, message } = this.props;
 
     if (isLoggedIn) {
-      return <Redirect to="/eventGrid" />;
+      return <Redirect to="/home" />;
     }
 
     return (

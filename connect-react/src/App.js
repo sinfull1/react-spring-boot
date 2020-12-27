@@ -9,7 +9,7 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Events from "./components/events.component";
-
+import CSLContainer from './charts/CSLContainer';
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -63,7 +63,7 @@ class App extends Component {
         <div>
           <nav className="navbar navbar-expand navbar-dark bg-dark">
             <Link to={"/"} className="navbar-brand">
-              Grid  Example
+             Sid Blog
             </Link>
             <div className="navbar-nav mr-auto">
               <li className="nav-item">
@@ -124,7 +124,7 @@ class App extends Component {
               {currentUser ?<Route exact path="/eventGrid"   component={Events} />
               :<Route exact path="/eventGrid"   component={Login} />}
               
-          
+              <Route exact path="/d3" component = {CSLContainer} />
             
             </Switch>
           </div>
