@@ -71,7 +71,7 @@ export default class UploadFiles extends Component {
 
 clickView(event)
 {
-  var URL = 'http://localhost:8080/api/downloadView?fileName='+event.target.text;
+  var URL = 'http://ec2-13-233-193-175.ap-south-1.compute.amazonaws.com:8080/api/downloadView?fileName='+event.target.text;
   window.open(URL);
 }
 
