@@ -22,7 +22,8 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
             e.printStackTrace();
         }
     }
-    private String basePath = System.getProperty("java.io.tmpdir") + "myTemp";
+    private String basePath = System.getProperty("java.io.tmpdir") + "myPublish";
+
     Path path = Paths.get(basePath);
 
     @Autowired
@@ -32,6 +33,8 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
     @SneakyThrows
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent readyEvent) {
+        try{Files.createTempDirectory(basePath);}
+        catch(FileAlreadyExistsException e){}
         try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
             path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
             WatchKey key = null;
