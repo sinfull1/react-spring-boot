@@ -33,8 +33,7 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
     @SneakyThrows
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent readyEvent) {
-        try{Files.createTempDirectory(basePath);}
-        catch(FileAlreadyExistsException e){}
+
         try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
             path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
             WatchKey key = null;
