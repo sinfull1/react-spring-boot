@@ -14,12 +14,12 @@ let id = Math.random().toString(36).substr(2, 9);
 
 
 
-let sseEvents = new EventSource("http://ec2-13-233-193-175.ap-south-1.compute.amazonaws.com:8080/getHttp?subsId=" + id);
+let sseEvents = new EventSource("http://localhost:8080/getHttp?subsId=" + id);
 sseEvents.onopen = event => console.log('open', event);
 sseEvents.onerror = event => {
   console.log("Server side shut");
   sseEvents.close();
-  sseEvents = new EventSource("http://ec2-13-233-193-175.ap-south-1.compute.amazonaws.com:8080/getHttp?subsId=" + id);
+  sseEvents = new EventSource("http://localhost:8080/getHttp?subsId=" + id);
 }
 const savedFilter = [];
 const savedSelectedRows = [];
@@ -54,7 +54,7 @@ export default function Events(props) {
   };
 
   function addRowData(newData) {
-    fetch('http://ec2-13-233-193-175.ap-south-1.compute.amazonaws.com:8080/event?subsId=' + id + "&event=sample");
+    fetch('http://localhost:8080/event?subsId=' + id + "&event=sample");
   };
 
   function removeRowData() {

@@ -27,4 +27,7 @@ public interface FileStorageService {
 
     void deleteAll();
 
+    List<FileInfo> getPubishFileInfo();
+
+    boolean publishFile(String fileName) throws IOException;
 }

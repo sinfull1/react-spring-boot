@@ -30,6 +30,18 @@ public class UploadController {
     }
 
 
+    @GetMapping(path = "/getPublishFiles")
+    public List<FileInfo> getPublishFiles() {
+        return storageService.getPubishFileInfo();
+    }
+
+
+    @GetMapping(path = "/publishFile")
+    public boolean getPublishFiles(@RequestParam("fileName") String fileName) throws IOException {
+        return storageService.publishFile(fileName);
+    }
+
+
     @PostMapping("/upload")
     public Mono<Boolean> uploadFile(@RequestPart("payload") Flux<FilePart> filePartFlux) throws IOException {
         return storageService.store(filePartFlux);
