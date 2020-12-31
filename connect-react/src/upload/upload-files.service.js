@@ -1,4 +1,8 @@
-import http from "./http-common";
+import axios from "axios";
+
+const http = axios.create({
+  baseURL: "http://localhost:8080",
+});
 
 class UploadFilesService {
   upload(file, onUploadProgress) {
@@ -17,6 +21,13 @@ class UploadFilesService {
   getFiles() {
     return http.get("/files");
   }
+  getPublishFiles() {
+    return http.get("/getPublishFiles");
+  }
+  publishFile(fileName) {
+    return http.get("/publishFile?fileName="+fileName);
+  }
+
 }
 
 export default new UploadFilesService();

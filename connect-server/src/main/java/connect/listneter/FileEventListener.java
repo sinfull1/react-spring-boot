@@ -22,7 +22,7 @@ import java.nio.file.Paths;
 @Component
 public class FileEventListener implements ApplicationListener<FileEvent> {
 
-    private String basePath = System.getProperty("java.io.tmpdir") + "myPublish";
+    private String basePath = System.getProperty("java.io.tmpdir") + File.separator+ "myPublish";
     @Autowired
     FileEventProcessor eventProcessor;
 

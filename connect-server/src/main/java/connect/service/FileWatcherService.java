@@ -7,6 +7,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 
@@ -22,9 +23,10 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
             e.printStackTrace();
         }
     }
-    private String basePath = System.getProperty("java.io.tmpdir") + "myPublish";
+    private String publishPath = System.getProperty("java.io.tmpdir") + File.separator+ "myPublish";
 
-    Path path = Paths.get(basePath);
+    private String tempPath = System.getProperty("java.io.tmpdir") + File.separator+ "myTemp";
+
 
     @Autowired
     FileEventPublisher fileEventPublisher;
@@ -33,7 +35,15 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
     @SneakyThrows
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent readyEvent) {
+        Path path = Paths.get(publishPath);
+        Path temp = Paths.get(tempPath);
 
+        try{Files.createDirectory(path);}
+        catch (FileAlreadyExistsException ex)
+        {System.out.println(ex.toString());}
+        try{Files.createDirectory(temp);}
+        catch (FileAlreadyExistsException ex)
+        {System.out.println(ex.toString());}
         try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
             path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
             WatchKey key = null;

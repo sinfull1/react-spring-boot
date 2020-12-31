@@ -1,20 +1,23 @@
 import React, { Component } from "react";
 import UploadService from "./upload-files.service";
 
+import './upload.css';
+
 export default class UploadFiles extends Component {
   constructor(props) {
     super(props);
     this.selectFile = this.selectFile.bind(this);
     this.upload = this.upload.bind(this);
     this.clickView = this.clickView.bind(this);
+    this.publish = this.publish.bind(this);
 
     this.state = {
       selectedFiles: undefined,
       currentFile: undefined,
       progress: 0,
       message: "",
-
       fileInfos: [],
+      publishInfo: []
     };
   }
 
@@ -22,6 +25,13 @@ export default class UploadFiles extends Component {
     UploadService.getFiles().then((response) => {
       this.setState({
         fileInfos: response.data,
+      });
+    });
+
+    UploadService.getPublishFiles().then((response) => {
+      
+      this.setState({
+        publishInfo: response.data,
       });
     });
   }
@@ -71,9 +81,24 @@ export default class UploadFiles extends Component {
 
 clickView(event)
 {
-  var URL = 'http://ec2-13-233-193-175.ap-south-1.compute.amazonaws.com:8080/api/downloadView?fileName='+event.target.text;
+  var URL = 'http://localhost:8080/api/downloadView?fileName='+event.target.text;
   window.open(URL);
 }
+async publish(data)
+
+ {
+    let response = UploadService.publishFile(data);
+    let resdata;
+     response.then( e =>{if(e.data){
+     console.log(e.data)
+    this.setState({ publishInfo: [...this.state.publishInfo, data]});
+    }
+    else{
+      alert("Already Published. Publish new version?");
+    }});
+    
+}
+
 
   render() {
     const {
@@ -82,8 +107,9 @@ clickView(event)
       progress,
       message,
       fileInfos,
+      publishInfo
     } = this.state;
-
+  
     return (
       <div>
         {currentFile && (
@@ -117,14 +143,17 @@ clickView(event)
           {message}
         </div>
 
-        <div className="card">
+        <div className="card-upload">
           <div className="card-header">List of Files</div>
           <ul className="list-group list-group-flush">
             {fileInfos &&
               fileInfos.map((file, index) => (
+                <div className="bar-upload">
                 <li className="list-group-item" key={index}>
-                  <a onClick={this.clickView}>{file.name}</a>
+                  <a className="a-upload" onClick={this.clickView}>{file.name}</a>
                 </li>
+                <button className="button-upload"  onClick={()=>this.publish(file.name)}>Publish </button>
+                </div>
               ))}
           </ul>
         </div>

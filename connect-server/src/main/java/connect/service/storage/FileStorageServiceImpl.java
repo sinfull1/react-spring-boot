@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -24,7 +25,8 @@ import java.util.stream.Stream;
 public class FileStorageServiceImpl implements FileStorageService {
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
-    private String basePath = System.getProperty("java.io.tmpdir") + "myTemp";
+    private String tempPath = System.getProperty("java.io.tmpdir") + File.separator + "myTemp";
+    private String publishPath = System.getProperty("java.io.tmpdir") + File.separator + "myPublish";
 
 
     FileStorageServiceImpl() throws IOException {
@@ -33,16 +35,16 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public void init() throws IOException {
         try {
-            Files.createDirectory(Paths.get(basePath));
+            Files.createDirectory(Paths.get(tempPath));
         } catch (FileAlreadyExistsException e) {
-            logger.info("Directory Already exists" + basePath);
+            logger.info("Directory Already exists" + tempPath);
         }
         logger.info("Storage service init completed");
     }
 
     @Override
     public Mono<Boolean> store(Flux<FilePart> filePartFlux)  {
-            return   filePartFlux.flatMap(it -> it.transferTo(Paths.get(basePath + File.separator + it.filename()))).then(Mono.just(true));
+            return   filePartFlux.flatMap(it -> it.transferTo(Paths.get(tempPath + File.separator + it.filename()))).then(Mono.just(true));
     }
 
     @Override
@@ -58,7 +60,32 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public List<FileInfo> getAllFileInfo() {
         List<FileInfo> results = new ArrayList<FileInfo>();
-        File[] files = new File(basePath).listFiles();
+        File[] files = new File(tempPath).listFiles();
+        assert files != null;
+        for (File file : files) {
+            if (file.isFile()) {
+                results.add(new FileInfo(file.getPath(), file.getName()));
+            }
+        }
+        return results;
+    }
+
+
+
+    @Override
+    public Resource loadAsResource(String filename) {
+        return null;
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
+    public List<FileInfo> getPubishFileInfo() {
+        List<FileInfo> results = new ArrayList<FileInfo>();
+        File[] files = new File(publishPath).listFiles();
         assert files != null;
         for (File file : files) {
             if (file.isFile()) {
@@ -69,12 +96,13 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public Resource loadAsResource(String filename) {
-        return null;
-    }
-
-    @Override
-    public void deleteAll() {
+    public boolean publishFile(String fileName) throws IOException {
+        if(Files.exists(Paths.get(this.publishPath+File.separator+fileName)))
+            return false;
+      int status = FileCopyUtils.copy(new File(this.tempPath+File.separator+fileName),
+                                new File(this.publishPath+File.separator+fileName));
+      System.out.println(status);
+      return true;
 
     }
 }

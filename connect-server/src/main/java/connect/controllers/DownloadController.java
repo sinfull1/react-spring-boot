@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class DownloadController {
     final  TikaConfig tikaConfig= new TikaConfig();
     final  Detector detector = tikaConfig.getDetector();
-    private String basePath = System.getProperty("java.io.tmpdir") + "myTemp";
+    private String tempPath = System.getProperty("java.io.tmpdir") + File.separator+ "myTemp";
 
     public DownloadController() throws TikaException, IOException {
     }
@@ -30,7 +30,7 @@ public class DownloadController {
     @GetMapping(value = "/downloadView")
     @ResponseBody
     public ResponseEntity<FileSystemResource> downloadView( @RequestParam ("fileName") String fileName) throws TikaException, IOException {
-        File[] files = new File(basePath).listFiles();
+        File[] files = new File(tempPath).listFiles();
         assert files != null;
         File requestFile = Arrays.stream(files).filter(file->file.getName().equals(fileName)).collect(Collectors.toList()).get(0);
         FileSystemResource fileSystemResource  = new FileSystemResource(requestFile);
