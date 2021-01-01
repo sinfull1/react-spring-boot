@@ -48,4 +48,10 @@ public class UploadController {
 
     }
 
+    @GetMapping("/deleteFile")
+    public Mono<Boolean> deleteFile(@RequestParam("fileName") String fileName) throws IOException {
+        return storageService.delete(fileName);
+
+    }
+
 }

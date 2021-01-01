@@ -33,6 +33,7 @@ public class DownloadController {
         File[] files = new File(tempPath).listFiles();
         assert files != null;
         File requestFile = Arrays.stream(files).filter(file->file.getName().equals(fileName)).collect(Collectors.toList()).get(0);
+        assert  requestFile !=null;
         FileSystemResource fileSystemResource  = new FileSystemResource(requestFile);
         TikaInputStream stream = TikaInputStream.get(new FileInputStream(requestFile));
         Metadata metadata = new Metadata();

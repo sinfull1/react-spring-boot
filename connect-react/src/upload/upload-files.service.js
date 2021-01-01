@@ -27,6 +27,9 @@ class UploadFilesService {
   publishFile(fileName) {
     return http.get("/publishFile?fileName="+fileName);
   }
+  deleteFile(fileName) {
+    return http.get("/deleteFile?fileName="+fileName);
+  }
 
 }
 
