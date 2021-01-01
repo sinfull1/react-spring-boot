@@ -22,14 +22,14 @@ export default class UploadFiles extends Component {
   }
 
   componentDidMount() {
+  //get the file in the temp folder
     UploadService.getFiles().then((response) => {
       this.setState({
         fileInfos: response.data,
       });
     });
-
+//get the file in the publish folder
     UploadService.getPublishFiles().then((response) => {
-      
       this.setState({
         publishInfo: response.data,
       });
@@ -44,7 +44,6 @@ export default class UploadFiles extends Component {
 
   upload() {
     let currentFile = this.state.selectedFiles[0];
-
     this.setState({
       progress: 0,
       currentFile: currentFile,
@@ -85,19 +84,29 @@ clickView(event)
   window.open(URL);
 }
 async publish(data)
-
  {
-    let response = UploadService.publishFile(data);
-    let resdata;
-     response.then( e =>{if(e.data){
-     console.log(e.data)
-    this.setState({ publishInfo: [...this.state.publishInfo, data]});
-    }
+    let response = await UploadService.publishFile(data);
+    if(response.data){
+       await this.setState({ publishInfo: [...this.state.publishInfo, {url:"", name:data}]});
+     }
     else{
       alert("Already Published. Publish new version?");
-    }});
-    
+    }
 }
+
+async delete(data)
+ {
+    let response = UploadService.deleteFile(data);
+    response.then( e =>{if(e.data){
+      UploadService.getFiles().then((response) => {
+        this.setState({
+          fileInfos: response.data,
+        });
+      });
+    }
+  });
+ }
+
 
 
   render() {
@@ -109,10 +118,10 @@ async publish(data)
       fileInfos,
       publishInfo
     } = this.state;
-  
-    return (
+    console.table(publishInfo);
+      return (
       <div>
-        {currentFile && (
+        {currentFile && progress!=100 &&(
           <div className="progress">
             <div
               className="progress-bar progress-bar-info progress-bar-striped"
@@ -126,19 +135,20 @@ async publish(data)
             </div>
           </div>
         )}
-
-        <label className="btn btn-default">
+        <div className="bar-upload">
+        <label>
           <input type="file" onChange={this.selectFile} />
-        </label>
-
-        <button
-          className="btn btn-success"
+          <button
+          className="button3"
           disabled={!selectedFiles}
           onClick={this.upload}
         >
           Upload
         </button>
+        </label>
 
+       
+    </div>
         <div className="alert alert-light" role="alert">
           {message}
         </div>
@@ -150,9 +160,14 @@ async publish(data)
               fileInfos.map((file, index) => (
                 <div className="bar-upload">
                 <li className="list-group-item" key={index}>
+                  { 
+                  publishInfo.map(e=>e.name ==file.name).includes(true)?  
+                                <div className="led-box"> <div className="led-green"></div></div>
+                                :<div className="led-box"> <div className="led-grey"></div></div>}
                   <a className="a-upload" onClick={this.clickView}>{file.name}</a>
-                </li>
-                <button className="button-upload"  onClick={()=>this.publish(file.name)}>Publish </button>
+                  <a className="button1"  onClick={()=>this.publish(file.name)}>Publish </a>
+                  <a className="button1"  onClick={()=>this.delete(file.name)}>Delete </a>
+                 </li>
                 </div>
               ))}
           </ul>

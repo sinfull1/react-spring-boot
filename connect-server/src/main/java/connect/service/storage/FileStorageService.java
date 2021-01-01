@@ -30,4 +30,6 @@ public interface FileStorageService {
     List<FileInfo> getPubishFileInfo();
 
     boolean publishFile(String fileName) throws IOException;
+
+    Mono<Boolean> delete(String fileName) throws IOException;
 }

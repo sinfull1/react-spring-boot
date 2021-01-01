@@ -32,6 +32,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     FileStorageServiceImpl() throws IOException {
         this.init();
     }
+
     @Override
     public void init() throws IOException {
         try {
@@ -43,8 +44,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public Mono<Boolean> store(Flux<FilePart> filePartFlux)  {
-            return   filePartFlux.flatMap(it -> it.transferTo(Paths.get(tempPath + File.separator + it.filename()))).then(Mono.just(true));
+    public Mono<Boolean> store(Flux<FilePart> filePartFlux) {
+        return filePartFlux.flatMap(it -> it.transferTo(Paths.get(tempPath + File.separator + it.filename()))).then(Mono.just(true));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public FileInfo getFile(String fileName) {
-        return new FileInfo(fileName,fileName);
+        return new FileInfo(fileName, fileName);
     }
 
     @Override
@@ -69,7 +70,6 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
         return results;
     }
-
 
 
     @Override
@@ -97,12 +97,24 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public boolean publishFile(String fileName) throws IOException {
-        if(Files.exists(Paths.get(this.publishPath+File.separator+fileName)))
+        if (Files.exists(Paths.get(this.publishPath + File.separator + fileName)))
             return false;
-      int status = FileCopyUtils.copy(new File(this.tempPath+File.separator+fileName),
-                                new File(this.publishPath+File.separator+fileName));
-      System.out.println(status);
-      return true;
+        int status = FileCopyUtils.copy(new File(this.tempPath + File.separator + fileName),
+                new File(this.publishPath + File.separator + fileName));
+        System.out.println(status);
+        return true;
 
+    }
+
+    @Override
+    public Mono<Boolean> delete(String fileName) throws IOException {
+        try {
+            Files.deleteIfExists(Paths.get(this.tempPath + File.separator + fileName));
+
+            Files.deleteIfExists(Paths.get(this.publishPath + File.separator + fileName));
+        } catch (IOException io) {
+            return Mono.just(false);
+        }
+        return Mono.just(true);
     }
 }

@@ -1,13 +1,18 @@
 .bar-upload {
-display:flex;
+    display:inline;
 }
-
+input{
+    display:inline;
+}
 
 .a-upload{
 margin-left: 20px;
 cursor: pointer;
 background-color: #f7f7f7;
 
+}
+.card-header{
+    padding:5px;
 }
 
 .card-upload {
@@ -22,14 +27,105 @@ background-color: #f7f7f7;
 
   .button-upload {
     background-color:#28a74559;
-    align-self: right;
-    right: 450px;
-    position: absolute;
-    
+    float: right;    
   }
 
 .list-group-item{
-    display:flex;
     padding: 0px 0px;
     border: none;
  }
+ .list-group-item:hover{
+     box-shadow:1px 1px 1px 1px grey blur inset
+ }
+
+
+ .led-green {
+    margin: 0 auto;
+    width: 8px;
+    height: 8px;
+    background-color: #ABFF00;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+  }
+
+  
+ .led-grey {
+    margin: 0 auto;
+    width: 8px;
+    height: 8px;
+    background-color: #e4e3e3;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #888888 0 -1px 9px, #a3a3a3 0 2px 12px;
+  }
+
+
+  .led-box {
+    height: 8px;
+    width: 8px;
+    margin-left: 10px;
+    margin-top: 10px;
+    align-self: center;
+    float: left;
+  }
+  
+  .led-box p {
+    font-size: 12px;
+    text-align: center;
+    margin: 1em;
+  }
+
+ a.button1{
+     display:inline-block;
+     background-color:#dfdfdf;
+     margin: 1px;
+     
+     padding-left: 5px;
+     font-size:15px;
+     padding-right: 5px;
+     border-radius:0.12em;
+     box-sizing: border-box;
+     text-decoration:none;
+     font-family:'Roboto',sans-serif;
+     color:#7e7e7e;
+     text-align:center;
+     transition: all 0.2s;
+     float:right;
+    }
+a.button1:hover{
+     color:#ffffff;
+     background-color:#00c02a;
+     cursor: pointer;
+    }
+@media all and (max-width:30em){
+a.button1{
+    display:block;
+    margin:0.4em auto;
+}
+}
+
+button.button3{
+    display:inline-block;
+    padding:0.3em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border-radius:2em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#FFFFFF;
+    background-color:#4eb5f1;
+    text-align:center;
+    transition: all 0.2s;
+    float:right;
+    cursor: pointer;
+ }
+ button.button3:hover{
+ background-color:#4095c6;
+ }
+ @media all and (max-width:30em){
+ button.button3{
+ display:block;
+ margin:0.2em auto;
+ }
+}
+ 
