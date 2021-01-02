@@ -1,5 +1,6 @@
 package connect.security;
 
+import connect.security.repository.Credential;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -45,9 +46,9 @@ public class JWTUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(User user) {
+    public String generateToken(AuthRequest user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", user.getRoles());
+        claims.put("role", "ADMIN");
         return doGenerateToken(claims, user.getUsername());
     }
 

@@ -1,6 +1,7 @@
 package connect.security.repository;
 
 
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -12,7 +13,9 @@ import java.sql.Timestamp;
 public class Credential {
 
     @Id
-    private Integer userId;
+    @Generated
+    private Integer userid;
+
 
     private String username;
 
