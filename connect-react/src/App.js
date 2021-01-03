@@ -17,6 +17,8 @@ import { clearMessage } from "./actions/message";
 import { history } from './helpers/history';
 import UploadFiles from "./upload/upload-files.component";
 
+import GooglePayment from "./payment/payment.component";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -123,6 +125,7 @@ class App extends Component {
               :<Route exact path="/eventGrid"   component={Login} />}
               
               <Route exact path="/d3" component = {CSLContainer} />
+              <Route exact path="/payment" component = {GooglePayment} />
             
             </Switch>
           </div>
