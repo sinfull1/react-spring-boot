@@ -5,7 +5,7 @@ import CSLBlockView from './CSLBlockView';
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 
-const events = new EventSource("https://localhost:8443/getPrices");
+const events = new EventSource("https://ec2-13-126-17-155.ap-south-1.compute.amazonaws.com:8443/getPrices");
 
 class CSLContainer  extends Component {
 
