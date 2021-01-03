@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
+import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
@@ -83,6 +84,11 @@ class Register extends Component {
 
   handleRegister(e) {
     e.preventDefault();
+    
+    if (this.state.successful) {
+      return <Redirect to="/home" />;
+    }
+
 
     this.setState({
       successful: false,
@@ -114,12 +120,7 @@ class Register extends Component {
     return (
       <div className="col-md-12">
         <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
+        
           <Form
             onSubmit={this.handleRegister}
             ref={(c) => {
