@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeExchange(it -> it
                         .anyExchange().permitAll()
                 )
+
                 .addFilterAt(new AuthzFilter(jwtUtils), SecurityWebFiltersOrder.HTTP_BASIC)
                 .build();
 

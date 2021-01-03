@@ -32,8 +32,8 @@ class CSLTrackerView extends Component {
    }
   drawChart() {
     var margin = {top: 20, right: 50, bottom: 30, left: 50};
-    var width = 1000 - margin.left - margin.right;
-    var height = 400 - margin.top - margin.bottom;
+    var width = 500 - margin.left - margin.right;
+    var height = 200 - margin.top - margin.bottom;
 
     const xScale = scaleTime().range([0,width]).domain([1588499706418 - 6 * 60 * 60 * 1000,   1588499706418]).nice();
     const yScale = scaleLinear().range([height, 0]).domain([0,100]);
@@ -45,20 +45,20 @@ class CSLTrackerView extends Component {
      var timeDelta = (Date.now() - this.state.initialTime)/300;
 
      var path = chart.append("path")
-              .attr("stroke","black")
-              .attr("stroke-width", 2)
+              .attr("stroke","grey")
+              .attr("stroke-width", 1)
               .attr("fill","none");
      console.log(timeDelta);
 
     var hScale = height/100;
     var pathData = [ "M " + this.prevTime + " " + (height-(this.prevPrice)*hScale)
-                    + " L " + timeDelta +" "+ (height-(this.props.stocks.map(s=> s.stockPrice)[0])*hScale)];
+                    + " L " + timeDelta +" "+ (height-(this.props.stocks.map(s=> s.stockPrice)[this.props.variable])*hScale)];
 
     path.data(pathData)
                   .attr("d", function(d) {
                        return d;
                   });
-    this.prevPrice = this.props.stocks.map(s=> s.stockPrice)[0];
+    this.prevPrice = this.props.stocks.map(s=> s.stockPrice)[this.props.variable];
     this.prevTime = timeDelta;
      }
 

@@ -1,5 +1,6 @@
 .bar-upload {
     display:inline;
+    
 }
 input{
     display:inline;
@@ -78,7 +79,6 @@ background-color: #f7f7f7;
      display:inline-block;
      background-color:#dfdfdf;
      margin: 1px;
-     
      padding-left: 5px;
      font-size:15px;
      padding-right: 5px;
@@ -103,6 +103,11 @@ a.button1{
 }
 }
 
+.alert{
+  margin-top:25px;
+  padding: 0px;
+}
+
 button.button3{
     display:inline-block;
     padding:0.3em 1.2em;
@@ -111,12 +116,12 @@ button.button3{
     box-sizing: border-box;
     text-decoration:none;
     font-family:'Roboto',sans-serif;
-    font-weight:300;
+    font-weight:200;
     color:#FFFFFF;
     background-color:#4eb5f1;
     text-align:center;
     transition: all 0.2s;
-    float:right;
+    float: right;
     cursor: pointer;
  }
  button.button3:hover{

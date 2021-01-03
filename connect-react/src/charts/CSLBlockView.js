@@ -4,12 +4,12 @@ function CSLBlockView(props) {
 
      return(
          <div className="csl-block-view">
-         <h2> Large Cap Stocks </h2>
+         <h2> Variable Flux</h2>
            <table className="table100 ver1 m-b-110">
             <thead>
              <tr className="row100 head">
-                <th>Stock Code</th>
-                <th>Stock Price</th>
+                <th>Variable Code</th>
+                <th>Variable Value</th>
              </tr>
              </thead>
              <tbody>

@@ -22,8 +22,8 @@ class CSLBarView extends Component {
    }
   drawChart() {
          const margin = 60;
-         const height = 500 - 2 * margin;
-         const width =  600 - 2 * margin;
+         const height =  200 - 2 * margin;
+         const width =  300 - 2 * margin;
          const xScale = scaleBand().range([0,width]).domain(this.props.stocks.map((s)=> s.stockName)).padding(0.2);
          const yScale = scaleLinear().range([height,0]).domain([0,100]);
          const svg = select(this.node);
@@ -35,7 +35,7 @@ class CSLBarView extends Component {
          chart.selectAll('rect').data(this.props.stocks)
                              .attr('x', (s) => xScale(s.stockName))
                              .attr('y', (s) => yScale(s.stockPrice))
-                             .attr('height', (s) => 380 - yScale(s.stockPrice))
+                             .attr('height', (s) => 80 - yScale(s.stockPrice))
                              .attr('width', xScale.bandwidth());
      }
 

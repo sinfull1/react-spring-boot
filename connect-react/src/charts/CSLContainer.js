@@ -5,7 +5,7 @@ import CSLBlockView from './CSLBlockView';
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 
-const events = new EventSource("http://localhost:8080/getPrices");
+const events = new EventSource("https://localhost:8443/getPrices");
 
 class CSLContainer  extends Component {
 
@@ -39,9 +39,10 @@ class CSLContainer  extends Component {
     console.group(this.state);
      return(
         <div className="stock-group-wrapper">
-         <CSLTrackerView stocks={stocks}/>
-         <CSLTrackerView stocks={stocks}/>
+         <CSLTrackerView stocks={stocks} variable={1}/>
+         <CSLTrackerView stocks={stocks}variable={0}/>
          <CSLBarView stocks={stocks}/>
+         <CSLBlockView stocks={stocks}/>
         </div>
     );
   }

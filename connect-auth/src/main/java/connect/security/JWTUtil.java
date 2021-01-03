@@ -46,7 +46,7 @@ public class JWTUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(Credential user) {
+    public String generateToken(AuthRequest user) {
         Map<String, Object> claims = new HashMap<>();
 
         //TODO : add roles to the back end credential table
