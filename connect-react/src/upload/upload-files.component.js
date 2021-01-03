@@ -80,7 +80,7 @@ export default class UploadFiles extends Component {
 
 clickView(event)
 {
-  var URL = 'http://localhost:8080/api/downloadView?fileName='+event.target.text;
+  var URL = 'https://localhost:8443/api/downloadView?fileName='+event.target.text;
   window.open(URL);
 }
 async publish(data)
@@ -136,17 +136,12 @@ async delete(data)
           </div>
         )}
         <div className="bar-upload">
-        <label>
+        
           <input type="file" onChange={this.selectFile} />
-          <button
-          className="button3"
-          disabled={!selectedFiles}
-          onClick={this.upload}
-        >
+          <button className="button3"   disabled={!selectedFiles} onClick={this.upload} >
           Upload
         </button>
-        </label>
-
+        
        
     </div>
         <div className="alert alert-light" role="alert">
