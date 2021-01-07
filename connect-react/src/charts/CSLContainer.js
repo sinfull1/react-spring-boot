@@ -5,7 +5,7 @@ import CSLBlockView from './CSLBlockView';
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 
-const events = new EventSource("https://www.gopaychain.com:8443/getPrices");
+const events = new EventSource("https://52.66.171.212:8443/getPrices");
 
 class CSLContainer  extends Component {
 

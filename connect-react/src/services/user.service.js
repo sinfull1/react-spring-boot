@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "https://www.gopaychain.com:8443/api/test/";
+const API_URL = "https://52.66.171.212:8443/api/test/";
 
 class UserService {
   getPublicContent() {
