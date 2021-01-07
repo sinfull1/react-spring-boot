@@ -14,12 +14,12 @@ let id = Math.random().toString(36).substr(2, 9);
 
 
 
-let sseEvents = new EventSource("https://52.66.171.212:8443/getHttp?subsId=" + id);
+let sseEvents = new EventSource("https://www.gopaychain.in/getHttp?subsId=" + id);
 sseEvents.onopen = event => console.log('open', event);
 sseEvents.onerror = event => {
   console.log("Server side shut");
   sseEvents.close();
-  sseEvents = new EventSource("https://52.66.171.212:8443/getHttp?subsId=" + id);
+  sseEvents = new EventSource("https://www.gopaychain.in/getHttp?subsId=" + id);
 }
 const savedFilter = [];
 const savedSelectedRows = [];
@@ -54,7 +54,7 @@ export default function Events(props) {
   };
 
   function addRowData(newData) {
-    fetch('https://52.66.171.212:8443/event?subsId=' + id + "&event=sample");
+    fetch('https://www.gopaychain.in/event?subsId=' + id + "&event=sample");
   };
 
   function removeRowData() {
