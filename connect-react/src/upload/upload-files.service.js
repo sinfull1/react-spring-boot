@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "https://ec2-52-66-171-212.ap-south-1.compute.amazonaws.com:8443",
+  baseURL: "https://www.gopaychain.com:8443",
 });
 
 class UploadFilesService {

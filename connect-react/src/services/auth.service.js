@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://ec2-52-66-171-212.ap-south-1.compute.amazonaws.com:8444/";
+const API_URL = "https://www.gopaychain.com:8444/";
 
 class AuthService {
   login(username, password) {
