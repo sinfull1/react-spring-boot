@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .authorizeExchange(it -> it
                         .anyExchange().permitAll()
-                )
+                ).redirectToHttps().and()
 
                 .addFilterAt(new AuthzFilter(jwtUtils), SecurityWebFiltersOrder.HTTP_BASIC)
                 .build();

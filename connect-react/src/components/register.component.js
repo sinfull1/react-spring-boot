@@ -85,10 +85,7 @@ class Register extends Component {
   handleRegister(e) {
     e.preventDefault();
     
-    if (this.state.successful) {
-      return <Redirect to="/home" />;
-    }
-
+ 
 
     this.setState({
       successful: false,
@@ -105,6 +102,7 @@ class Register extends Component {
           this.setState({
             successful: true,
           });
+     
         })
         .catch(() => {
           this.setState({
@@ -116,7 +114,11 @@ class Register extends Component {
 
   render() {
     const { message } = this.props;
-
+    if(this.state.successful){
+      alert ("registration sucessful. Please Login using new id");
+      return <Redirect to="/home" />;
+    }
+    
     return (
       <div className="col-md-12">
         <div className="card card-container">

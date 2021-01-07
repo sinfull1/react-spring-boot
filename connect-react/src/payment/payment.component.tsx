@@ -49,7 +49,7 @@ const GooglePayment: React.FC = () => {
   };
 
   return (
-    <div className="App">
+    <div className="PaymentApp">
       <div className="params">
         <label>
           <span>Default amount:</span>

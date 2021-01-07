@@ -80,7 +80,7 @@ export default class UploadFiles extends Component {
 
 clickView(event)
 {
-  var URL = 'https://ec2-52-66-171-212.ap-south-1.compute.amazonaws.com:8443/api/downloadView?fileName='+event.target.text;
+  var URL = 'https://localhost:8443/api/downloadView?fileName='+event.target.text;
   window.open(URL);
 }
 async publish(data)

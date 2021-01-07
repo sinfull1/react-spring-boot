@@ -44,11 +44,11 @@ public class AuthenticateREST {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Mono<String> login(@RequestBody RegisterRequest ar) {
+    public Mono<String> register() {
         Credential user = new Credential();
-        user.setUsername(ar.getUsername());
-        user.setPassword(passwordEncoder.encode(ar.getPassword()));
-        user.setEmail(ar.getEmail());
+        user.setUsername(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setEmail(UUID.randomUUID().toString());
         user.setSalt(UUID.randomUUID().toString());
         user.setActive(true);
         user.setCreated(Timestamp.from(Instant.now()));
