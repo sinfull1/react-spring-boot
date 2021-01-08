@@ -6,9 +6,7 @@ const API_URL = "https://www.gopaychain.in/event";
 class UserService {
   getPublicContent() {
     return axios.get (API_URL + "all", {
-      headers: {
-        authHeader()
-      }
+      headers:  authHeader()
      });
   }
 

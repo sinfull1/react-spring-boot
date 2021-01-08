@@ -5,8 +5,11 @@ import CSLBlockView from './CSLBlockView';
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 
-const events = new EventSource("https://www.gopaychain.in/getPrices");
 
+if(localStorage.getItem("user"))
+{
+const events = new EventSource("https://www.gopaychain.in/getPrices");
+}
 class CSLContainer  extends Component {
 
 
