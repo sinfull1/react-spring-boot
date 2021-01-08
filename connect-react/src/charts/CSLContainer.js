@@ -6,10 +6,8 @@ import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 
 
-if(localStorage.getItem("user"))
-{
-const events = new EventSource("https://www.gopaychain.in/getPrices");
-}
+
+
 class CSLContainer  extends Component {
 
 
@@ -22,6 +20,7 @@ class CSLContainer  extends Component {
   }
 
   async componentDidMount() {
+    const events = new EventSource("https://www.gopaychain.in/getPrices");
     this.setState({isLoading: true});
     events.onopen = event => console.log('open', event); // <2>
     events.onmessage = event => {
