@@ -116,7 +116,10 @@ class Register extends Component {
 
   render() {
     const { message } = this.props;
-
+    if (successful)
+    {
+      <Redirect to="/home"/>
+    }
     return (
       <div className="col-md-12">
         <div className="card card-container">
