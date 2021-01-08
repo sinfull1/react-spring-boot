@@ -5,6 +5,7 @@ import { max } from 'd3-array';
 import * as d3 from 'd3'
 import { select } from 'd3-selection';
 import './csltrackerview.css';
+import CSLSlider from './CSLSlider';
 
 class CSLTrackerView extends Component {
 
@@ -63,7 +64,10 @@ class CSLTrackerView extends Component {
      }
 
   render(){
-     return ( <div className="csl-tracker-view"> <svg ref={node => this.node =node}>
+     return ( 
+     
+     <div className="csl-tracker-view"> <svg ref={node => this.node =node}>
+        <CSLSlider></CSLSlider>
         <g>
             <g id="axisLeft">
             </g>
