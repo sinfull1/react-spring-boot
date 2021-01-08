@@ -22,7 +22,7 @@ public class SectorGeneratorService {
         return sectorGenerator.get();
     }
     public  Flux<SectorDao> getQuotes() {
-        Flux<Long> interval = Flux.interval(Duration.ofMillis(30));
+        Flux<Long> interval = Flux.interval(Duration.ofMillis(500));
         interval.subscribe((i) -> sectorGenerator.get());
         Flux<SectorDao> messageFlux = Flux.fromStream(Stream.generate(sectorGenerator));
         return Flux.zip(interval, messageFlux).map(Tuple2::getT2);
