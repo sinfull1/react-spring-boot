@@ -116,9 +116,9 @@ class Register extends Component {
 
   render() {
     const { message } = this.props;
-    if (successful)
+    if (this.state.successful)
     {
-      <Redirect to="/home"/>
+      return ( <Redirect to="/home"/>)
     }
     return (
       <div className="col-md-12">
