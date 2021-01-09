@@ -5,7 +5,7 @@ import CSLBlockView from './CSLBlockView';
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
 
-const events = new EventSource("https://www.gopaychain.in/getPrices");
+const events = new EventSource("https://localhost:8443/getPrices");
 
 
 class CSLContainer  extends Component {
@@ -38,13 +38,13 @@ class CSLContainer  extends Component {
 
   render() {
     const {stocks, isLoading} = this.state;
-    console.group(this.state);
      return(
         <div className="stock-group-wrapper">
+           <CSLBlockView stocks={stocks}/>
          <CSLTrackerView stocks={stocks} variable={1}/>
          <CSLTrackerView stocks={stocks}variable={0}/>
          <CSLBarView stocks={stocks}/>
-         <CSLBlockView stocks={stocks}/>
+        
         </div>
     );
   }

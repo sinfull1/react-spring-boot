@@ -1,0 +1,15 @@
+.flux-rate
+{
+    display:flex;
+    padding-left: 15px;
+
+}
+
+.flux-button
+{
+    width:200px;
+    height:30px;
+    margin-left:10px;
+    padding-left:10px;
+
+}
