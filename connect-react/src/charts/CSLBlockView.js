@@ -16,7 +16,7 @@ function CSLBlockView(props) {
               {props.stocks.map(stock =>
                 <tr className="row100">
                   <td>{stock.stockCode}</td>
-                  <td>{stock.stockPrice}</td>
+                  <td>{Math.round(stock.stockPrice)}</td>
                 </tr>
               )}
              </tbody>

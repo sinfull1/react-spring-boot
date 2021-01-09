@@ -1,6 +1,7 @@
 .csl-tracker-view{
-  height:200px;
+  height:100%;
   width:50%;
+  margin-top:20px;
 }
 svg {
 height:100%;

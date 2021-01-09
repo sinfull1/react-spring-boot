@@ -73,8 +73,9 @@ textarea:focus, input:focus {
 }
 
 .csl-block-view {
-  width: 30%;
-  background: #d1d1d1;
+  width: 100%;
+  
+  padding-left: 30px;
 }
 
 
