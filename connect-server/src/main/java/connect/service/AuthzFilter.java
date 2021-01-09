@@ -1,7 +1,6 @@
 package connect.service;
 
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,6 +14,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import org.springframework.stereotype.Component;
+
 @RequiredArgsConstructor
 @Component
 public class AuthzFilter implements WebFilter {
@@ -26,13 +26,21 @@ public class AuthzFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String token = resolveToken(exchange.getRequest());
-        if (exchange.getRequest().getMethod().equals(HttpMethod.OPTIONS) )
+        System.out.println(token);
+        if (exchange.getRequest().getMethod().equals(HttpMethod.OPTIONS)) {
+            System.out.println("prefilght");
             return chain.filter(exchange);
-        if (exchange.getRequest().getHeaders().get("accept").get(0).equals("text/event-stream") )
+        }
+        if (exchange.getRequest().getHeaders().get("accept").get(0).equals("text/event-stream"))
+        {
+            System.out.println("text stream");
             return chain.filter(exchange);
-        if (StringUtils.hasText(token) && jwtUtils.validateToken(token)  ) {
+
+        }
+
+        if (StringUtils.hasText(token) && jwtUtils.validateToken(token)) {
             Authentication authentication = jwtUtils.getAuthentication(token);
-           return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
+            return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
         }
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         return chain.filter(exchange);
