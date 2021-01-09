@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition", "Content-Type"})
+
 @RestController
 public class UploadController {
 

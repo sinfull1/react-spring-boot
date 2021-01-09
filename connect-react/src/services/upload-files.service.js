@@ -1,7 +1,11 @@
 import axios from "axios";
 import {API_URL} from '../settings';
+
 const http = axios.create({
   baseURL: API_URL,
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("user")
+  }
 });
 
 class UploadFilesService {
@@ -12,14 +16,16 @@ class UploadFilesService {
 
     return http.post("/upload", formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/form-data"
       },
       onUploadProgress,
     });
   }
 
   getFiles() {
-    return http.get("/files");
+  return http.get("/files");
+  
+
   }
   getPublishFiles() {
     return http.get("/getPublishFiles");
@@ -29,6 +35,11 @@ class UploadFilesService {
   }
   deleteFile(fileName) {
     return http.get("/deleteFile?fileName="+fileName);
+  }
+
+  getDownloadView(fileName)
+  {
+    return 'https://localhost:8443/api/downloadView?fileName='+fileName;
   }
 
 }

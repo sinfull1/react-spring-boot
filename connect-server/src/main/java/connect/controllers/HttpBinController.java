@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
 import java.util.function.Function;
 
 
-@CrossOrigin(origins = {"*"})
+
 @RestController
 
 public class HttpBinController {

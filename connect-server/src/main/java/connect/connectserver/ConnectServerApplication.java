@@ -33,9 +33,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
-@SpringBootApplication(exclude = {CachesEndpointAutoConfiguration.class})
-@EnableCaching
-
+@SpringBootApplication
 @EnableWebFlux
 @ComponentScan(basePackages = {"connect"})
 public class ConnectServerApplication {
@@ -53,8 +51,7 @@ public class ConnectServerApplication {
         public void addCorsMappings(CorsRegistry corsRegistry) {
             corsRegistry.addMapping("/**")
                     .allowedOrigins("*")
-                    .allowedMethods("PUT,GET")
-                    .maxAge(3600);
+                                        .maxAge(3600);
         }
     }
 
