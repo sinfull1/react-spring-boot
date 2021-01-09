@@ -1,17 +1,15 @@
 import axios from "axios";
 
-const API_URL = "https://www.gopaychain.in/";
+import {AUTH_API_URL} from '../App';
 
 class AuthService {
   login(username, password) {
     return axios
-      .post(API_URL + "login", { username, password })
+      .post(AUTH_API_URL + "login", { username, password })
       .then((response) => {
-        console.log(response);
         if (response.data.token) {
           localStorage.setItem("user", response.data.token);
         }
-
         return response.data;
       });
   }
@@ -21,7 +19,7 @@ class AuthService {
   }
 
   register(username, email, password) {
-    return axios.post(API_URL + "register", {
+    return axios.post(AUTH_API_URL + "register", {
       username,
       email,
       password,

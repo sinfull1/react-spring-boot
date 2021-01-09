@@ -17,6 +17,9 @@ import { clearMessage } from "./actions/message";
 import { history } from './helpers/history';
 import UploadFiles from "./upload/upload-files.component";
 
+
+
+
 import GooglePayment from "./payment/payment.component";
 
 class App extends Component {
@@ -141,5 +144,6 @@ function mapStateToProps(state) {
     user,
   };
 }
-
+export const AUTH_API_URL = "https://localhost:8444/";
+export const API_URL = "https://localhost:8443";
 export default connect(mapStateToProps)(App);

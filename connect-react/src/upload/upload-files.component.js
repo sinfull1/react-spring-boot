@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UploadService from "./upload-files.service";
+import UploadService from "../services/upload-files.service";
 
 import './upload.css';
 
@@ -80,7 +80,7 @@ export default class UploadFiles extends Component {
 
 clickView(event)
 {
-  var URL = 'https://www.gopaychain.in/api/downloadView?fileName='+event.target.text;
+  var URL = 'https://localhost:8443/api/downloadView?fileName='+event.target.text;
   window.open(URL);
 }
 async publish(data)

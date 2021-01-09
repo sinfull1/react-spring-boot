@@ -4,8 +4,9 @@ import CSLBlockView from './CSLBlockView';
 
 import CSLBarView from './CSLBarView';
 import CSLTrackerView from './CSLTrackerView';
+import EventService from '../services/event.service';
 
-const events = new EventSource("https://www.gopaychain.in/getPrices");
+const events = EventService.getPricesDataSource();
 
 
 class CSLContainer  extends Component {
