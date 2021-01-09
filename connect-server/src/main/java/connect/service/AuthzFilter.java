@@ -15,6 +15,8 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class AuthzFilter implements WebFilter {
@@ -31,7 +33,8 @@ public class AuthzFilter implements WebFilter {
             System.out.println("prefilght");
             return chain.filter(exchange);
         }
-        if (exchange.getRequest().getHeaders().get("accept").get(0).equals("text/event-stream"))
+        List<String> gg = exchange.getRequest().getHeaders().get("accept");
+        if (gg != null && gg.get(0).equals("text/event-stream"))
         {
             System.out.println("text stream");
             return chain.filter(exchange);
