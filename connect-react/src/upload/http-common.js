@@ -1,6 +1,6 @@
 import axios from "axios";
-
+import {API_URL} from '../App';
 export default axios.create({
-  baseURL: "https://www.gopaychain.in",
+  baseURL: API_URL,
 });
 

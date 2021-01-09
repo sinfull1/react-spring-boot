@@ -13,7 +13,6 @@ class CSLTrackerView extends Component {
       super(props);
       this.state = {
          chart: null,
-     
       }
       this.drawChart = this.drawChart.bind(this)
       var prevPrice = 0;
@@ -39,9 +38,6 @@ class CSLTrackerView extends Component {
       var margin = { top: 10, right: 40, bottom: 20, left: 40 };
       var width = 500 - margin.left - margin.right;
       var height = 150 - margin.top - margin.bottom;
-      
-    
-      
       //division below is time delta divided in the width
       let widthOfSvg = document.getElementById("tracker").width.baseVal.value - margin.left - margin.right;;
       let xScale = scaleTime().range([0, width]).domain([this.initialTime, this.initialTime+  50 * 1000]).nice();
@@ -49,8 +45,7 @@ class CSLTrackerView extends Component {
       const svg = select(this.node);
       const chart = svg.select('g').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
       const xAxis = chart.select('#axisLeft').call(axisLeft(yScale));
-      const yAxis = chart.select('#axisBottom').attr('transform', "translate(0," + height + ")")
-         .call(axisBottom(xScale));
+      const yAxis = chart.select('#axisBottom').attr('transform', "translate(0," + height + ")") .call(axisBottom(xScale));
       const curve = d3.line().curve(d3.curveNatural);
       var hScale = height / 100;
       const points = [[this.prevTime ,  (height - (this.prevPrice) * hScale)], 
@@ -60,19 +55,14 @@ class CSLTrackerView extends Component {
            .attr('d', curve(points))
            .attr('stroke', 'steelblue')
            .attr('fill', 'none');
-
-      
       if(this.prevTime && this.prevTime>widthOfSvg-75)
       {
          this.prevTime=0
          chart.selectAll("path").remove();
          this.initialTime=Date.now();
-        // this.drawChart();
       }
-      
       this.prevPrice = this.props.stocks.map(s => s.stockPrice)[this.props.variable];
       this.prevTime = this.prevTime +  width/110;
-      console.log(this.prevTime);
    }
 
    render() {

@@ -9,17 +9,18 @@ import { Redirect } from 'react-router-dom';
 import "./events.css";
 import Dropdown from 'react-dropdown';
 import ModalComponent from './modal.component';
+import EventService from '../services/event.service';
 
-let id = Math.random().toString(36).substr(2, 9);
+let subsId = Math.random().toString(36).substr(2, 9);
 
 
 
-let sseEvents = new EventSource("https://www.gopaychain.in/getHttp?subsId=" + id);
+let sseEvents = EventService.getEventGridDataSourceBySubs(subsId);
 sseEvents.onopen = event => console.log('open', event);
 sseEvents.onerror = event => {
   console.log("Server side shut");
   sseEvents.close();
-  sseEvents = new EventSource("https://www.gopaychain.in/getHttp?subsId=" + id);
+  sseEvents = EventService.getEventGridDataSourceBySubs(subsId)
 }
 const savedFilter = [];
 const savedSelectedRows = [];
@@ -54,7 +55,7 @@ export default function Events(props) {
   };
 
   function addRowData(newData) {
-    fetch('https://www.gopaychain.in/event?subsId=' + id + "&event=sample");
+   EventService.getEventDataById(subsId,"sample");
   };
 
   function removeRowData() {
@@ -199,7 +200,7 @@ export default function Events(props) {
   };
 
   const doesExternalFilterPass = (node) => {
-    switch (id) {
+    switch (subsId) {
       case 'below25':
         return true
       default:

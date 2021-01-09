@@ -25,7 +25,9 @@ export default function ContinuousSlider() {
   return (
     <div className="flux-rate">
       <Typography id="continuous-slider" gutterBottom>
-        Flux Rate (Under work)
+        Flux Rate (Under work)y
+
+        
       </Typography>
       <Grid container spacing={2}>
         <Grid item xs>
