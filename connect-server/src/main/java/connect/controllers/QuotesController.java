@@ -13,8 +13,9 @@ import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
 
-@CrossOrigin(origins = {"*"})
+
 @RestController
+
 public class QuotesController {
 
 

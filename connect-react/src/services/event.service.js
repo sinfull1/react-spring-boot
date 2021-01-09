@@ -1,6 +1,12 @@
-import authHeader from "./auth-header";
-import {API_URL} from  '../settings';
 
+import axios from "axios";
+import {API_URL} from  '../settings';
+const http = axios.create({
+  baseURL: API_URL,
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("user")
+  }
+});
 
 class EventService {
 
@@ -8,7 +14,7 @@ class EventService {
     return new EventSource(API_URL+ "/getHttp?subsId=" + id);
   }
   getEventDataById(id, type) {
-    return fetch(API_URL+ "/event?subsId=" + id + "&event=sample");
+    return http.get(API_URL+ "/event?subsId=" + id + "&event=sample");
   }
   getPricesDataSource() {
     return new EventSource(API_URL+"/getPrices");

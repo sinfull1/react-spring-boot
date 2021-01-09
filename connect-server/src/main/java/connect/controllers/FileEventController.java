@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 
-@CrossOrigin(origins = {"*"})
+
 @RestController
 public class FileEventController {
 
