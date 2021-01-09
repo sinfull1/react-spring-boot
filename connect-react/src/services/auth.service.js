@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {AUTH_API_URL} from '../App';
+import {AUTH_API_URL} from '../settings';
 
 class AuthService {
   login(username, password) {

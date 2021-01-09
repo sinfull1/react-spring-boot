@@ -1,5 +1,5 @@
 import authHeader from "./auth-header";
-import {API_URL} from '../App';
+import {API_URL} from  '../settings';
 
 
 class EventService {
