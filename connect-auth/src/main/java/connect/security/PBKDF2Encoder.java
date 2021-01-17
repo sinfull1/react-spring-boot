@@ -13,10 +13,9 @@ import java.util.Base64;
 
 @Component
 @Setter
-public class PBKDF2Encoder implements PasswordEncoder {
+public class PBKDF2Encoder  {
 
-    @Value("${springbootwebfluxjjwt.password.encoder.secret}")
-    private String secret;
+
 
     @Value("${springbootwebfluxjjwt.password.encoder.iteration}")
     private Integer iteration;
@@ -29,8 +28,8 @@ public class PBKDF2Encoder implements PasswordEncoder {
      * @param cs password
      * @return encoded password
      */
-    @Override
-    public String encode(CharSequence cs) {
+
+    public String encode(CharSequence cs, String secret) {
         try {
             byte[] result = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")
                     .generateSecret(new PBEKeySpec(cs.toString().toCharArray(), secret.getBytes(), iteration, keylength))
@@ -39,11 +38,6 @@ public class PBKDF2Encoder implements PasswordEncoder {
         } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public boolean matches(CharSequence cs, String string) {
-        return encode(cs).equals(string);
     }
 
 }

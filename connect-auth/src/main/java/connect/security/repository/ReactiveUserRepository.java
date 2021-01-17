@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 public interface ReactiveUserRepository extends ReactiveCrudRepository<Credential, Integer> {
 
 
-    @Query("SELECT username,password FROM credential where username= $1")
+    @Query("SELECT username,password,salt FROM credential where username= $1")
     Mono<AuthRequest> findByUserName(String username);
 
 }

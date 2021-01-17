@@ -2,6 +2,8 @@ import connect.security.PBKDF2Encoder;
 import org.junit.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.UUID;
+
 public class TestClass {
 
 
@@ -10,10 +12,11 @@ public class TestClass {
     {
         PBKDF2Encoder pe = new PBKDF2Encoder();
         pe.setIteration(33);
-        pe.setKeylength(64);
-        pe.setSecret("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength");
+        pe.setKeylength(256);
+        System.out.println(UUID.randomUUID().toString());
+
         CharSequence chare = "djff";
-        System.out.println(pe.encode(chare));
+        System.out.println(pe.encode(chare,UUID.randomUUID().toString()));
 
 
 

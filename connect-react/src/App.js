@@ -11,7 +11,7 @@ import Home from "./components/home.component";
 import Events from "./components/events.component";
 import CSLContainer from './charts/CSLContainer';
 
-import { logout } from "./actions/auth";
+import { logout } from "./slices/auth.slice";
 import { clearMessage } from "./actions/message";
 
 import { history } from './helpers/history';

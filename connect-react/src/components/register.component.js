@@ -6,7 +6,7 @@ import { isEmail } from "validator";
 import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
-import { register } from "../actions/auth";
+
 
 const required = (value) => {
   if (!value) {
@@ -99,7 +99,7 @@ class Register extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       this.props
         .dispatch(
-          register(this.state.username, this.state.email, this.state.password)
+       //   register(this.state.username, this.state.email, this.state.password)
         )
         .then(() => {
           this.setState({

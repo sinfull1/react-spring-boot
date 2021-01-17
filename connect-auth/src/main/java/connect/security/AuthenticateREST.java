@@ -24,18 +24,19 @@ public class AuthenticateREST {
     @Autowired
     private PBKDF2Encoder passwordEncoder;
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     ReactiveUserRepository repository;
+
+    @Autowired
+    EmailServiceImpl emailService;
 
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public Mono<ResponseEntity<?>> login(@RequestBody AuthRequest ar) {
         return  repository.findByUserName(ar.getUsername()).map(userDetails -> {
-            if (passwordEncoder.encode(ar.getPassword()).equals(userDetails.getPassword())) {
+            if (passwordEncoder.encode(ar.getPassword(),userDetails.getSalt()).equals(userDetails.getPassword())) {
                 return ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails)));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -43,16 +44,25 @@ public class AuthenticateREST {
         }).defaultIfEmpty(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
+
+    @RequestMapping(value = "/logintest", method = RequestMethod.POST, consumes = "application/json")
+    public Mono<ResponseEntity<?>> logintest(@RequestBody AuthRequest ar) {
+
+        return Mono.just(ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(ar))));
+
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Mono<String> login(@RequestBody RegisterRequest ar) {
         Credential user = new Credential();
+        String secret = UUID.randomUUID().toString();
         user.setUsername(ar.getUsername());
-        user.setPassword(passwordEncoder.encode(ar.getPassword()));
+        user.setPassword(passwordEncoder.encode(ar.getPassword(), secret));
         user.setEmail(ar.getEmail());
-        user.setSalt(UUID.randomUUID().toString());
+        user.setSalt(secret);
         user.setActive(true);
         user.setCreated(Timestamp.from(Instant.now()));
-
+      //  emailService.sendSimpleMessage(null,null,null);
         return repository.save(user).flatMap(x->Mono.just(x.getUsername()));
 
     }
