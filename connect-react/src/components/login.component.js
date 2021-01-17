@@ -2,7 +2,8 @@ import React, { useState} from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { useDispatch} from "react-redux";
-import {login} from '../slices/auth.slice'
+import {reload} from '../slices/auth.slice'
+import {Redirect} from "react-router-dom";
 
 const required = (value) => {
     if (!value) {
@@ -25,15 +26,26 @@ export default function Login(props) {
     const onChangePassword = function (e) {
         setPassword(e.target.value);
     }
+    const isLoggedIn = function()
+    {
+        return localStorage.getItem("user");
+    }
 
     const handleLogin =   function (e) {
         e.preventDefault();
         dispatch({ type: "SECURE_LOGIN",payload:{username,password} });
+        const {history} = props;
+        history.push("/home");
+    //    dispatch(reload());
 
-      }
-    return (
+     }
+       return (
+
+           isLoggedIn() ?
+               (<Redirect to="/home"/>):
 
             <div className="col-md-12">
+
                 <div className="card card-container">
                     <img
                         className="profile-img-card"

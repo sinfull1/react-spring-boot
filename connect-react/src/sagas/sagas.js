@@ -1,5 +1,5 @@
 import {call, takeEvery, put} from "redux-saga/effects";
-import {setToken} from "../slices/auth.slice";
+import {setToken,reload} from "../slices/auth.slice";
 import LoginApi from '../api/login.interface';
 
 export function* secureLogin(payload) {
@@ -13,6 +13,7 @@ export function* secureLogin(payload) {
             })
         );
         yield put(setToken({username:username,token:result.data.token}));
+        yield put(reload());
     } catch (e) {
         yield put({type: "TODO_FETCH_FAILED"});
     }

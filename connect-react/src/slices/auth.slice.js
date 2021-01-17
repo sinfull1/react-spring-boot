@@ -22,12 +22,12 @@ const authSlice = createSlice({
         logout(state, action) {
             localStorage.removeItem("user");
         },
-        registerSuccess(state,action) {
-            state.message ="Succesfull";
+        reload(state,action) {
+            window.location.reload();
         }
     }
 })
 
-export const { setToken, logout} = authSlice.actions;
+export const { reload, setToken, logout} = authSlice.actions;
 
 export default authSlice.reducer;
