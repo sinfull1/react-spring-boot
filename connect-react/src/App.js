@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import {connect, useSelector} from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,57 +10,20 @@ import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Events from "./components/events.component";
 import CSLContainer from './charts/CSLContainer';
-
 import { logout } from "./slices/auth.slice";
 import { clearMessage } from "./actions/message";
-
 import { history } from './helpers/history';
 import UploadFiles from "./upload/upload-files.component";
 
-
-
-
 import GooglePayment from "./payment/payment.component";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.logOut = this.logOut.bind(this);
+export default function App(props) {
 
-    this.state = {
-      showModeratorBoard: false,
-      showAdminBoard: false,
-      currentUser: undefined,
-    };
-
-    history.listen((location) => {
-      props.dispatch(clearMessage()); // clear message when changing location
-    });
-  }
-
-  componentDidMount() {
-    const user = this.props.user;
-
-    if (user) {
-      this.setState({
-        currentUser: user,
-        
-      });
-    }
-  }
-  isLoggedIn()
-  {
-           return AuthService.isLoggedIn();
-  }
+  const token = useSelector(state => state.token);
+  const currentUser = useSelector(state => state.username);
 
 
 
-  logOut() {
-    this.props.dispatch(logout());
-  }
-
-  render() {
-    let currentUser = localStorage.getItem("user");
     return (
       <Router history={history}>
         <div>
@@ -136,13 +99,6 @@ class App extends Component {
       </Router>
     );
   }
-}
 
-function mapStateToProps(state) {
-  const { user } = state.auth;
-  return {
-    user,
-  };
-}
 
-export default connect(mapStateToProps)(App);
+

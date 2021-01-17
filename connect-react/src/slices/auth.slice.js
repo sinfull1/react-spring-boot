@@ -1,28 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit'
 import LoginApi from "../api/login.interface";
+import {useDispatch} from "react-redux";
 let initialState =  {
    username: "",
    password:"",
-   token:""
+   token:"",
+   message:""
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        async login(state, action) {
-            const { username, password } = action.payload
-            const response=  await LoginApi(username, password);
-            response.then(res=>{
-                console.log(res);
-            })
+        setToken(state, action) {
+           localStorage.setItem("user",action.payload.token) ;
+           return {
+               username: action.payload.username,
+               token: action.payload.token
+           }
         },
         logout(state, action) {
             localStorage.removeItem("user");
+        },
+        registerSuccess(state,action) {
+            state.message ="Succesfull";
         }
     }
 })
 
-export const { login, logout} = authSlice.actions;
+export const { setToken, logout} = authSlice.actions;
 
 export default authSlice.reducer;

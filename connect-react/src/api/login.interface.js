@@ -1,21 +1,13 @@
-import axios from 'axios'
+import Axios from "axios";
+class LoginApi{
 
-
-
-
-
-export default async function LoginApi(username,password){
-
-    const AUTH_API_URL = 'https://localhost:8444/'
-    try {
-        return axios.post(AUTH_API_URL + "login", {username,password}).then(response =>{
-        if (response.data.token) {
-            localStorage.setItem("user", response.data.token);
-        }}
-
-        );
-       } catch (err) {
-        throw err
-    }
+    callAPI = async ({url, method, data}) => {
+        return Axios({
+            url,
+            method,
+            data
+        });
+    };
 }
 
+export default new LoginApi();

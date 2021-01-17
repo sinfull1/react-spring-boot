@@ -1,5 +1,4 @@
 import React, { useState} from "react";
-import {Redirect} from 'react-router-dom';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { useDispatch} from "react-redux";
@@ -27,20 +26,13 @@ export default function Login(props) {
         setPassword(e.target.value);
     }
 
-    const handleLogin = async function (e) {
+    const handleLogin =   function (e) {
         e.preventDefault();
-        setLoading(true);
-        const response = await dispatch(login({username, password}))
-        console.log(response);
-        const { history } = props;
-        history.push("/home");
-        setLoading(false);
-        setMessage("Logged in");
-        window.location.reload();
-    }
+        dispatch({ type: "SECURE_LOGIN",payload:{username,password} });
+
+      }
     return (
-        { message } === "Logged in" ?
-            <Redirect to="/home"/>:
+
             <div className="col-md-12">
                 <div className="card card-container">
                     <img
