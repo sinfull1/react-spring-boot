@@ -10,7 +10,7 @@ export function* secureLogin(payload) {
         const {username, password} = payload.payload
         let result = yield call(() =>
             LoginApi.callAPI({
-                url: AUTH_API_URL+"login",
+                url: AUTH_API_URL+"/login",
                 method: "POST",
                 data: {username: username, password: password}
             })
