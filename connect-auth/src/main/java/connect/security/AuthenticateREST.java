@@ -32,7 +32,11 @@ public class AuthenticateREST {
     EmailServiceImpl emailService;
 
 
-
+    @RequestMapping(value = "/")
+    public String base()
+    {
+        return "true";
+    }
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public Mono<ResponseEntity<?>> login(@RequestBody AuthRequest ar) {
         return  repository.findByUserName(ar.getUsername()).map(userDetails -> {
