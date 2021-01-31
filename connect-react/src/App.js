@@ -8,6 +8,8 @@ import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Events from "./components/events.component";
+import Booking from "./components/booking.component";
+
 import CSLContainer from './charts/CSLContainer';
 import { logout } from "./slices/auth.slice";
 
@@ -19,7 +21,7 @@ import Header from "./components/header.component";
 
 export default function App(props) {
 
-  const token = useSelector(state => state.token);
+
   const currentUser = localStorage.getItem("user");
 
 
@@ -36,9 +38,9 @@ export default function App(props) {
               :<Route exact path="/upload"   component={Login} />}
               {currentUser ?<Route exact path="/eventGrid"   component={Events} />
               :<Route exact path="/eventGrid"   component={Login} />}
-              
               <Route exact path="/d3" component = {CSLContainer} />
               <Route exact path="/payment" component = {GooglePayment} />
+              <Route exact path="/book" component = {Booking} />
             
             </Switch>
           </div>

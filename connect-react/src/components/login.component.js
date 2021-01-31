@@ -33,11 +33,9 @@ export default function Login(props) {
 
     const handleLogin =   function (e) {
         e.preventDefault();
-        dispatch({ type: "SECURE_LOGIN",payload:{username,password} });
+        dispatch({ type: "SECURE_LOGIN", payload:{username,password} });
         const {history} = props;
         history.push("/home");
-    //    dispatch(reload());
-
      }
        return (
 

@@ -40,6 +40,7 @@ import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderOptions;
 import reactor.kafka.sender.SenderRecord;
 
+
 /**
  * Sample producer application using Reactive API for Kafka.
  * To run sample producer
@@ -55,10 +56,8 @@ import reactor.kafka.sender.SenderRecord;
 public class KafkaPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class.getName());
-
-    private static final String BOOTSTRAP_SERVERS = "localhost:9092";
+    private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
     private static final String TOPIC = "demo-topic";
-
     private   KafkaSender<Integer, String> sender;
     private  SimpleDateFormat dateFormat;
 
@@ -75,9 +74,6 @@ public class KafkaPublisher {
         sender = KafkaSender.create(senderOptions);
         dateFormat = new SimpleDateFormat("HH:mm:ss:SSS z dd MMM yyyy");
     }
-
-
-
     public void sendMessages(String topic) throws InterruptedException {
         Random random = new Random();
         sender.<Integer>send(Flux.interval(Duration.ofSeconds(1))
@@ -94,10 +90,12 @@ public class KafkaPublisher {
                             dateFormat.format(new Date(metadata.timestamp())));
                 });
     }
-
     public void close() {
         sender.close();
     }
-
+    public static void main(String[] args) throws InterruptedException {
+        KafkaPublisher kf = new KafkaPublisher();
+        kf.sendMessages(TOPIC);
+    }
 
 }

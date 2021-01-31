@@ -1,0 +1,40 @@
+
+.Sample input,
+.Sample button {
+  font: inherit;
+}
+.Sample  {
+  width:100%;
+
+}
+
+.Sample header {
+  background-color: #323639;
+  width:100%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  color: white;
+}
+.Sample header h1 {
+  font-size: inherit;
+  margin: 0;
+}
+
+.Sample__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  
+}
+.Sample__container > * > * {
+  margin: 10px;
+}
+.Sample__container__content {
+  display: flex;
+  max-width: 25%;
+  flex-basis: 420px;
+  flex-direction: column;
+  flex-grow: 100;
+  align-items: stretch;
+}

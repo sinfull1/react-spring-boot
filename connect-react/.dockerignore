@@ -1,0 +1,8 @@
+./node_modules
+./settings
+./target
+./e2e
+./public
+.git
+*.md
+.gitignore

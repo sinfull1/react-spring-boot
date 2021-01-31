@@ -1,23 +1,22 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import {useDispatch} from "react-redux";
-import {logout} from "../slices/auth.slice";
+import {useDispatch, useSelector} from "react-redux";
+import {logout, reload} from "../slices/auth.slice";
 
 
 export default function Header(props)
 {
     const dispatch = useDispatch();
-
     function signOut() {
         dispatch(logout());
+        dispatch(reload());
     }
-
+    const user = localStorage.getItem("name")
     return (
-
         <div className="container">
             <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <Link to={"/"} className="navbar-brand">
-                    Sid Blog
+                    {user} Blog
                 </Link>
                 <div className="navbar-nav mr-auto">
                     <li className="nav-item">

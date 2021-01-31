@@ -36,7 +36,6 @@ class UploadFilesService {
   deleteFile(fileName) {
     return http.get("/deleteFile?fileName="+fileName);
   }
-
   getDownloadView(fileName)
   {
     return 'https://localhost:8443/api/downloadView?fileName='+fileName;

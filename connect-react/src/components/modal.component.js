@@ -36,7 +36,6 @@ export default function ModalComponent(props){
   }
  
     return (
-       
         <>
         <button className="button" onClick={openModal}>{props.titleName}</button>
         <Modal
@@ -46,17 +45,13 @@ export default function ModalComponent(props){
           style={customStyles}
           contentLabel="Example Modal"
         >
- 
-       
-         <form onSubmit={closeModal}>
+        <form onSubmit={closeModal}>
                 <label>
                 Provide a Name
                 <input type="text" value={props.textvalue} onChange={handleChange}  />
                 </label>
                 <input className="button" type="submit" value="Submit" />
           </form>
-           
-      
         </Modal>
      </>
     );
