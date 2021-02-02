@@ -120,7 +120,7 @@ async delete(data)
     } = this.state;
     console.table(publishInfo);
       return (
-      <div>
+      <div className="upload">
         {currentFile && progress!=100 &&(
           <div className="progress">
             <div

@@ -10,8 +10,8 @@ export default function CheckboxLabels(props) {
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: false,
-    checkedF: false,
-    checkedG: false,
+    checkedC: false,
+    checkedD: false,
   });
 
   const handleChange = (event) => {
@@ -25,7 +25,7 @@ export default function CheckboxLabels(props) {
         control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
         label="Flights"
       />
- <FormControlLabel
+    <FormControlLabel
         control={<Checkbox checked={state.checkedB} onChange={handleChange} name="checkedB" />}
         label="Trains"
       />

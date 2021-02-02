@@ -19,11 +19,12 @@ const useStyles = makeStyles((theme) => ({
 export default function TravelStub(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  let check = useSelector(state => state.travel.checked)
- 
+  let check = useSelector(state => props.way==="return"?state.travel.checked[1]:state.travel.checked[0])
   let origin = useSelector(state => state.travel.origin);
   let destination = useSelector(state => state.travel.destination);
-  const [checked, setChecked] = React.useState(props.way==="return"?check[1]:check[0] );
+
+
+  //const [checked, setChecked] = React.useState(props.way==="return"?check[1]:check[0] );
   if(props.way==="return")
   {
       [origin,destination] =[destination,origin]
@@ -33,12 +34,13 @@ export default function TravelStub(props) {
   let flights = origin + " TO "+ destination + " Rs."+Math.random()*1000 + "  Timing:" + new Date().toLocaleTimeString()
 
   const handleToggle = (value) => () => {
-    setChecked([value]);
+    
     dispatch({type:"SET_FLIGHT", payload:{flights:flights,checked:[value],way: props.way}})
   
   };
 
   return (
+    (props.show &&origin.length>6 && destination.length>6 && origin!==destination?
     <List dense className={classes.root}>
       {[0, 1, 2, 3].map((value) => {
         const labelId = `checkbox-list-secondary-label-${value}`;
@@ -55,13 +57,13 @@ export default function TravelStub(props) {
               <Checkbox
                 edge="end"
                 onChange={handleToggle(value)}
-                checked={checked.indexOf(value) !== -1}
+                checked={check.indexOf(value) !== -1}
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             </ListItemSecondaryAction>
           </ListItem>
         );
       })}
-    </List>
-  );
+    </List>:null
+  ));
 }

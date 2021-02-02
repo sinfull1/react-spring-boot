@@ -20,20 +20,11 @@
    
 }
 
-.form-control
-{
-    width: 40%;
-    background-color: whitesmoke;
-    margin-left:30px;
-    margin-right:30px;
-}
 
 .show-flight
 {
 width:100;
 box-shadow: 0 0 8px rgba(0, 0, 0, .5);
-
-
 }
 
 

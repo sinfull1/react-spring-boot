@@ -6,6 +6,12 @@ input{
     display:inline;
 }
 
+.upload{
+
+  margin-left:15px;
+  margin-top:  15px;
+  margin-right:10px;
+}
 .a-upload{
 margin-left: 20px;
 cursor: pointer;

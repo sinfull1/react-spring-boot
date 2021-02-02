@@ -1,5 +1,5 @@
 import Autosuggest from 'react-autosuggest';
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import { useDispatch, useSelector} from "react-redux";
 import {airports} from '../../api/data';
 import './airportsuggest.css';
@@ -61,16 +61,21 @@ var _ = require('lodash');
     const [value, setValue] = useState(props.place);
     const [suggestions, setSuggestions] = useState([]);
     const dispatch = useDispatch();
+  
+
 
   
    const  onChange = function (event, { newValue, method }){
       setValue( newValue)
       if(props.fromto==="Origin") dispatch({ type: "SET_ORIGIN", payload:{newValue} });
       if(props.fromto==="Destination")  dispatch({ type: "SET_DESTINATION", payload:{newValue} });
+      dispatch({type:"SET_FLIGHT", payload:{flights:"",checked:[],way: "one"}})
+      dispatch({type:"SET_FLIGHT", payload:{flights:"",checked:[],way: "return"}}) 
     };
 
     const onClick = (event) => {
         event.target.select();
+   
       };
     
    const onSuggestionsFetchRequested = function ({ value })  {
@@ -87,7 +92,8 @@ var _ = require('lodash');
         placeholder: props.fromto,
         value,
         onChange: onChange,
-        onClick: onClick
+        onClick: onClick,
+        ref: props.refer
       };
   
       return (

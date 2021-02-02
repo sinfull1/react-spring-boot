@@ -26,10 +26,13 @@ const authSlice = createSlice({
         },
         reload(state,action) {
             window.location.reload();
+        },
+        setMessage(state, action){
+            state.message = "Registation Succefull";
         }
     }
 })
 
-export const { reload, setToken, logout} = authSlice.actions;
+export const { reload, setToken, logout, setMessage} = authSlice.actions;
 
 export default authSlice.reducer;

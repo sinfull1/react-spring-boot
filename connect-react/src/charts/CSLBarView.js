@@ -42,7 +42,8 @@ class CSLBarView extends Component {
 
 
   render(){
-     return ( <div className="csl-bar-view"> <svg ref={node => this.node =node}>
+     return ( <div className="csl-bar-view"> 
+     <svg ref={node => this.node =node} id="bar-view">
         <g>
             <g id="axisLeft">
             </g>

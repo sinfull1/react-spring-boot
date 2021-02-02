@@ -15,7 +15,7 @@ class MasterForm extends React.Component {
         password: '', 
       }
     }
-     
+    
   
     handleChange = event => {
       event.preventDefault();
@@ -70,7 +70,26 @@ class MasterForm extends React.Component {
   
   nextButton(){
     let currentStep = this.state.currentStep;
-    if(currentStep <3){
+    
+    if(currentStep ==1){
+      return (
+        <button 
+          className="btn btn-primary float-right" 
+          type="button" onClick={this._next}>
+        Next
+        </button>        
+      )
+    }
+    if(currentStep ==2){
+      return (
+        <button 
+          className="btn btn-primary float-right" 
+          type="button" onClick={this._next}>
+        Next
+        </button>        
+      )
+    }
+    if(currentStep ==3){
       return (
         <button 
           className="btn btn-primary float-right" 

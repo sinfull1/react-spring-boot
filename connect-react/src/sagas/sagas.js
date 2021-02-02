@@ -1,5 +1,5 @@
 import {call, takeEvery, put} from "redux-saga/effects";
-import {setToken,reload} from "../slices/auth.slice";
+import {setToken,reload,setMessage} from "../slices/auth.slice";
 import {setOrigin,setDestination,setDates,setFlight} from "../slices/travel.slice";
 import LoginApi from '../api/login.interface';
 import {AUTH_API_URL} from '../settings';
@@ -34,7 +34,8 @@ export function* secureRegister(payload) {
                 data: {username: username, email:email, password: password}
             })
         );
-      //  yield put(setToken({username:username,token:result.data.token}));
+
+       yield put(setMessage("Registration Sucessful"));
         yield put(reload());
     } catch (e) {
         yield put({type: "TODO_FETCH_FAILED"});
