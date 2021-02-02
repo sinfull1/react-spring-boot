@@ -5,7 +5,7 @@ export default function Step2(props) {
     } 
     return(
       <div className="form-group">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Traveller's Name</label>
         <input
           className="form-control"
           id="username"
@@ -16,7 +16,7 @@ export default function Step2(props) {
           onChange={props.handleChange}
           />
 
-     <label htmlFor="email">email</label>
+     <label htmlFor="email">Traveller's Email</label>
         <input
           className="form-control"
           id="email"
@@ -26,6 +26,18 @@ export default function Step2(props) {
           value={props.email}
           onChange={props.handleChange}
           />
+      <label htmlFor="email">Traveller's Phone</label>
+        <input
+          className="form-control"
+          id="phone"
+          name="phone"
+          type="number"
+          placeholder="Enter Phone"
+          value={props.email}
+          onChange={props.handleChange}
+          />
+
+
       </div>
     );
   }

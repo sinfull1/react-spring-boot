@@ -11,7 +11,8 @@ export default function Step3(props) {
     
     return(
       <React.Fragment>
-     {flights}
+      <p>{flights[0]}</p>
+      <p>{flights[1]}</p>
       <GooglePayment></GooglePayment>
     
       </React.Fragment>

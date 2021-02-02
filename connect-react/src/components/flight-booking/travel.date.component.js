@@ -7,8 +7,8 @@ const now = new Date();
 
 
 export default function Sample() {
-    const yesterdayBegin = new Date(useSelector( state=> state.travel.dates[0]));
-    const todayEnd = new Date(useSelector( state=> state.travel.dates[1]));
+  const yesterdayBegin = new Date(useSelector( state=> state.travel.dates[0]));
+  const todayEnd = new Date(useSelector( state=> state.travel.dates[1]));
   const [value, onChange] = useState([yesterdayBegin, todayEnd]);
   const dispatch = useDispatch();
   let dates =[]

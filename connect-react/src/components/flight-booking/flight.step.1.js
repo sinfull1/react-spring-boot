@@ -41,7 +41,7 @@ export default function Step1(props) {
                 <TravelDates></TravelDates>
             </div>
             <div className="step-1-checkgroup">
-                <button className="btn btn-secondary  btn-sm btn-block grey" onClick={onClick} >Press me</button>
+                <button className="btn btn-secondary  btn-sm btn-block grey" onClick={onClick} >Show Travel Options</button>
             </div>
 
             {toggle?<TravelStub way="one"></TravelStub>:null}

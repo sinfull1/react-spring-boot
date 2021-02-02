@@ -22,6 +22,25 @@ export function* secureLogin(payload) {
     }
 }
 
+
+
+export function* secureRegister(payload) {
+    try {
+        const {username,email, password} = payload.payload
+        let result = yield call(() =>
+            LoginApi.callAPI({
+                url: AUTH_API_URL+"/register",
+                method: "POST",
+                data: {username: username, email:email, password: password}
+            })
+        );
+      //  yield put(setToken({username:username,token:result.data.token}));
+        yield put(reload());
+    } catch (e) {
+        yield put({type: "TODO_FETCH_FAILED"});
+    }
+}
+
 export function* setOriginValue(payload)
 {
    yield put(setOrigin(payload))
@@ -45,6 +64,7 @@ export function* setFlightValues(payload)
 
 export default function* rootSaga() {
     yield takeEvery("SECURE_LOGIN", secureLogin);
+    yield takeEvery("SECURE_REGISTER", secureRegister);
     yield takeEvery("SET_ORIGIN", setOriginValue);
     yield takeEvery("SET_DESTINATION", setDestinationValue);
     yield takeEvery("SET_DATES", setDateValues);
