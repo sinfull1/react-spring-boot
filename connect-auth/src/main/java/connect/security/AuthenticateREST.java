@@ -39,13 +39,8 @@ public class AuthenticateREST {
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public Mono<ResponseEntity<?>> login(@RequestBody AuthRequest ar) {
-        return  repository.findByUserName(ar.getUsername()).map(userDetails -> {
-            if (passwordEncoder.encode(ar.getPassword(),userDetails.getSalt()).equals(userDetails.getPassword())) {
-                return ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails)));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-        }).defaultIfEmpty(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+        return getToken(ar);
+
     }
 
 
@@ -60,8 +55,19 @@ public class AuthenticateREST {
         user.setActive(true);
         user.setCreated(Timestamp.from(Instant.now()));
         repository.save(user).flatMap(x->Mono.just(x.getUsername())).block();
-        return this.login(new AuthRequest(ar.getUsername(),ar.getPassword(),null));
+        ResponseEntity<?>  token =  getToken(new AuthRequest(ar.getUsername(),ar.getPassword(),null)).block();
+        return Mono.just(token);
 
+    }
 
+    private Mono<ResponseEntity<?>> getToken(AuthRequest ar)
+    {
+      return  repository.findByUserName(ar.getUsername()).map(userDetails -> {
+            if (passwordEncoder.encode(ar.getPassword(),userDetails.getSalt()).equals(userDetails.getPassword())) {
+                return ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(userDetails)));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }).defaultIfEmpty(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 }
