@@ -1,5 +1,39 @@
-import React from "react";
+import React,{useState} from "react";
+import {useDispatch } from 'react-redux';
+
 export default function Step2(props) {
+
+   const [name, setName] = useState("");
+   const [email, setEmail] = useState("");
+   const [phone, setPhone] = useState();
+   const dispatch = useDispatch();
+   const handleuChange= function(event)
+   {
+    setName(event.target.value);
+   }
+   const handleeChange= function(event)
+   {
+     
+    setEmail(event.target.value);
+   }
+
+   const handlepChange= function(event)
+   {
+    setPhone(event.target.value);
+   }
+
+
+   const onClick = function (event) {
+    event.preventDefault();
+
+    if(name && email && phone)
+    {
+      dispatch({ type: "SET_TRAVELLER_DETAILS", payload: { name: name, email:email, phone:phone } });
+    }
+}
+   
+
+
     if (props.currentStep !== 2) {
       return null
     } 
@@ -8,12 +42,13 @@ export default function Step2(props) {
         <label htmlFor="username">Traveller's Name</label>
         <input
           className="form-control"
-          id="username"
-          name="username"
+          id="name"
+          name="name"
           type="text"
           placeholder="Enter username"
-          value={props.username}
-          onChange={props.handleChange}
+          value={name}
+          onChange={handleuChange}
+          autocomplete="on"
           />
 
      <label htmlFor="email">Traveller's Email</label>
@@ -23,8 +58,9 @@ export default function Step2(props) {
           name="email"
           type="text"
           placeholder="Enter Email"
-          value={props.email}
-          onChange={props.handleChange}
+          value={email}
+          onChange={handleeChange}
+          autocomplete="on"
           />
       <label htmlFor="email">Traveller's Phone</label>
         <input
@@ -33,10 +69,13 @@ export default function Step2(props) {
           name="phone"
           type="number"
           placeholder="Enter Phone"
-          value={props.email}
-          onChange={props.handleChange}
+          value={phone}
+          onChange={handlepChange}
+          autocomplete="on"
           />
-
+          <div className="step-1-checkgroup">
+                <button className="btn btn-secondary btn-sm btn-block grey" onClick={onClick} >Set Traveller</button>
+            </div>
 
       </div>
     );

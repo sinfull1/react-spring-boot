@@ -105,7 +105,7 @@ export default function Register(props) {
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
-              <span>Login</span>
+              <span>Register</span>
             </button>
           </div>
 

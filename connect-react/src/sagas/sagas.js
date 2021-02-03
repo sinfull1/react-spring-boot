@@ -1,6 +1,6 @@
 import {call, takeEvery, put} from "redux-saga/effects";
 import {setToken,reload,setMessage} from "../slices/auth.slice";
-import {setOrigin,setDestination,setDates,setTravel,setOriginFlight,setDestinationFlight} from "../slices/travel.slice";
+import {setTotal,setOrigin,setDestination,setDates,setTravel,setOriginFlight,setDestinationFlight,setTravelDetails, setTravellerDetails} from "../slices/travel.slice";
 import LoginApi from '../api/login.interface';
 import {AUTH_API_URL,API_URL} from '../settings';
 
@@ -35,7 +35,7 @@ export function* secureRegister(payload) {
             })
         );
 
-       yield put(setMessage("Registration Sucessful"));
+        yield put(setToken({username:username,token:result.data.token}));
         yield put(reload());
     } catch (e) {
         yield put({type: "TODO_FETCH_FAILED"});
@@ -52,8 +52,6 @@ export function* getTravel(payload) {
                 method: "POST",
                 data: {origin: origin, destination:destination, travelDate: travelDate},
                 headers: {Authorization: "Bearer "+localStorage.getItem("token")}
-                
-
             })
         );
 
@@ -87,6 +85,21 @@ export function* setDestinationFlightValues(payload)
    yield put(setDestinationFlight(payload))
 }
 
+export function* setTravelDetail(payload)
+{
+   yield put(setTravelDetails(payload))
+}
+
+
+export function* setTotalDisplay(payload)
+{
+   yield put(setTotal(payload))
+}
+
+export function* setTravellerDisplayDetails(payload)
+{
+   yield put(setTravellerDetails(payload))
+}
 
 export default function* rootSaga() {
     yield takeEvery("SECURE_LOGIN", secureLogin);
@@ -97,4 +110,7 @@ export default function* rootSaga() {
     yield takeEvery("SET_ORIGIN_FLIGHT", setOriginFlightValues);
     yield takeEvery("SET_DESTINATION_FLIGHT", setDestinationFlightValues);
     yield takeEvery("SET_TRAVEL", getTravel);
+    yield takeEvery("SET_TRAVELLER", setTravelDetail);
+    yield takeEvery("SET_TOTAL", setTotalDisplay);
+    yield takeEvery("SET_TRAVELLER_DETAILS", setTravellerDisplayDetails);
 }

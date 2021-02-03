@@ -1,4 +1,6 @@
+
 import { createSlice } from '@reduxjs/toolkit'
+
 
 
 let initialState = {
@@ -8,7 +10,11 @@ let initialState = {
     dates: [new Date().toLocaleDateString(), new Date().toLocaleDateString()],
     flight: ["", ""],
     checked: [[], []],
-    travels:[]
+    travels:[],
+    travelDetails:{},
+    total:0,
+    traveller:[]
+    
 }
 
 const travelSlice = createSlice({
@@ -26,23 +32,36 @@ const travelSlice = createSlice({
             state.dates = action.payload.payload.dates
         },
         setOriginFlight(state, action) {
-                state.flight[0] = action.payload.payload.flights
+                
                 state.checked[0] = action.payload.payload.checked
  
         },
         setDestinationFlight(state, action) {
-                state.flight[1] = action.payload.payload.flights
+                
                 state.checked[1] = action.payload.payload.checked
           
         },
         setTravel(state,action){
             state.travels = action.payload;
              
-        }
+        },
 
+        setTravelDetails(state,action)
+        {
+            state.travelDetails=action.payload;
+        },
+
+        setTotal(state,action)
+        {
+            state.total = action.payload.payload.total;
+        },
+        setTravellerDetails(state,action)
+        {
+            state.traveller = action.payload.payload;
+        }
     }
 })
 
-export const { setOrigin, setDestination, setDates, setOriginFlight ,setDestinationFlight, setTravel} = travelSlice.actions;
+export const { setTravellerDetails,setTotal, setTravelDetails,setOrigin, setDestination, setDates, setOriginFlight ,setDestinationFlight, setTravel} = travelSlice.actions;
 
 export default travelSlice.reducer;

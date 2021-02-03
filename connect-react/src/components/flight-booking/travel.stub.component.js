@@ -39,12 +39,19 @@ export default function TravelStub(props) {
   if(travels.length>0)
   {
     flights = travels.map(travel =>{  
-         return  " Price Rs."+travel.price 
-                  + " Travel Date:" + dates[props.way==="return"?1:0]
-                  + " Depature Time: "   + new Date(travel.departureTime).toLocaleTimeString()
-                  + " Arrival Time: "   + new Date(travel.arrivalTime).toLocaleTimeString();
-  });
-  }                    
+         return  {price: travel.price,
+                  travelDate: dates[props.way==="return"?1:0],
+                  departureTime: new Date(travel.departureTime).toLocaleTimeString(),
+                  arrivalTime: new Date(travel.arrivalTime).toLocaleTimeString()        
+                 }});
+  }          
+  
+  const getString= function(value)
+  {
+    return "Price: " + value.price+ " Travel Date:" + value.travelDate + " Departure Date: " + value.departureTime + 
+    " Arrival Time:" + value.arrivalTime;
+
+  }
   return (
     (props.show &&origin.length>6 && destination.length>6 && origin!==destination?
     <List dense className={classes.root}>
@@ -59,11 +66,11 @@ export default function TravelStub(props) {
                 src={`spicejet.png`}
               />
             </ListItemAvatar>
-            <ListItemText id={labelId} primary={value} secondary="SpiceJet" />
+            <ListItemText id={labelId} primary={getString(value)} secondary="SpiceJet" />
             <ListItemSecondaryAction>
               <Checkbox
                 edge="end"
-                onChange={props.toggle(index,flights)}
+                onChange={props.toggle(index)}
                 checked= {check.indexOf(index) !== -1}
                 inputProps={{ 'aria-labelledby': labelId }}
               />

@@ -1,66 +1,41 @@
-import React, { Component,Fragment} from "react";
+import React, { useState} from "react";
 import Step1 from './flight.step.1';
 import Step2 from './flight.step.2';
 import Step3 from './flight.step.3';
 import {useSelector} from 'react-redux';
 import './flight.css';
 
-class MasterForm extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        currentStep: 1,
-        email:  '',
-        username: '',
-        password: '', 
-      }
-    }
-    
-  
-    handleChange = event => {
-      event.preventDefault();
-      const {name, value} = event.target
-      this.setState({
-        [name]: value
-      })    
-    }
+export default function MasterForm(props) {
      
-    handleSubmit = event => {
+    const [currentStep, setCurrentStep] =useState(1);
+    const check= useSelector(state=> state.travel.checked);
+    const traveller= useSelector(state=> state.travel.traveller);
+
+    const handleSubmit  = function(event) {
       event.preventDefault();
-      const { email, username, password } = this.state
-      alert(`Your registration detail: \n 
-             Email: ${email} \n 
-             Username: ${username} \n
-             Password: ${password}`)
-             event.preventDefault();
     }
     
-    _next = () => {
-      let currentStep = this.state.currentStep
-      currentStep = currentStep >= 2? 3: currentStep + 1
-      this.setState({
-        currentStep: currentStep
-      })
+   const  _next = function(){
+      let newStep = currentStep;
+      newStep = newStep >= 2? 3: newStep + 1
+      setCurrentStep( newStep);
     }
       
-    _prev = () => {
-      let currentStep = this.state.currentStep
-      currentStep = currentStep <= 1? 1: currentStep - 1
-      this.setState({
-        currentStep: currentStep
-      })
+   const _prev = function() {
+    let newStep = currentStep;
+    newStep = newStep <= 1? 1: newStep - 1
+      setCurrentStep( newStep);
     }
   
   /*
   * the functions for our button
   */
-  previousButton() {
-    let currentStep = this.state.currentStep;
-    if(currentStep !==1){
+  const previousButton =function(){
+        if(currentStep !==1){
       return (
         <button 
           className="btn btn-secondary" 
-          type="button" onClick={this._prev}>
+          type="button" onClick={_prev}>
         Previous
         </button>
       )
@@ -68,23 +43,21 @@ class MasterForm extends React.Component {
     return null;
   }
   
-  nextButton(){
-    let currentStep = this.state.currentStep;
-    
-    if(currentStep ==1){
+  const nextButton= function() {
+    if(currentStep ==1 && check[0].length>0 && check[1].length>0){
       return (
         <button 
           className="btn btn-primary float-right" 
-          type="button" onClick={this._next}>
+          type="button" onClick={_next}>
         Next
         </button>        
       )
     }
-    if(currentStep ==2){
+    if(currentStep ==2 && traveller.email && traveller.email.length>0){
       return (
         <button 
           className="btn btn-primary float-right" 
-          type="button" onClick={this._next}>
+          type="button" onClick={_next}>
         Next
         </button>        
       )
@@ -93,7 +66,7 @@ class MasterForm extends React.Component {
       return (
         <button 
           className="btn btn-primary float-right" 
-          type="button" onClick={this._next}>
+          type="button" onClick={_next}>
         Next
         </button>        
       )
@@ -101,44 +74,37 @@ class MasterForm extends React.Component {
     return null;
   }
     
-    render() {    
+     
       return (
         <div className="flightContainer">
         <h4>Travel Assistant</h4>
         <div className ="statebar">
-        {this.state.currentStep==1?<p className="steplight">Plan</p> : <p>Plan</p>}
-        {this.state.currentStep==2?<p className="steplight">Reserve</p> : <p>Reserve</p>}
-        {this.state.currentStep==3?<p className="steplight">Pay</p> : <p>Pay</p>}
+        { currentStep==1?<p className="steplight">Plan</p> : <p>Plan</p>}
+        { currentStep==2?<p className="steplight">Reserve</p> : <p>Reserve</p>}
+        { currentStep==3?<p className="steplight">Pay</p> : <p>Pay</p>}
         </div>
-        <form onSubmit={this.handleSubmit}>
+        <form >
         {/* 
           render the form steps and pass required props in
         */}
 
-          <Step1 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            email={this.state.email}
+          <Step1         currentStep={ currentStep} 
+
           />
           <Step2 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            username={this.state.username}
+            currentStep={ currentStep} 
+     
           />
           <Step3 
-            currentStep={this.state.currentStep} 
-            handleChange={this.handleChange}
-            password={this.state.password}
+            currentStep={ currentStep} 
+  
           />
-          {this.previousButton()}
-          {this.nextButton()}
+          {previousButton()}
+          {nextButton()}
   
         </form>
         </div>
       );
     }
-  }
-  
 
   
-export default MasterForm;

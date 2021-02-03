@@ -49,15 +49,8 @@ public class AuthenticateREST {
     }
 
 
-    @RequestMapping(value = "/logintest", method = RequestMethod.POST, consumes = "application/json")
-    public Mono<ResponseEntity<?>> logintest(@RequestBody AuthRequest ar) {
-
-        return Mono.just(ResponseEntity.ok(new AuthResponse(jwtUtil.generateToken(ar))));
-
-    }
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Mono<String> login(@RequestBody RegisterRequest ar) {
+    public Mono<ResponseEntity<?>>  register(@RequestBody RegisterRequest ar) {
         Credential user = new Credential();
         String secret = UUID.randomUUID().toString();
         user.setUsername(ar.getUsername());
@@ -66,8 +59,9 @@ public class AuthenticateREST {
         user.setSalt(secret);
         user.setActive(true);
         user.setCreated(Timestamp.from(Instant.now()));
-      //  emailService.sendSimpleMessage(null,null,null);
-        return repository.save(user).flatMap(x->Mono.just(x.getUsername()));
+        repository.save(user).flatMap(x->Mono.just(x.getUsername())).block();
+        return this.login(new AuthRequest(ar.getUsername(),ar.getPassword(),null));
+
 
     }
 }

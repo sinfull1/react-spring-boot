@@ -70,8 +70,8 @@ var _ = require('lodash');
       setValue( newValue)
       if(props.fromto==="Origin") dispatch({ type: "SET_ORIGIN", payload:{newValue} });
       if(props.fromto==="Destination")  dispatch({ type: "SET_DESTINATION", payload:{newValue} });
-      dispatch({type:"SET_FLIGHT", payload:{flights:"",checked:[],way: "one"}})
-      dispatch({type:"SET_FLIGHT", payload:{flights:"",checked:[],way: "return"}}) 
+      dispatch({type:"SET_ORIGIN_FLIGHT", payload:{flights:"",checked:[]}})
+      dispatch({type:"SET_DESTINATION_FLIGHT", payload:{flights:"",checked:[]}}) 
       if(origin && destination && newValue.length>5)
       {
         props.refresh();

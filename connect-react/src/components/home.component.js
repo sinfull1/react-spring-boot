@@ -15,12 +15,12 @@ export default function Home(props) {
         (<div className="container">
 
                 <header className="jumbotron">
-                    <p><Link to={"/eventGrid"}> Event Grid </Link>with Adhoc reactivity design</p>
-                    <p><Link to={"/upload"}> Upload </Link> Download functionality on with filesystem </p>
+                   {/* <p><Link to={"/eventGrid"}> Event Grid </Link>with Adhoc reactivity design</p>*/}
+                    <p><Link to={"/upload"}> Upload </Link> Upload/Download functionality </p>
                     <p><Link to={"/kafka"}> Kafka </Link> high transaction simulator</p>
                     <p><Link to={"/spark"}> Spark </Link> for file based analytics</p>
-                    <p><Link to={"/d3"}> D3 Charts </Link> with high repaint</p>
-                    <p><Link to={"/book"}> bookTickets</Link> with high repaint</p>
+                    <p><Link to={"/d3"}> Server Side Events D3 Charts </Link> Two variable in incremental redraw</p>
+                    <p><Link to={"/book"}> Flight Booking UX</Link> A reactive flight booking UX with suggestions</p>
                 </header>
             </div>
         );
