@@ -9,5 +9,5 @@ public class TravelRequest {
 
     private String origin;
     private String destination;
-    private Date travelDate;
+    private String travelDate;
 }
