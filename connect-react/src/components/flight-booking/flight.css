@@ -20,6 +20,22 @@
    
 }
 
+.pheader
+{
+    background-color: rgb(50, 54, 57);
+    box-shadow: 0 0 8px rgba(0, 0, 0, .5);
+    font-size:12px;
+    text-align: center;
+    color:white;
+    height:45px;
+    padding:10px;
+
+}
+
+.summary{
+    width:30%;
+    margin-top:8px;
+}
 
 .show-flight
 {

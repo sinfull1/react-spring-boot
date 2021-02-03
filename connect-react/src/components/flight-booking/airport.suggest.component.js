@@ -62,7 +62,8 @@ var _ = require('lodash');
     const [suggestions, setSuggestions] = useState([]);
     const dispatch = useDispatch();
   
-
+    const origin = useSelector(state => state.travel.origin);
+    const destination = useSelector(state => state.travel.destination);
 
   
    const  onChange = function (event, { newValue, method }){
@@ -71,6 +72,10 @@ var _ = require('lodash');
       if(props.fromto==="Destination")  dispatch({ type: "SET_DESTINATION", payload:{newValue} });
       dispatch({type:"SET_FLIGHT", payload:{flights:"",checked:[],way: "one"}})
       dispatch({type:"SET_FLIGHT", payload:{flights:"",checked:[],way: "return"}}) 
+      if(origin && destination && newValue.length>5)
+      {
+        props.refresh();
+      }
     };
 
     const onClick = (event) => {

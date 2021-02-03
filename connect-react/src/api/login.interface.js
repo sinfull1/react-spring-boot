@@ -5,7 +5,15 @@ class LoginApi{
         return Axios({
             url,
             method,
-            data
+            data,
+            headers: {
+                post: {        // can be common or any other method
+                  Authorization: "Bearer "+ localStorage.getItem("user")
+                }
+              },
+              mode: 'no-cors',
+
+
         });
     };
 }

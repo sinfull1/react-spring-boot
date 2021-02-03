@@ -1,8 +1,8 @@
 import {call, takeEvery, put} from "redux-saga/effects";
 import {setToken,reload,setMessage} from "../slices/auth.slice";
-import {setOrigin,setDestination,setDates,setFlight} from "../slices/travel.slice";
+import {setOrigin,setDestination,setDates,setTravel,setOriginFlight,setDestinationFlight} from "../slices/travel.slice";
 import LoginApi from '../api/login.interface';
-import {AUTH_API_URL} from '../settings';
+import {AUTH_API_URL,API_URL} from '../settings';
 
 
 export function* secureLogin(payload) {
@@ -42,6 +42,28 @@ export function* secureRegister(payload) {
     }
 }
 
+
+export function* getTravel(payload) {
+    try {
+        const {origin,destination,travelDate} = payload.payload
+        let result = yield call(() =>
+            LoginApi.callAPI({
+                url: API_URL+"/getTravel",
+                method: "POST",
+                data: {origin: origin, destination:destination, travelDate: travelDate},
+                headers: {Authorization: "Bearer "+localStorage.getItem("token")}
+                
+
+            })
+        );
+
+        yield put(setTravel(result.data));
+    } catch (e) {
+        yield put({type: "TODO_FETCH_FAILED"});
+    }
+}
+
+
 export function* setOriginValue(payload)
 {
    yield put(setOrigin(payload))
@@ -56,11 +78,14 @@ export function* setDateValues(payload)
 {
    yield put(setDates(payload))
 }
-export function* setFlightValues(payload)
+export function* setOriginFlightValues(payload)
 {
-   yield put(setFlight(payload))
+   yield put(setOriginFlight(payload))
 }
-
+export function* setDestinationFlightValues(payload)
+{
+   yield put(setDestinationFlight(payload))
+}
 
 
 export default function* rootSaga() {
@@ -69,5 +94,7 @@ export default function* rootSaga() {
     yield takeEvery("SET_ORIGIN", setOriginValue);
     yield takeEvery("SET_DESTINATION", setDestinationValue);
     yield takeEvery("SET_DATES", setDateValues);
-    yield takeEvery("SET_FLIGHT", setFlightValues);
+    yield takeEvery("SET_ORIGIN_FLIGHT", setOriginFlightValues);
+    yield takeEvery("SET_DESTINATION_FLIGHT", setDestinationFlightValues);
+    yield takeEvery("SET_TRAVEL", getTravel);
 }

@@ -4,20 +4,22 @@ import AirportSuggest from './airport.suggest.component';
 import { useSelector, useDispatch } from 'react-redux';
 import CheckboxLabels from './travel.checkbox.component';
 import TravelDates from './travel.date.component';
-import { schedule } from '../../api/schedule';
+
 import TravelStub from "./travel.stub.component";
+import TravelSummary from "./travel.summary.component";
 export default function Step1(props) {
     const origin = useSelector(state => state.travel.origin);
     const destination = useSelector(state => state.travel.destination);
+    const travelDate = new Date(useSelector( state=> state.travel.dates[0]));
+    const flights = useSelector( state=> state.travel.flight);
     const [toggle, setToggle] = useState(false);
     const dispatch = useDispatch();
     const textInput = useRef();
     const textInput1 = useRef();
+    const check = useSelector(state => state.travel.checked);
     if (props.currentStep !== 1) {
         return null
     }
-    
-
 
 
 
@@ -26,7 +28,8 @@ export default function Step1(props) {
         
         if(origin!==destination  )
         {
-            setToggle(true);
+           dispatch({type:"SET_TRAVEL", payload:{origin:origin,destination:destination,travelDate:travelDate}})
+           setToggle(true);
         }
         
         if(!origin && !destination && textInput.current && textInput.current.style){
@@ -42,11 +45,18 @@ export default function Step1(props) {
             setInterval(function(){textInput1.current.style.background="rgb(235,235,235)" }, 100);
             setToggle(false);
         }    
-        
-       
-       
     }
 
+    const refresh = function(event){
+        dispatch({type:"SET_TRAVEL", payload:{origin:origin,destination:destination,travelDate:travelDate}})
+    }
+    const handleOriginToggle = (value,flights) => () => {
+        dispatch({type:"SET_ORIGIN_FLIGHT", payload: {flights:flights, checked:[value] }})
+      };
+
+      const handleDestinationToggle = (value,flights) => () => {
+        dispatch({type:"SET_DESTINATION_FLIGHT", payload: {flights:flights, checked:[value] }})
+      };
     return (
 
         <div className="step-1-group">
@@ -55,18 +65,21 @@ export default function Step1(props) {
 
             </div>
             <div className="step-1-checkgroup">
-                <AirportSuggest fromto="Origin" place={origin}  refer={textInput}></AirportSuggest>
-                <AirportSuggest fromto="Destination" place={destination} refer={textInput1}></AirportSuggest>
+                <AirportSuggest fromto="Origin" place={origin}  refer={textInput} refresh={refresh}></AirportSuggest>
+                <AirportSuggest fromto="Destination" place={destination} refer={textInput1} refresh={refresh}></AirportSuggest>
             </div>
             <div className="step-1-checkgroup">
                 <TravelDates></TravelDates>
             </div>
             <div className="step-1-checkgroup">
-                <button className="btn btn-secondary  btn-sm btn-block grey" onClick={onClick} >Show Travel Options</button>
+                <button className="btn btn-secondary btn-sm btn-block grey" onClick={onClick} >Show Travel Options</button>
             </div>
-
-            {toggle?<TravelStub way="one" show={toggle}></TravelStub>:null}
-            {toggle?<TravelStub way="return" show={toggle}></TravelStub>:null}
+            <div className="step-1-checkgroup">
+                {toggle?<TravelStub way="one" show={toggle} toggle={handleOriginToggle}></TravelStub>:null}
+                {toggle?<TravelStub way="return" show={toggle} toggle={handleDestinationToggle}></TravelStub>:null}
+                {toggle?<TravelSummary toggle={toggle} flights={flights} check={check}></TravelSummary>:null}
+               
+            </div>
         </div>
     );
 }
