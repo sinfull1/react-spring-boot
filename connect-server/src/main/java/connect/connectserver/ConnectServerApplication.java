@@ -50,8 +50,7 @@ public class ConnectServerApplication {
         @Override
         public void addCorsMappings(CorsRegistry corsRegistry) {
             corsRegistry.addMapping("/**")
-                    .allowedOrigins("*")
-                                        .maxAge(3600);
+                    .allowedOrigins("*").maxAge(3600);
         }
     }
 
@@ -78,6 +77,15 @@ public class ConnectServerApplication {
                 -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> bookRouter(
+            @Value("classpath:/public/index.html") Resource html) {
+        return route(GET("/book"), request
+                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
+        );
+    }
+
 
 
     @Bean
