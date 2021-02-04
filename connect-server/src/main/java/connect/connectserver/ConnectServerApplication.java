@@ -78,13 +78,6 @@ public class ConnectServerApplication {
         );
     }
 
-    @Bean
-    public RouterFunction<ServerResponse> bookRouter(
-            @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/book"), request
-                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
-        );
-    }
 
 
 
