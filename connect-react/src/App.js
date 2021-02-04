@@ -40,7 +40,8 @@ export default function App(props) {
               :<Route exact path="/eventGrid"   component={Login} />}
               <Route exact path="/d3" component = {CSLContainer} />
               <Route exact path="/payment" component = {GooglePayment} />
-              <Route exact path="/book" component = {Booking} />
+              {currentUser ?<Route exact path="/book"   component={Booking} />
+              :<Route exact path="/book"   component={Login} />}
             
             </Switch>
           </div>
