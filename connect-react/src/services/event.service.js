@@ -1,4 +1,5 @@
 
+import { LocalParking } from "@material-ui/icons";
 import axios from "axios";
 import {API_URL} from  '../settings';
 const http = axios.create({
@@ -12,6 +13,10 @@ class EventService {
 
   getEventGridDataSourceBySubs(id) {
     return new EventSource(API_URL+ "/getHttp?subsId=" + id);
+  }
+
+  getConsumeEvent() {
+    return new EventSource(API_URL+ "/consume?user="+localStorage.getItem("name"));
   }
   getEventDataById(id, type) {
     return http.get(API_URL+ "/event?subsId=" + id + "&event=sample");

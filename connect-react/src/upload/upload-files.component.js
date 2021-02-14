@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UploadService from "../services/upload-files.service";
-
+import {API_URL} from '../settings.js';
 import './upload.css';
 
 export default class UploadFiles extends Component {
@@ -80,7 +80,7 @@ export default class UploadFiles extends Component {
 
 clickView(event)
 {
-  var URL = 'https://localhost:8443/api/downloadView?fileName='+event.target.text;
+  var URL = API_URL+"/api/downloadView?fileName="+event.target.text;
   window.open(URL);
 }
 async publish(data)

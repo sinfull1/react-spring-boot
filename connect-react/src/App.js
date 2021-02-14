@@ -18,6 +18,7 @@ import UploadFiles from "./upload/upload-files.component";
 
 import GooglePayment from "./payment/payment.component";
 import Header from "./components/header.component";
+import KafkaPublisher from "./components/publisher/kafka-component";
 
 export default function App(props) {
 
@@ -38,11 +39,13 @@ export default function App(props) {
               :<Route exact path="/upload"   component={Login} />}
               {currentUser ?<Route exact path="/eventGrid"   component={Events} />
               :<Route exact path="/eventGrid"   component={Login} />}
-              <Route exact path="/d3" component = {CSLContainer} />
+               {currentUser ?<Route exact path="/d3"   component={CSLContainer} />
+                            :<Route exact path="/d3"   component={Login} />}
               <Route exact path="/payment" component = {GooglePayment} />
               {currentUser ?<Route exact path="/book"   component={Booking} />
               :<Route exact path="/book"   component={Login} />}
-            
+            {currentUser ?<Route exact path="/kafka"   component={KafkaPublisher} />
+              :<Route exact path="/kafka"   component={Login} />}
             </Switch>
           </div>
 

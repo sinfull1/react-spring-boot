@@ -9,11 +9,12 @@ class LoginApi{
             headers: {
                 post: {        // can be common or any other method
                   Authorization: "Bearer "+ localStorage.getItem("user")
+                },
+                get: {        // can be common or any other method
+                  Authorization: "Bearer "+ localStorage.getItem("user")
                 }
               },
-              mode: 'no-cors',
-
-
+           mode: 'no-cors',
         });
     };
 }

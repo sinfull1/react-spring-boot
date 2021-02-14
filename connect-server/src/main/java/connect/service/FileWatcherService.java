@@ -44,6 +44,8 @@ public class FileWatcherService implements ApplicationListener<ApplicationReadyE
         try{Files.createDirectory(temp);}
         catch (FileAlreadyExistsException ex)
         {System.out.println(ex.toString());}
+
+
         try (WatchService watchService = FileSystems.getDefault().newWatchService()) {
             path.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
             WatchKey key = null;

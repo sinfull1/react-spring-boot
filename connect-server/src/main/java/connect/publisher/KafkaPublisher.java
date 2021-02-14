@@ -36,9 +36,12 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderOptions;
 import reactor.kafka.sender.SenderRecord;
+
+import javax.annotation.PreDestroy;
 
 
 /**
@@ -57,7 +60,7 @@ public class KafkaPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class.getName());
     private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
-    private static final String TOPIC = "demo-topic";
+    private static final String TOPIC = "new-booking-1";
     private   KafkaSender<Integer, String> sender;
     private  SimpleDateFormat dateFormat;
 
@@ -74,11 +77,10 @@ public class KafkaPublisher {
         sender = KafkaSender.create(senderOptions);
         dateFormat = new SimpleDateFormat("HH:mm:ss:SSS z dd MMM yyyy");
     }
-    public void sendMessages(String topic) throws InterruptedException {
+    public void sendMessages(String message) throws InterruptedException {
         Random random = new Random();
-        sender.<Integer>send(Flux.interval(Duration.ofSeconds(1))
-                .map(pulse -> random.nextInt())
-                .map(i -> SenderRecord.create(new ProducerRecord<>(topic, i, "Message_" + i), i)))
+        sender.<Integer>send(Mono.just(SenderRecord.create(new ProducerRecord<>(TOPIC, 1, message), 1)))
+
                 .doOnError(e -> log.error("Send failed", e))
                 .subscribe(r -> {
                     RecordMetadata metadata = r.recordMetadata();
@@ -90,12 +92,10 @@ public class KafkaPublisher {
                             dateFormat.format(new Date(metadata.timestamp())));
                 });
     }
-    public void close() {
-        sender.close();
-    }
-    public static void main(String[] args) throws InterruptedException {
-        KafkaPublisher kf = new KafkaPublisher();
-        kf.sendMessages(TOPIC);
-    }
 
+   @PreDestroy
+    public void destroy()
+   {
+       sender.close();
+   }
 }

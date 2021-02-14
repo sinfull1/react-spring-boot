@@ -34,12 +34,6 @@ public class HttpBinController {
     RateLimiter rateLimiter = registry.rateLimiter("my");
 
 
-    @PostMapping(value = "/send", consumes = MediaType.TEXT_PLAIN_VALUE)
-    public Mono<Description[]> send(@RequestBody Mono<Description[]> text) {
-        return text;
-    }
-
-
     @GetMapping(value = "/getMapping")
     public Mono<String> get() throws Exception {
         Callable<Mono<String>> restrictedCall = RateLimiter

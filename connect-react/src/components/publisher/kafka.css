@@ -1,0 +1,54 @@
+.flex-container {
+    padding: 10px;
+
+    margin: 10px;
+    justify-content: space-around;
+    line-height:30px;
+    width:100%;
+  }
+  
+  .flex-item-en {
+    background:rgb(97, 255, 91);
+    margin: 5px;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    flex: 1 0 0px;
+    font-size:10px;
+    height: auto;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .flex-item-dis {
+    background:rgb(77, 84, 97);
+    margin: 5px;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    flex: 1 0 0px;
+    font-size:10px;
+    height: auto;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .flex-item {
+    background:cornflowerblue;
+    margin: 5px;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    flex: 1 0 0px;
+    font-size:10px;
+    height: auto;
+    transition: all 0.1s ease-in-out;
+  }
+  .flex-item:hover {
+    background: rgb(0, 102, 255);
+    margin: 5px;
+    color: white;
+    text-align: center;
+    padding: 6px;
+    flex: 1 0 0px;
+    height: auto;
+  }
+

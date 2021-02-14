@@ -4,6 +4,7 @@ import {setTotal,setOrigin,setDestination,setDates,setTravel,setOriginFlight,set
 import LoginApi from '../api/login.interface';
 import {AUTH_API_URL,API_URL} from '../settings';
 
+let gg = []
 
 export function* secureLogin(payload) {
     try {
@@ -51,7 +52,7 @@ export function* getTravel(payload) {
                 url: API_URL+"/getTravel",
                 method: "POST",
                 data: {origin: origin, destination:destination, travelDate: travelDate},
-                headers: {Authorization: "Bearer "+localStorage.getItem("token")}
+  
             })
         );
 
@@ -60,6 +61,33 @@ export function* getTravel(payload) {
         yield put({type: "TODO_FETCH_FAILED"});
     }
 }
+
+export function* publish(payload) {
+    const {id} = payload.payload
+    try {
+       
+        let result = yield call(() =>
+            LoginApi.callAPI({
+                url: API_URL+"/publish?message="+id+"&user="+localStorage.getItem("name"),
+                method: "GET",
+                data :{}
+            })
+        );
+     if ( "Success" === result.data)
+     {
+         console.log("published sucesfully");
+     }
+     else{
+           gg.push(id)
+     }
+     ;
+    } catch (e) {
+        gg.push(id)
+        yield put({type: "TODO_FETCH_FAILED"});
+    }
+}
+
+
 
 
 export function* setOriginValue(payload)
@@ -101,6 +129,7 @@ export function* setTravellerDisplayDetails(payload)
    yield put(setTravellerDetails(payload))
 }
 
+
 export default function* rootSaga() {
     yield takeEvery("SECURE_LOGIN", secureLogin);
     yield takeEvery("SECURE_REGISTER", secureRegister);
@@ -113,4 +142,5 @@ export default function* rootSaga() {
     yield takeEvery("SET_TRAVELLER", setTravelDetail);
     yield takeEvery("SET_TOTAL", setTotalDisplay);
     yield takeEvery("SET_TRAVELLER_DETAILS", setTravellerDisplayDetails);
+    yield takeEvery("PUBLISH", publish);
 }

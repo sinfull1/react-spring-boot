@@ -1,7 +1,7 @@
 package connect.config;
 
 
-import connect.service.AuthzFilter;
+//import connect.service.AuthzFilter;
 import connect.service.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

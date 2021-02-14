@@ -13,7 +13,8 @@ let initialState = {
     travels:[],
     travelDetails:{},
     total:0,
-    traveller:[]
+    traveller:[],
+    selectTicket: ""
     
 }
 
@@ -58,10 +59,15 @@ const travelSlice = createSlice({
         setTravellerDetails(state,action)
         {
             state.traveller = action.payload.payload;
+        },
+        setTicket(state,action)
+        {
+            state.selectTicket =action.payload.payload;
         }
+       
     }
 })
 
-export const { setTravellerDetails,setTotal, setTravelDetails,setOrigin, setDestination, setDates, setOriginFlight ,setDestinationFlight, setTravel} = travelSlice.actions;
+export const { setTicket,setTravellerDetails,setTotal, setTravelDetails,setOrigin, setDestination, setDates, setOriginFlight ,setDestinationFlight, setTravel} = travelSlice.actions;
 
 export default travelSlice.reducer;
