@@ -60,7 +60,7 @@ public class KafkaPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class.getName());
     private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
-    private static final String TOPIC = "new-booking-1";
+    private static final String TOPIC = "lock-status";
     private   KafkaSender<Integer, String> sender;
     private  SimpleDateFormat dateFormat;
 

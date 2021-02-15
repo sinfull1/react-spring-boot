@@ -35,7 +35,6 @@ export function* secureRegister(payload) {
                 data: {username: username, email:email, password: password}
             })
         );
-
         yield put(setToken({username:username,token:result.data.token}));
         yield put(reload());
     } catch (e) {

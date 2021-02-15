@@ -50,13 +50,14 @@ public class KafkaTableConsumer {
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class.getName());
 
     private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
-    private static final String TOPIC = "new-booking-1";
+    private static final String TOPIC = "lock-status";
 
     private final ReceiverOptions<Integer, String> receiverOptions;
     private final SimpleDateFormat dateFormat;
     ReceiverOptions<Integer, String> options = null;
     static KafkaReceiver<Integer, String> kafkar = null;
     public List<String> kk = new ArrayList<>();
+    HashMap<String, String> temp = new HashMap<>();
     @Autowired
     TableProcessor tableProcessor;
 
@@ -83,14 +84,13 @@ public class KafkaTableConsumer {
 
         kafkar = KafkaReceiver.create(options);
         kafkar.receive().flatMap(map-> Mono.just(map.value()))
-              .subscribe(x->kk.add(x));
+                .subscribe(x->kk.add(x));
+        HashMap<String, String> temp = new HashMap<String, String>();
+        kk.stream().forEach(k->temp.put(k.split(":")[0],k.split(":")[1]));
     }
 
     public HashMap<String, String> consume()
     {
-        HashMap<String, String> temp = new HashMap<String, String>();
-        kk.stream().forEach(k->temp.put(k.split(":")[0],k.split(":")[1]));
-
         return temp;
     }
 

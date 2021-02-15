@@ -44,7 +44,7 @@ export default function App(props) {
               <Route exact path="/payment" component = {GooglePayment} />
               {currentUser ?<Route exact path="/book"   component={Booking} />
               :<Route exact path="/book"   component={Login} />}
-            {currentUser ?<Route exact path="/kafka"   component={KafkaPublisher} />
+              {currentUser ?<Route exact path="/kafka"   component={KafkaPublisher} />
               :<Route exact path="/kafka"   component={Login} />}
             </Switch>
           </div>

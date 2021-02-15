@@ -11,13 +11,6 @@ import { API_URL } from '../../settings';
 
 let sseEvents = EventService.getConsumeEvent();
 
-sseEvents.onopen = event => console.log('open', event);
-sseEvents.onerror = event => {
-    console.log("Server side shut");
-    sseEvents.close();
-    sseEvents = EventService.getConsumeEvent()
-}
-
 
 
 
@@ -30,7 +23,13 @@ export default function KafkaPublisher() {
         LoginApi.callAPI({
             url: API_URL + "/booking",
             method: "GET"
-        }).then(result => setAll(result.data));
+        }).then(result => {
+            if(result.status==200)
+            {
+            setAll(result.data)
+            }
+        })
+        .catch(result=> console.log(result));
         ;
         LoginApi.callAPI({
             url: API_URL + "/conagg",
@@ -45,7 +44,8 @@ export default function KafkaPublisher() {
                 }
             }
             setSelected(map);
-        });
+        })
+        .catch(result=> console.log(result));
         ;
 
     },

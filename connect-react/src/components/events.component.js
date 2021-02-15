@@ -16,12 +16,7 @@ let subsId = Math.random().toString(36).substr(2, 9);
 
 
 let sseEvents = EventService.getEventGridDataSourceBySubs(subsId);
-sseEvents.onopen = event => console.log('open', event);
-sseEvents.onerror = event => {
-  console.log("Server side shut");
-  sseEvents.close();
-  sseEvents = EventService.getEventGridDataSourceBySubs(subsId)
-}
+
 const savedFilter = [];
 const savedSelectedRows = [];
 const options = [];
