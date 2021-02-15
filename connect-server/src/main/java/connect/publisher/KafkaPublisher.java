@@ -26,6 +26,7 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import connect.config.KafkaConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
@@ -49,8 +50,6 @@ import javax.annotation.PreDestroy;
  * To run sample producer
  * <ol>
  *   <li> Start Zookeeper and Kafka server
- *   <li> Update {@link #BOOTSTRAP_SERVERS} and {@link #TOPIC} if required
- *   <li> Create Kafka topic {@link #TOPIC}
  *   <li> Run {@link KafkaPublisher} as Java application with all dependent jars in the CLASSPATH (eg. from IDE).
  *   <li> Shutdown Kafka server and Zookeeper when no longer required
  * </ol>
@@ -59,28 +58,15 @@ import javax.annotation.PreDestroy;
 public class KafkaPublisher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaPublisher.class.getName());
-    private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
-    private static final String TOPIC = "lock-status";
-    private   KafkaSender<Integer, String> sender;
-    private  SimpleDateFormat dateFormat;
+    private final KafkaSender<Integer, String> sender;
+    private final SimpleDateFormat dateFormat;
 
     public KafkaPublisher() {
-
-        Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
-        props.put(ProducerConfig.CLIENT_ID_CONFIG, "sample-producer");
-        props.put(ProducerConfig.ACKS_CONFIG, "all");
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        SenderOptions<Integer, String> senderOptions = SenderOptions.create(props);
-
-        sender = KafkaSender.create(senderOptions);
+        sender = KafkaSender.create(KafkaConfig.getSenderOptions("sample-producer"));
         dateFormat = new SimpleDateFormat("HH:mm:ss:SSS z dd MMM yyyy");
     }
-    public void sendMessages(String message) throws InterruptedException {
-        Random random = new Random();
-        sender.<Integer>send(Mono.just(SenderRecord.create(new ProducerRecord<>(TOPIC, 1, message), 1)))
-
+    public void sendMessages(String message)  {
+        sender.send(Mono.just(SenderRecord.create(new ProducerRecord<>(KafkaConfig.TOPIC, 1, message), 1)))
                 .doOnError(e -> log.error("Send failed", e))
                 .subscribe(r -> {
                     RecordMetadata metadata = r.recordMetadata();

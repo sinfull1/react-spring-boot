@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+import connect.config.KafkaConfig;
 import connect.processor.DistributedEventProcessor;
 import io.github.resilience4j.core.functions.OnceConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -32,6 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -55,47 +58,21 @@ import reactor.kafka.receiver.internals.ConsumerFactory;
  * </ol>
  */
 @Component
-public class KafkaConsumer {
+public class KafkaConsumer implements ApplicationListener<ApplicationStartedEvent> {
 
-    private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class.getName());
 
-    private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
-    private static final String TOPIC = "lock-status";
-
-    private final ReceiverOptions<Integer, String> receiverOptions;
-    private final SimpleDateFormat dateFormat;
-    ReceiverOptions<Integer, String> options = null;
-    static KafkaReceiver<Integer, String> kafkar = null;
+    static KafkaReceiver<Object, Object> kafkar = null;
     @Autowired
     DistributedEventProcessor distributedEventProcessor;
 
     public KafkaConsumer() {
-
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
-        props.put(ConsumerConfig.CLIENT_ID_CONFIG, "user");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "new-group");
-      //  props.put( ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, "lldldl");
-
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
-      //    props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG,"10000");
-        // props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG,"500");
-        receiverOptions = ReceiverOptions.create(props);
-        dateFormat = new SimpleDateFormat("HH:mm:ss:SSS z dd MMM yyyy");
-        options = receiverOptions.subscription(Collections.singleton(TOPIC))
-                .addAssignListener(partitions -> log.debug("onPartitionsAssigned {}", partitions))
-                .addRevokeListener(partitions -> log.debug("onPartitionsRevoked {}", partitions));
-              //  .pollTimeout(Duration.ofMillis(1000));
-
-        kafkar = KafkaReceiver.create(options);
-        kafkar.receive().flatMap(map-> Mono.just(map.value()))
-                .doOnNext(k->distributedEventProcessor.getSink().emitNext(k, Sinks.EmitFailureHandler.FAIL_FAST))
-                .subscribe();
+        kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("latest","locking","lock-group"));
+        kafkar.receive().flatMap(map-> Mono.just((String)map.value()))
+                .subscribe(k->distributedEventProcessor.getSink().emitNext(k, Sinks.EmitFailureHandler.FAIL_FAST));
     }
 
-    public static Flux<ReceiverRecord<Integer, String>> consumeMessages() {
-        return kafkar.receive();
+    @Override
+    public void onApplicationEvent(ApplicationStartedEvent event) {
+
     }
 }
