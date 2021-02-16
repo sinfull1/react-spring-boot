@@ -61,9 +61,7 @@ public class KafkaController {
 
     @GetMapping(value = "/consume",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Object> sub(@RequestParam("user") String user) throws InterruptedException {
-      Flux.interval(Duration.ofSeconds(5),Duration.ofSeconds(20)).subscribe(t->{distributedEventProcessor
-               .getSink().emitNext(ServerSentEvent.builder().event("heartbeat").data("message").build()
-              , Sinks.EmitFailureHandler.FAIL_FAST);});
+
       return  distributedEventProcessor.getFlux(user);
     }
 

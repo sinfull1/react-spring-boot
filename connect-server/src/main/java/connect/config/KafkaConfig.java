@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class KafkaConfig {
     private static final String BOOTSTRAP_SERVERS = "http://ec2-13-232-52-62.ap-south-1.compute.amazonaws.com:9092";
-    public static final String TOPIC = "lock-event-audit";
+    public static final String TOPIC = "lock-audit";
 
 
     public static ReceiverOptions<Object, Object> getReceiverOptions(String resetConfig, String clientId,String groupId) {
