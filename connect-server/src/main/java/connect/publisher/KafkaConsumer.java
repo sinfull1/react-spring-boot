@@ -70,7 +70,8 @@ public class KafkaConsumer implements ApplicationListener<ApplicationStartedEven
     DistributedEventProcessor distributedEventProcessor;
 
     public KafkaConsumer() {
-        kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("latest","locking","lock-group"));
+        kafkar = KafkaReceiver.create(KafkaConfig.
+                getReceiverOptions("latest","locking","lock-group"));
         kafkar.receive().flatMap(map-> Mono.just((String)map.value()))
                 .flatMap(value-> Mono.just( ServerSentEvent.<String> builder().event("lock-event")
                         .id(String.valueOf(a.getAndIncrement()))

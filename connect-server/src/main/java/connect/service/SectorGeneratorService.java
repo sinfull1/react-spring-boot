@@ -28,9 +28,8 @@ public class SectorGeneratorService {
         Flux<Long> interval = Flux.interval(Duration.ofMillis(3000));
         interval.subscribe((i) -> sectorGenerator.get());
         Flux<ServerSentEvent<SectorDao>> messageFlux = Flux.fromStream(Stream.generate(sectorGenerator).map(
-                sector->{
-                    return ServerSentEvent.<SectorDao> builder().event("pricing-event").id(String.valueOf(a.getAndIncrement()))
-                            .data(sector).build();}
+                sector-> ServerSentEvent.<SectorDao> builder().event("pricing-event").id(String.valueOf(a.getAndIncrement()))
+                        .data(sector).build()
 
         ));
         return Flux.zip(interval, messageFlux).map(Tuple2::getT2);

@@ -7,11 +7,14 @@ import connect.publisher.KafkaPublisher;
 import connect.publisher.KafkaTableConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Sinks;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +29,7 @@ public class KafkaController {
     @Autowired
     DistributedEventProcessor distributedEventProcessor;
 
-    @Autowired
-    TableProcessor tableProcessor;
+
 
     @Autowired
     KafkaTableConsumer kafkaTableConsumer;
@@ -59,6 +61,9 @@ public class KafkaController {
 
     @GetMapping(value = "/consume",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Object> sub(@RequestParam("user") String user) throws InterruptedException {
+      Flux.interval(Duration.ofSeconds(5),Duration.ofSeconds(20)).subscribe(t->{distributedEventProcessor
+               .getSink().emitNext(ServerSentEvent.builder().event("heartbeat").data("message").build()
+              , Sinks.EmitFailureHandler.FAIL_FAST);});
       return  distributedEventProcessor.getFlux(user);
     }
 

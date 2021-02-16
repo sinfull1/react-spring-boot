@@ -54,6 +54,7 @@ public class KafkaTableConsumer implements ApplicationListener<ApplicationStarte
 
     static KafkaReceiver<Object, Object> kafkar = null;
     HashMap<String, String> temp = new HashMap<>();
+    private final String uid = UUID.randomUUID().toString();
 
     public HashMap<String, String> consume() {
         return temp;
@@ -62,8 +63,8 @@ public class KafkaTableConsumer implements ApplicationListener<ApplicationStarte
 
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
-
-        kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("earliest","locking-2","lock-group-2"));
+        kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("earliest",
+                "locking-2"+uid,"lock-group-2"));
         kafkar.receive().flatMap(map -> Mono.just((String) map.value()))
                 .subscribe(k -> temp.put(k.split(":")[0], k.split(":")[1]));
     }
