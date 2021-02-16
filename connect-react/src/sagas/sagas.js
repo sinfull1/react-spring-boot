@@ -1,25 +1,28 @@
-import {call, takeEvery, put} from "redux-saga/effects";
-import {setToken,reload,setMessage} from "../slices/auth.slice";
-import {setTotal,setOrigin,setDestination,setDates,setTravel,setOriginFlight,setDestinationFlight,setTravelDetails, setTravellerDetails} from "../slices/travel.slice";
+import { call, takeEvery, put } from "redux-saga/effects";
+import { setToken, reload, setMessage } from "../slices/auth.slice";
+import { setTotal, setOrigin, setDestination, setDates, setTravel, setOriginFlight, setDestinationFlight, setTravelDetails, setTravellerDetails } from "../slices/travel.slice";
 import LoginApi from '../api/login.interface';
-import {AUTH_API_URL,API_URL} from '../settings';
+import { AUTH_API_URL, API_URL } from '../settings';
 
 let gg = []
 
 export function* secureLogin(payload) {
     try {
-        const {username, password} = payload.payload
+        const { username, password } = payload.payload
         let result = yield call(() =>
             LoginApi.callAPI({
-                url: AUTH_API_URL+"/login",
+                url: AUTH_API_URL + "/login",
                 method: "POST",
-                data: {username: username, password: password}
+                data: { username: username, password: password }
             })
         );
-        yield put(setToken({username:username,token:result.data.token}));
+        if(result.status==200)
+        {
+        yield put(setToken({ username: username, token: result.data.token }));
         yield put(reload());
+        }
     } catch (e) {
-        yield put({type: "TODO_FETCH_FAILED"});
+        yield put({ type: "TODO_FETCH_FAILED" });
     }
 }
 
@@ -27,105 +30,100 @@ export function* secureLogin(payload) {
 
 export function* secureRegister(payload) {
     try {
-        const {username,email, password} = payload.payload
+        const { username, email, password } = payload.payload
         let result = yield call(() =>
             LoginApi.callAPI({
-                url: AUTH_API_URL+"/register",
+                url: AUTH_API_URL + "/register",
                 method: "POST",
-                data: {username: username, email:email, password: password}
+                data: { username: username, email: email, password: password }
             })
         );
-        yield put(setToken({username:username,token:result.data.token}));
+        if(result.status==200)
+        {
+        yield put(setToken({ username: username, token: result.data.token }));
         yield put(reload());
+        }
     } catch (e) {
-        yield put({type: "TODO_FETCH_FAILED"});
+        yield put({ type: "TODO_FETCH_FAILED" });
     }
 }
 
 
 export function* getTravel(payload) {
     try {
-        const {origin,destination,travelDate} = payload.payload
+        const { origin, destination, travelDate } = payload.payload
         let result = yield call(() =>
             LoginApi.callAPI({
-                url: API_URL+"/getTravel",
+                url: API_URL + "/getTravel",
                 method: "POST",
-                data: {origin: origin, destination:destination, travelDate: travelDate},
-  
+                data: { origin: origin, destination: destination, travelDate: travelDate },
+
             })
         );
-
-        yield put(setTravel(result.data));
+        if (result.status == 200) {
+            yield put(setTravel(result.data));
+        }
     } catch (e) {
-        yield put({type: "TODO_FETCH_FAILED"});
+        yield put({ type: "TODO_FETCH_FAILED" });
     }
 }
 
 export function* publish(payload) {
-    const {id} = payload.payload
+    const { id } = payload.payload
     try {
-       
+
         let result = yield call(() =>
             LoginApi.callAPI({
-                url: API_URL+"/publish?message="+id+"&user="+localStorage.getItem("name"),
+                url: API_URL + "/publish?message=" + id + "&user=" + localStorage.getItem("name"),
                 method: "GET",
-                data :{}
+                data: {}
             })
         );
-     if ( "Success" === result.data)
-     {
-         console.log("published sucesfully");
-     }
-     else{
-           gg.push(id)
-     }
-     ;
+        if ("Success" === result.data && result.status == 200) {
+            console.log("published sucesfully");
+        }
+        else {
+            gg.push(id)
+        }
+        ;
     } catch (e) {
         gg.push(id)
-        yield put({type: "TODO_FETCH_FAILED"});
+        yield put({ type: "TODO_FETCH_FAILED" });
     }
 }
 
 
 
 
-export function* setOriginValue(payload)
-{
-   yield put(setOrigin(payload))
+export function* setOriginValue(payload) {
+    yield put(setOrigin(payload))
 }
 
-export function* setDestinationValue(payload)
-{
-   yield put(setDestination(payload))
+export function* setDestinationValue(payload) {
+    yield put(setDestination(payload))
 }
 
-export function* setDateValues(payload)
-{
-   yield put(setDates(payload))
+export function* setDateValues(payload) {
+    yield put(setDates(payload))
 }
-export function* setOriginFlightValues(payload)
-{
-   yield put(setOriginFlight(payload))
+export function* setOriginFlightValues(payload) {
+    yield put(setOriginFlight(payload))
 }
-export function* setDestinationFlightValues(payload)
-{
-   yield put(setDestinationFlight(payload))
+export function* setDestinationFlightValues(payload) {
+    yield put(setDestinationFlight(payload))
 }
 
-export function* setTravelDetail(payload)
-{
-   yield put(setTravelDetails(payload))
+export function* setTravelDetail(payload) {
+    yield put(setTravelDetails(payload))
 }
 
 
-export function* setTotalDisplay(payload)
-{
-   yield put(setTotal(payload))
+export function* setTotalDisplay(payload) {
+    yield put(setTotal(payload))
 }
 
-export function* setTravellerDisplayDetails(payload)
-{
-   yield put(setTravellerDetails(payload))
+export function* setTravellerDisplayDetails(payload) {
+    yield put(setTravellerDetails(payload))
 }
 
 
