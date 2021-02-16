@@ -6,6 +6,7 @@ import connect.generator.SectorGenerator;
 import connect.service.SectorGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class QuotesController {
 
 
     @GetMapping(value = "/getPrices")
-    Flux<SectorDao> getQuotes() {
+    Flux<ServerSentEvent<SectorDao>> getQuotes() {
         return sectorGeneratorService.getQuotes();
     }
 

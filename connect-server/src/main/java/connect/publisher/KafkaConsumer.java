@@ -20,9 +20,11 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 import connect.config.KafkaConfig;
+import connect.dao.SectorDao;
 import connect.processor.DistributedEventProcessor;
 import io.github.resilience4j.core.functions.OnceConsumer;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -60,6 +63,7 @@ import reactor.kafka.receiver.internals.ConsumerFactory;
 @Component
 public class KafkaConsumer implements ApplicationListener<ApplicationStartedEvent> {
 
+    AtomicInteger a = new AtomicInteger();
 
     static KafkaReceiver<Object, Object> kafkar = null;
     @Autowired
@@ -68,6 +72,9 @@ public class KafkaConsumer implements ApplicationListener<ApplicationStartedEven
     public KafkaConsumer() {
         kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("latest","locking","lock-group"));
         kafkar.receive().flatMap(map-> Mono.just((String)map.value()))
+                .flatMap(value-> Mono.just( ServerSentEvent.<String> builder().event("lock-event")
+                        .id(String.valueOf(a.getAndIncrement()))
+                         .data(value).build()))
                 .subscribe(k->distributedEventProcessor.getSink().emitNext(k, Sinks.EmitFailureHandler.FAIL_FAST));
     }
 

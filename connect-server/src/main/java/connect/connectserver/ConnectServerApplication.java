@@ -88,7 +88,7 @@ public class ConnectServerApplication {
 
     public RouterFunction<ServerResponse> htmlKakfaRouter(
             @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/router"), request
+        return route(GET("/kafka"), request
                 -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
         );
     }
