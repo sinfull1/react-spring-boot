@@ -8,59 +8,55 @@ import { API_URL } from '../../settings';
 
 
 let sseEvents;
-let map = new Map()
+var map = new Map();
 
 export default function KafkaPublisher() {
     const dispatch = useDispatch();
     const [all, setAll] = useState([]);
-    const [selected, setSelected] = useState(map);
+    const [selected, setSelected] = useState();
     const [clientSelected, setClientSelected] = useState();
 
    
     const updateevent = (event) =>{
         const update = event.data;
         const newmap = new Map();
-        for(const [key,value] of selected)
+        map.set(update.split(":")[0], update.split(":")[1])
+        for(const [key,value] of map)
         {
          newmap.set(key,value);
         }
-        newmap.set(update.split(":")[0], update.split(":")[1])
-
+        
         setSelected(newmap);
     }
    
     
     useEffect(() => {
         sseEvents = EventService.getConsumeEvent();
-        LoginApi.callAPI({
+         LoginApi.callAPI({
             url: API_URL + "/booking",
             method: "GET"
         }).then(result => {
             if (result.status == 200) {
                 setAll(result.data)
             }
-        })
-            .catch(result => console.log(result));
-        ;
+        }).catch(result => console.log(result));
         LoginApi.callAPI({
             url: API_URL + "/conagg",
             method: "GET"
         }).then(result => {
+            let jjj = new Map();
             for (var value in result.data) {
-                map.set(value, result.data[value])
+                jjj.set(value, result.data[value])
                 if (value === localStorage.getItem("name")) {
                     setClientSelected(result.data[value])
                 }
             }
-            setSelected(map);
-            sseEvents.addEventListener("lock-event", updateevent);
+            map = jjj;
+            setSelected(jjj);
+            setTimeout(()=> sseEvents.addEventListener("lock-event", updateevent),1000);
             
-        }
-    )
-        .catch(result => console.log(result));
-    ;
-},
-[]
+        }).catch(result => console.log(result));},
+        []
     )
 
 
@@ -70,11 +66,15 @@ const onClick = function (event) {
     setClientSelected(event.target.innerText);
 }
 
-const findInMap = (map, val) => {
-    for (let [k, v] of map) {
+const findInMap = (val) => {
+    if(selected)
+    {
+    for (let [k, v] of selected) {
         if (val && v && v === val && k !== localStorage.getItem("name")) {
+            console.log(k,val);
             return true;
         }
+    }
     }
     return false;
 }
@@ -88,7 +88,7 @@ return (
                 if (value === clientSelected) {
                     return (<button id={value} className="flex-item-en" onClick={onClick}>{value}</button>);
                 }
-                if (findInMap(selected, value)) {
+                else if (findInMap(value)) {
                     return (<button id={value} className="flex-item-dis" disabled >{value}</button>);
                 }
                 else {
