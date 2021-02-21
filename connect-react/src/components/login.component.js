@@ -17,7 +17,7 @@ const required = (value) => {
 export default function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("Please Login");
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch()
     const onChangeUsername = function (e) {
@@ -32,21 +32,13 @@ export default function Login(props) {
 
     const handleLogin = function (e) {
         e.preventDefault();
+        setMessage("Logging in");
+        setLoading(true);
         if (username && password) {
-            dispatch({ type: "SECURE_LOGIN", payload: { username, password } });
-            const { history } = props;
-            history.push("/home");
-            setMessage("")
-
-        } else {
-            setMessage("Required Fields are missing")
-        }
-
+            dispatch({ type: "SECURE_LOGIN", payload: { username, password} });
+        } 
     }
     return (
-
-        isLoggedIn() ?
-            (<Redirect to="/home" />) :
 
             <div className="col-md-12">
 

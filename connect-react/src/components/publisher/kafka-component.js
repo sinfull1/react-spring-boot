@@ -6,9 +6,6 @@ import EventService from '../../services/event.service';
 import LoginApi from '../../api/login.interface';
 import { API_URL } from '../../settings';
 
-
-
-
 let sseEvents = EventService.getConsumeEvent();
 
 

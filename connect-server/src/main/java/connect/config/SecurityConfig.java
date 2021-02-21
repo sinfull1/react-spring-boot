@@ -2,6 +2,7 @@ package connect.config;
 
 
 //import connect.service.AuthzFilter;
+import connect.service.AuthzFilter;
 import connect.service.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ public class SecurityConfig {
                         .anyExchange().permitAll()
                 )
 
-            //    .addFilterAt(new AuthzFilter(jwtUtils), SecurityWebFiltersOrder.LAST)
+                .addFilterAt(new AuthzFilter(jwtUtils), SecurityWebFiltersOrder.LAST)
                 .build();
 
 

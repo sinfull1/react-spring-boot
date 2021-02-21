@@ -68,6 +68,7 @@ public class KafkaController {
 
     @GetMapping(value = "/conagg")
     public HashMap<String, String> conagg() throws InterruptedException {
+
         return kafkaTableConsumer.consume();
     }
 }

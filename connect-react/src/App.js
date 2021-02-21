@@ -19,34 +19,30 @@ import UploadFiles from "./upload/upload-files.component";
 import GooglePayment from "./payment/payment.component";
 import Header from "./components/header.component";
 import KafkaPublisher from "./components/publisher/kafka-component";
+import GooglePayButton from "@google-pay/button-react";
+import { Kafka } from "kafkajs";
 
 export default function App(props) {
 
 
-  const currentUser = localStorage.getItem("user");
+  
 
 
 
     return (
       <Router history={history}>
-         <div className="container mt-3">
-             <Header/>
+         <div className="container">
+        
             <Switch>
-              <Route exact path={["/", "/home"]} component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              {currentUser ?<Route exact path="/upload"   component={UploadFiles} />
-              :<Route exact path="/upload"   component={Login} />}
-              {currentUser ?<Route exact path="/eventGrid"   component={Events} />
-              :<Route exact path="/eventGrid"   component={Login} />}
-               {currentUser ?<Route exact path="/d3"   component={CSLContainer} />
-                            :<Route exact path="/d3"   component={Login} />}
-              <Route exact path="/payment" component = {GooglePayment} />
-              {currentUser ?<Route exact path="/book"   component={Booking} />
-              :<Route exact path="/book"   component={Login} />}
-              {currentUser ?<Route exact path="/kafka"   component={KafkaPublisher} />
-              :<Route exact path="/kafka"   component={Login} />}
-            </Switch>
+              <Route exact path={["/", "/home","/login"]} component={()=> {return (<><Header/><Home/></>)}} />
+              <Route exact path="/register" component={()=> {return (<><Header/><Register/></>)}} />
+              <Route exact path="/upload"   component={()=> {return (<><Header/><UploadFiles/></>)}} />
+              <Route exact path="/eventGrid"   component={()=> {return (<><Header/><Events/></>)}} />
+              <Route exact path="/d3"   component={()=> {return (<><Header/><CSLContainer/></>)}} />
+              <Route exact path="/payment" component = {()=> {return (<><Header/><GooglePayButton/></>)}} />
+              <Route exact path="/book"   component={()=> {return (<><Header/><Booking/></>)}} />
+              <Route exact path="/kafka"   component={()=> {return (<><Header/><KafkaPublisher/></>)}} />
+              </Switch>
           </div>
 
       </Router>

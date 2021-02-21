@@ -62,36 +62,6 @@ public class ConnectServerApplication {
         );
     }
 
-    @Bean
-    public RouterFunction<ServerResponse> htmlHomeRouter(
-            @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/home"), request
-                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
-        );
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> htmlLoginRouter(
-            @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/login"), request
-                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
-        );
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> htmlBookRouter(
-            @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/book"), request
-                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
-        );
-    }
-
-    public RouterFunction<ServerResponse> htmlKakfaRouter(
-            @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/kafka"), request
-                -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
-        );
-    }
 
 
 

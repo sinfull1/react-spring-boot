@@ -3,17 +3,20 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {Redirect} from "react-router-dom";
 import Header from "./header.component";
+import Login from "./login.component";
 
 export default function Home(props) {
 
     return !localStorage.getItem("user") ?
-        ( <>
-            <Redirect to="/login"/>
-            </>
+        (
+            <div className="container">
+               
+                <Login/>
+            </div> 
         )
         :
         (<div className="container">
-
+               
                 <header className="jumbotron">
                    {/* <p><Link to={"/eventGrid"}> Event Grid </Link>with Adhoc reactivity design</p>*/}
                     <p><Link to={"/upload"}> Upload </Link> Upload/Download functionality </p>

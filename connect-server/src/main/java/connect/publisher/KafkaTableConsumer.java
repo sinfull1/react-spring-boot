@@ -17,6 +17,7 @@ package connect.publisher;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Consumer;
 
 
 import connect.config.KafkaConfig;
@@ -34,6 +35,7 @@ import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.metrics.ApplicationStartup;
 import org.springframework.stereotype.Component;
+import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.receiver.KafkaReceiver;
@@ -55,8 +57,12 @@ public class KafkaTableConsumer implements ApplicationListener<ApplicationStarte
     static KafkaReceiver<Object, Object> kafkar = null;
     HashMap<String, String> temp = new HashMap<>();
     private final String uid = UUID.randomUUID().toString();
+    private Disposable d ;
 
     public HashMap<String, String> consume() {
+        d.dispose();
+         d = kafkar.receive().flatMap(map -> Mono.just((String) map.value()))
+                .subscribe(new Splitter());
         return temp;
     }
 
@@ -64,8 +70,26 @@ public class KafkaTableConsumer implements ApplicationListener<ApplicationStarte
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
         kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("earliest",
-                "locking-2"+uid,"lock-group-2"));
-        kafkar.receive().flatMap(map -> Mono.just((String) map.value()))
-                .subscribe(k -> temp.put(k.split(":")[0], k.split(":")[1]));
+                "locking-2","lock-group-2"));
+        d =kafkar.receive().flatMap(map -> Mono.just((String) map.value()))
+                .doOnNext(new Splitter()).subscribe();
+
     }
+
+
+    public class Splitter implements Consumer<String>
+    {
+        @Override
+        public void accept(String k) {
+            try{
+                temp.put( k.split(":")[0], k.split(":")[1]);
+            }
+            catch(Exception e){
+
+            }
+
+
+        }
+    }
+
 }

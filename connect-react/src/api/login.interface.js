@@ -1,7 +1,7 @@
 import Axios from "axios";
 class LoginApi{
 
-    callAPI = async ({url, method, data}) => {
+    callAPI =  ({url, method, data}) => {
         return Axios({
             url,
             method,
@@ -20,7 +20,6 @@ class LoginApi{
             {
               localStorage.removeItem("name");
               localStorage.removeItem("user");
-              window.location.reload();
             }
             return true;
           }

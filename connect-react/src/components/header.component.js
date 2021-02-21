@@ -1,31 +1,22 @@
 import {Link} from "react-router-dom";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {logout, reload} from "../slices/auth.slice";
 
 
 export default function Header(props)
 {
     const dispatch = useDispatch();
-    function signOut() {
-        dispatch(logout());
-        dispatch(reload());
+    function signOut(event) {
+       event.preventDefault();
+       dispatch({type:"LOGOUT"});
     }
-    const user = localStorage.getItem("name")
     return (
         <div className="container">
             <nav className="navbar navbar-expand navbar-dark bg-dark">
                 <Link to={"/"} className="navbar-brand">
-                    Welcome, {user} 
+                    Welcome, {localStorage.getItem("name") } 
                 </Link>
-                <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link to={"/home"} className="nav-link">
-                            Home
-                        </Link>
-                    </li>
-
-                </div>
+             
 
                 {localStorage.getItem("user") ? (
                     <div className="navbar-nav ml-auto">

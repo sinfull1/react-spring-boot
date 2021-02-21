@@ -42,10 +42,4 @@ public class AuthMain {
     }
 
 
-    @Bean
-    RouterFunction<ServerResponse> routerFunction() {
-        return  route(GET("/login"), req ->
-                ServerResponse.temporaryRedirect(URI.create("/home"))
-                        .build());
-    }
 }

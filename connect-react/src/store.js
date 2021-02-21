@@ -2,6 +2,7 @@
 import { configureStore, getDefaultMiddleware  } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga';
 import saga from "./sagas/sagas";
+import loginFlow from "./sagas/authsaga";
 import logger from 'redux-logger';
 import rootReducer from './rootReducer'
 const sagaMiddleware = createSagaMiddleware()
@@ -11,6 +12,7 @@ const store = configureStore({
     middleware: [...getDefaultMiddleware({thunk: false}), ...middlewares],
 });
 sagaMiddleware.run(saga);
+//sagaMiddleware.run(loginFlow);
 if (process.env.NODE_ENV === 'development' && module.hot) {
     module.hot.accept('./rootReducer', () => {
         const newRootReducer = require('./rootReducer').default

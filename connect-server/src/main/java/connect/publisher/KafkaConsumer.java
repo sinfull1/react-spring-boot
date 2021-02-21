@@ -53,8 +53,6 @@ import reactor.kafka.receiver.internals.ConsumerFactory;
  * To run sample consumer
  * <ol>
  *   <li> Start Zookeeper and Kafka server
- *   <li> Update {@link #BOOTSTRAP_SERVERS} and {@link #TOPIC} if required
- *   <li> Create Kafka topic {@link #TOPIC}
  *   <li> Send some messages to the topic, e.g. by running {@link KafkaConsumer}
  *   <li> Run {@link KafkaConsumer} as Java application with all dependent jars in the CLASSPATH (eg. from IDE).
  *   <li> Shutdown Kafka server and Zookeeper when no longer required
