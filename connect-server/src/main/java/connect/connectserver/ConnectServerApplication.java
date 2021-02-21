@@ -57,7 +57,12 @@ public class ConnectServerApplication {
     @Bean
     public RouterFunction<ServerResponse> htmlRouter(
             @Value("classpath:/public/index.html") Resource html) {
-        return route(GET("/"), request
+        return route(GET("/")
+                .and(GET("/login"))
+                .and(GET("/kafka"))
+                .and(GET("/upload"))
+                .and(GET("/book"))
+                .and(GET("/d3")), request
                 -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
         );
     }

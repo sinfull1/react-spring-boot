@@ -6,17 +6,32 @@ import EventService from '../../services/event.service';
 import LoginApi from '../../api/login.interface';
 import { API_URL } from '../../settings';
 
-let sseEvents = EventService.getConsumeEvent();
 
+let sseEvents;
+let map = new Map()
 
 export default function KafkaPublisher() {
     const dispatch = useDispatch();
     const [all, setAll] = useState([]);
-    const [selected, setSelected] = useState(new Map());
+    const [selected, setSelected] = useState(map);
     const [clientSelected, setClientSelected] = useState();
 
+   
+    const updateevent = (event) =>{
+        const update = event.data;
+        const newmap = new Map();
+        for(const [key,value] of selected)
+        {
+         newmap.set(key,value);
+        }
+        newmap.set(update.split(":")[0], update.split(":")[1])
 
+        setSelected(newmap);
+    }
+   
+    
     useEffect(() => {
+        sseEvents = EventService.getConsumeEvent();
         LoginApi.callAPI({
             url: API_URL + "/booking",
             method: "GET"
@@ -31,7 +46,6 @@ export default function KafkaPublisher() {
             url: API_URL + "/conagg",
             method: "GET"
         }).then(result => {
-            var map = new Map()
             for (var value in result.data) {
                 map.set(value, result.data[value])
                 if (value === localStorage.getItem("name")) {
@@ -39,19 +53,8 @@ export default function KafkaPublisher() {
                 }
             }
             setSelected(map);
-            sseEvents.addEventListener("lock-event", function (event) {
-                const update = event.data;
-                let newselect = new Map();
-                for(const[key,value ] of map)
-                {
-                    newselect.set(key,value);
-                }
-                newselect = newselect.set(update.split(":")[0], update.split(":")[1])
-                map =newselect;
-                setSelected(newselect);
-                
-            });
-
+            sseEvents.addEventListener("lock-event", updateevent);
+            
         }
     )
         .catch(result => console.log(result));

@@ -8,7 +8,7 @@ const http = axios.create({
     Authorization: "Bearer " + localStorage.getItem("user")
   },
   validateStatus: function (status) {
-    alert("executed");
+  
     return status < 500; // Resolve only if the status code is less than 500
   }
   
@@ -31,7 +31,7 @@ class EventService {
   }
 
   getConsumeEvent() {
-    if (user) {
+    
       let sseEvents =  new EventSource(API_URL + "/consume?user=" + localStorage.getItem("name"));
       sseEvents.onopen = event => console.log('open', event);
       sseEvents.onerror = event => {
@@ -39,7 +39,7 @@ class EventService {
         sseEvents.close();
       }
       return sseEvents;
-    }
+    
   }
   getEventDataById(id, type) {
     if (user) {
