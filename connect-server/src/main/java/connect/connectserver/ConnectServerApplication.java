@@ -58,11 +58,11 @@ public class ConnectServerApplication {
     public RouterFunction<ServerResponse> htmlRouter(
             @Value("classpath:/public/index.html") Resource html) {
         return route(GET("/")
-                .and(GET("/login"))
-                .and(GET("/kafka"))
-                .and(GET("/upload"))
-                .and(GET("/book"))
-                .and(GET("/d3")), request
+                .or(GET("/login"))
+                .or(GET("/kafka"))
+                .or(GET("/upload"))
+                .or(GET("/book"))
+                .or(GET("/d3")), request
                 -> ok().contentType(MediaType.TEXT_HTML).syncBody(html)
         );
     }
