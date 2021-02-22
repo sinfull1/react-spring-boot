@@ -20,6 +20,7 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -69,7 +70,7 @@ public class KafkaConsumer implements ApplicationListener<ApplicationStartedEven
 
     public KafkaConsumer() {
         kafkar = KafkaReceiver.create(KafkaConfig.
-                getReceiverOptions("latest","locking","lock-group"));
+                getReceiverOptions("latest","locking","lock-group"+ UUID.randomUUID().toString()));
         Flux.interval(Duration.ofSeconds(5),Duration.ofSeconds(20)).subscribe(t->{distributedEventProcessor
                 .getSink().emitNext(ServerSentEvent.builder().event("heartbeat").data("message").build()
                         , Sinks.EmitFailureHandler.FAIL_FAST);});

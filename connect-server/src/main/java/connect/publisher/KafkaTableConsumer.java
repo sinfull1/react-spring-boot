@@ -70,7 +70,7 @@ public class KafkaTableConsumer implements ApplicationListener<ApplicationStarte
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
         kafkar = KafkaReceiver.create(KafkaConfig.getReceiverOptions("earliest",
-                "locking-2","lock-group-2"));
+                "locking-2","lock-group-2"+UUID.randomUUID().toString()));
         d =kafkar.receive().flatMap(map -> Mono.just((String) map.value()))
                 .doOnNext(new Splitter()).subscribe();
 
