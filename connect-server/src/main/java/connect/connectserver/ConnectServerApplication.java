@@ -59,6 +59,7 @@ public class ConnectServerApplication {
             @Value("classpath:/public/index.html") Resource html) {
         return route(GET("/")
                 .or(GET("/login"))
+                .or(GET("/home"))
                 .or(GET("/kafka"))
                 .or(GET("/upload"))
                 .or(GET("/book"))

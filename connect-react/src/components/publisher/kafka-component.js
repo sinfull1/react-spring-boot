@@ -16,23 +16,17 @@ export default function KafkaPublisher() {
     const [selected, setSelected] = useState();
     const [clientSelected, setClientSelected] = useState();
 
-   
-    const updateevent = (event) =>{
+
+    const updateevent = (event) => {
         const update = event.data;
-        const newmap = new Map();
-        map.set(update.split(":")[0], update.split(":")[1])
-        for(const [key,value] of map)
-        {
-         newmap.set(key,value);
+        const element = document.getElementById(update.split(":")[1])
+        if (element.getAttribute("class") && element.getAttribute("class") !== "flex-item-en") {
+            element.setAttribute("class", "flex-item-dis");
         }
-        
-        setSelected(newmap);
     }
-   
-    
     useEffect(() => {
         sseEvents = EventService.getConsumeEvent();
-         LoginApi.callAPI({
+        LoginApi.callAPI({
             url: API_URL + "/booking",
             method: "GET"
         }).then(result => {
@@ -53,56 +47,72 @@ export default function KafkaPublisher() {
             }
             map = jjj;
             setSelected(jjj);
-            setTimeout(()=> sseEvents.addEventListener("lock-event", updateevent),1000);
-            
-        }).catch(result => console.log(result));},
+            setTimeout(() => sseEvents.addEventListener("lock-event", updateevent), 1000);
+
+        }).catch(result => console.log(result));
+    },
         []
     )
 
 
 
-const onClick = function (event) {
-    dispatch({ type: "PUBLISH", payload: { id: event.target.innerText } });
-    setClientSelected(event.target.innerText);
-}
 
-const findInMap = (val) => {
-    if(selected)
-    {
-    for (let [k, v] of selected) {
-        if (val && v && v === val && k !== localStorage.getItem("name")) {
-            console.log(k,val);
-            return true;
+    const findInMap = (val) => {
+        if (selected) {
+            for (let [k, v] of selected) {
+                if (val && v && v === val && k !== localStorage.getItem("name")) {
+                    console.log(k, val);
+                    return true;
+                }
+            }
         }
+        return false;
     }
+
+    const handleClick = function () {
+        LoginApi.callAPI({
+            url: API_URL + "/pubran",
+            method: "GET"
+        });
     }
-    return false;
-}
 
-return (
-    <>
-        <div id="resource-box" className="flex-container">
+    return (
+        <>
+            <button className="flex-item" onClick={handleClick}>publish 100 messages</button>
+            <div id="resource-box" className="flex-container">
+                {all ? all.map((value, index) => {
+                    return <MyButton id={value} bState="flex-item" value={value}></MyButton>
+                })
+                    : null}
+            </div>
 
-            {all ? all.map((value, index) => {
+        </>
 
-                if (value === clientSelected) {
-                    return (<button id={value} className="flex-item-en" onClick={onClick}>{value}</button>);
-                }
-                else if (findInMap(value)) {
-                    return (<button id={value} className="flex-item-dis" disabled >{value}</button>);
-                }
-                else {
-                    return (<button id={value} className="flex-item" onClick={onClick} >{value}</button>);
-                }
+    )
 
-            })
-                : null}
-        </div>
-
-    </>
-
-)
 
 
 
 }
+
+const MyButton = function (props) {
+    const dispatch = useDispatch();
+    const [bstate, setBstate] = useState("flex-item");
+
+    const onClick = function (event) {
+        dispatch({ type: "PUBLISH", payload: { id: event.target.innerText } });
+        setBstate("flex-item-en");
+
+    }
+
+
+
+    return (
+        <>
+            <button id={props.value} className={bstate} onClick={onClick}>{props.value}</button>
+        </>
+    )
+}
+
+
+

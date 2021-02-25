@@ -5,7 +5,8 @@ let initialState =  {
    username: "",
    password:"",
    token:"",
-   message:""
+   loading: false,
+   message:"Please Login"
 }
 
 const authSlice = createSlice({
@@ -28,7 +29,8 @@ const authSlice = createSlice({
             window.location.reload();
         },
         setMessage(state, action){
-            state.message = "Registation Succefull";
+            state.message = action.payload.message;
+            state.loading = action.payload.loading;
         }
     }
 })

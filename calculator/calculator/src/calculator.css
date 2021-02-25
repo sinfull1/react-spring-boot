@@ -1,0 +1,17 @@
+.calculator
+{
+   width: 30%;
+   display:flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+
+}
+
+.button
+{
+   width :25%;
+   height:40px;
+}
+.textbox{
+   width:100%;
+}

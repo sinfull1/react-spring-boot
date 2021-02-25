@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { reload } from '../slices/auth.slice'
 import { Redirect } from "react-router-dom";
 
@@ -15,10 +15,10 @@ const required = (value) => {
     }
 };
 export default function Login(props) {
+    const statusM = useSelector(state => state.auth.message)
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("Please Login");
-    const [loading, setLoading] = useState(false);
+    const loading = useSelector(state => state.auth.loading)
     const dispatch = useDispatch()
     const onChangeUsername = function (e) {
         setUsername(e.target.value);
@@ -32,11 +32,10 @@ export default function Login(props) {
 
     const handleLogin = function (e) {
         e.preventDefault();
-        setMessage("Logging in");
-        setLoading(true);
         if (username && password) {
-            dispatch({ type: "SECURE_LOGIN", payload: { username, password} });
-        } 
+           dispatch({ type: "SECURE_LOGIN", payload: { username, password} });
+        }
+       
     }
     return (
 
@@ -84,10 +83,10 @@ export default function Login(props) {
                             </button>
                         </div>
 
-                        {message && (
+                        {statusM && (
                             <div className="form-group">
                                 <div className="alert alert-danger" role="alert">
-                                    {message}
+                                    {statusM}
                                 </div>
                             </div>
                         )}

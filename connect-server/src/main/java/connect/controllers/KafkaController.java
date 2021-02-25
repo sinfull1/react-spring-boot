@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @RestController
@@ -69,6 +70,16 @@ public class KafkaController {
     @GetMapping(value = "/conagg")
     public HashMap<String, String> conagg() throws InterruptedException {
 
+        return kafkaTableConsumer.consume();
+    }
+
+
+    @GetMapping(value = "/pubran")
+    public HashMap<String, String> pubran() throws InterruptedException {
+        Random r = new Random();
+        for (int i =0;i<60;i++) {
+            kafkaPublisher.sendMessages("user" + ":" + "A" + r.nextInt(90));
+        }
         return kafkaTableConsumer.consume();
     }
 }
